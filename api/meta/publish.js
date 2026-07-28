@@ -65,6 +65,53 @@ const validatePublicUrl = (value, field, { sameSite = false } = {}) => {
   return parsed.toString()
 }
 
+const decodeHtml = (value = '') => value
+  .replace(/&amp;/gi, '&')
+  .replace(/&quot;/gi, '"')
+  .replace(/&#39;|&apos;/gi, "'")
+  .replace(/&lt;/gi, '<')
+  .replace(/&gt;/gi, '>')
+  .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+  .replace(/&#x([\da-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+  .replace(/\s+/g, ' ')
+  .trim()
+
+const getTagAttribute = (tag, name) => {
+  const match = tag.match(new RegExp(`\\b${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, 'i'))
+  return match ? decodeHtml(match[1] ?? match[2] ?? '') : ''
+}
+
+const getArticleMetadata = async (articleUrl) => {
+  const response = await fetch(articleUrl, {
+    method: 'GET',
+    headers: { 'User-Agent': 'GabrieleCiandriniMetaPublisher/1.0' },
+    redirect: 'follow',
+  })
+  if (!response.ok) throw new Error(`Articolo non raggiungibile: HTTP ${response.status}`)
+
+  const finalUrl = validatePublicUrl(response.url || articleUrl, 'articleUrl finale', { sameSite: true })
+  const html = await response.text()
+  if (html.length > 2_000_000) throw new Error('La pagina dell’articolo è troppo grande')
+
+  const meta = {}
+  for (const tag of html.match(/<meta\b[^>]*>/gi) || []) {
+    const key = (getTagAttribute(tag, 'property') || getTagAttribute(tag, 'name')).toLowerCase()
+    const content = getTagAttribute(tag, 'content')
+    if (key && content && !meta[key]) meta[key] = content
+  }
+  const titleTag = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)
+  const title = meta['og:title'] || decodeHtml(titleTag?.[1] || '')
+  const description = meta['og:description'] || meta.description || ''
+  const imageValue = meta['og:image'] || meta['twitter:image'] || ''
+  const imageUrl = imageValue
+    ? validatePublicUrl(new URL(imageValue, finalUrl).toString(), 'imageUrl')
+    : null
+  if (!title) throw new Error('Titolo dell’articolo non trovato')
+
+  const suggestedMessage = (description || title).slice(0, 1800).trim()
+  return { articleUrl: finalUrl, title, description, imageUrl, suggestedMessage }
+}
+
 export default async function handler(request, response) {
   if (request.method === 'GET') {
     return json(response, 200, {
@@ -96,6 +143,24 @@ export default async function handler(request, response) {
     if (body.action === 'verify') {
       const accounts = await getConnectedAccounts()
       return json(response, 200, { verified: true, accounts })
+    }
+    if (body.action === 'prepare') {
+      const articleUrl = validatePublicUrl(body.articleUrl, 'articleUrl', { sameSite: true })
+      const article = await getArticleMetadata(articleUrl)
+      const platforms = normalizePlatforms(body.platforms)
+      if (platforms.includes('instagram') && !article.imageUrl) {
+        throw new Error('L’articolo non contiene un’immagine social utilizzabile per Instagram')
+      }
+      return json(response, 200, {
+        prepared: true,
+        article,
+        publicationPlan: {
+          articleUrl: article.articleUrl,
+          imageUrl: article.imageUrl,
+          message: article.suggestedMessage,
+          platforms,
+        },
+      })
     }
 
     const platforms = normalizePlatforms(body.platforms)

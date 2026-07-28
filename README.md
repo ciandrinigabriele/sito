@@ -52,3 +52,17 @@ Il server convalida dominio, immagine, testo e piattaforme, ma non chiama Meta.
 Per verificare il collegamento senza creare post, inviare un POST autenticato
 con `{ "action": "verify" }`. La risposta restituisce soltanto nome e ID della
 Pagina e dell'account Instagram collegato; il token non viene mai esposto.
+
+Per preparare una bozza social direttamente da un articolo, senza pubblicarla:
+
+```json
+{
+  "action": "prepare",
+  "articleUrl": "https://gabrieleciandrini.com/percorso-articolo/",
+  "platforms": ["facebook", "instagram"]
+}
+```
+
+Il server legge esclusivamente pagine di `gabrieleciandrini.com`, recupera
+titolo, descrizione e immagine social e restituisce un piano di pubblicazione
+modificabile. La pubblicazione reale resta un secondo passaggio esplicito.

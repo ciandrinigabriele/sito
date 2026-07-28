@@ -57,10 +57,46 @@ const foreignUrl = await invoke({
 })
 if (foreignUrl.statusCode !== 400) throw new Error('Il publisher accetta URL di articoli esterni al sito')
 
+const originalFetch = globalThis.fetch
+globalThis.fetch = async (url, options) => {
+  if (options?.method !== 'GET') throw new Error('La preparazione articolo deve essere non distruttiva')
+  return {
+    ok: true,
+    status: 200,
+    url: String(url),
+    async text() {
+      return `<!doctype html>
+        <html><head>
+          <title>Titolo di riserva</title>
+          <meta content="Cambiare lavoro senza buttarsi nel vuoto" property="og:title">
+          <meta name="description" content="Una guida concreta per affrontare il cambiamento professionale.">
+          <meta property="og:image" content="/media/career-bridge-og.png">
+        </head><body><h1>Articolo</h1></body></html>`
+    },
+  }
+}
+
+const preparedArticle = await invoke({
+  authorization: 'Bearer local-verification-secret',
+  body: {
+    action: 'prepare',
+    articleUrl: 'https://gabrieleciandrini.com/cambiare-lavoro-ancona/',
+    platforms: ['facebook', 'instagram'],
+  },
+})
+globalThis.fetch = originalFetch
+if (
+  preparedArticle.statusCode !== 200
+  || preparedArticle.payload?.prepared !== true
+  || preparedArticle.payload?.article?.title !== 'Cambiare lavoro senza buttarsi nel vuoto'
+  || preparedArticle.payload?.publicationPlan?.imageUrl !== 'https://gabrieleciandrini.com/media/career-bridge-og.png'
+) {
+  throw new Error(`Preparazione articolo Meta non valida: ${JSON.stringify(preparedArticle.payload)}`)
+}
+
 process.env.META_GRAPH_API_VERSION = 'v24.0'
 process.env.META_PAGE_ID = '182800505570849'
 process.env.META_PAGE_ACCESS_TOKEN = 'server-only-test-token'
-const originalFetch = globalThis.fetch
 globalThis.fetch = async (url, options) => {
   if (options?.method !== 'GET') throw new Error('La verifica account deve essere non distruttiva')
   const parsed = new URL(url)
@@ -96,4 +132,4 @@ if (
   throw new Error(`Verifica account Meta non valida: ${JSON.stringify(verifiedAccounts.payload)}`)
 }
 
-console.log('Meta publisher verification passed: auth, dry run, domain validation and account discovery.')
+console.log('Meta publisher verification passed: auth, article preparation, dry run, domain validation and account discovery.')
