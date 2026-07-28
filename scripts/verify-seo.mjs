@@ -66,7 +66,7 @@ for (const item of content) {
     }
   }
 }
-for (const requiredPattern of ['/tag/:path*', '/category/:path*', '/author/:path*', '/feed/']) {
+for (const requiredPattern of ['/tag/:path*/', '/category/:path*/', '/author/:path*/', '/feed/']) {
   if (!redirectSources.has(normalizeRedirectPath(requiredPattern))) {
     failures.push(`${requiredPattern}: redirect archivio WordPress mancante`)
   }

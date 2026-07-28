@@ -3,17 +3,17 @@
   "trailingSlash": true,
   "redirects": [
     {
-      "source": "/tag/:path*",
+      "source": "/tag/:path*/",
       "destination": "/articoli/",
       "permanent": true
     },
     {
-      "source": "/category/:path*",
+      "source": "/category/:path*/",
       "destination": "/articoli/",
       "permanent": true
     },
     {
-      "source": "/author/:path*",
+      "source": "/author/:path*/",
       "destination": "/about-2/",
       "permanent": true
     },
