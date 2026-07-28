@@ -9,6 +9,8 @@ import './styles.css'
 
 const WHATSAPP = 'https://wa.me/393497759350'
 const oldSite = 'https://gabrieleciandrini.com'
+const BOOK_URL = '/libro-respira-immagina-agisci/'
+const AMAZON_URL = 'https://amzn.eu/d/0ec3bLMb'
 
 const images = {
   hero: 'https://i0.wp.com/gabrieleciandrini.com/wp-content/uploads/2021/01/gabriele-2-sito.jpg?resize=900%2C900&ssl=1',
@@ -62,6 +64,138 @@ function ArrowLink({ href, children, className = '' }) {
   return <a className={`arrowLink ${className}`} href={href}>{children}<ArrowRight size={18} /></a>
 }
 
+function BookPage() {
+  useEffect(() => {
+    document.title = 'Respira. Immagina. Agisci. | Il libro di Gabriele Ciandrini'
+    document.querySelector('meta[name="description"]')?.setAttribute(
+      'content',
+      'Scopri Respira. Immagina. Agisci., il libro di Gabriele Ciandrini: una storia vera di difficoltà, rinascita e trasformazione diventata un metodo concreto.'
+    )
+    const schema = document.createElement('script')
+    schema.type = 'application/ld+json'
+    schema.id = 'book-schema'
+    schema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Book',
+      name: 'Respira. Immagina. Agisci.',
+      author: { '@type': 'Person', name: 'Gabriele Ciandrini' },
+      inLanguage: 'it',
+      url: `${window.location.origin}${BOOK_URL}`,
+      offers: { '@type': 'Offer', url: AMAZON_URL, availability: 'https://schema.org/InStock' }
+    })
+    document.head.appendChild(schema)
+    return () => schema.remove()
+  }, [])
+
+  const bookCover = 'https://i0.wp.com/gabrieleciandrini.com/wp-content/uploads/2026/06/screenshot_20260624_114707_amazon-shopping8683529740896719166.jpg?resize=1033%2C1536&ssl=1'
+  const bookBack = 'https://i0.wp.com/gabrieleciandrini.com/wp-content/uploads/2026/06/screenshot_20260624_114714_amazon-shopping7138699582475312819.jpg?resize=1003%2C1536&ssl=1'
+  const whatsappBook = `${WHATSAPP}?text=Salve%20Gabriele%2C%20ho%20letto%20la%20pagina%20sul%20libro%20Respira%20Immagina%20Agisci%20e%20vorrei%20prenotare%20un%20incontro%20gratuito.`
+
+  return (
+    <div className="bookPage">
+      <header className="nav scrolled">
+        <a className="brand" href="/" aria-label="Gabriele Ciandrini, home"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a>
+        <nav className="links bookNav" aria-label="Navigazione principale">
+          <a href="/#percorsi">Percorsi</a><a href="/#metodo">Metodo</a><a className="activeNav" href={BOOK_URL}>Il libro</a><a href="/#chi-sono">Chi sono</a>
+          <a className="navCta" href={AMAZON_URL}>Acquista <ArrowRight size={16} /></a>
+        </nav>
+        <a className="bookMobileBuy" href={AMAZON_URL}>Acquista</a>
+      </header>
+
+      <main>
+        <section className="bookHero">
+          <div className="bookAura bookAuraOne" /><div className="bookAura bookAuraTwo" />
+          <div className="bookHeroCopy">
+            <a className="backHome" href="/"><ArrowRight size={14} /> Torna al sito</a>
+            <p className="eyebrow"><span /> Il libro di Gabriele Ciandrini</p>
+            <h1>Respira.<br />Immagina.<br /><em>Agisci.</em></h1>
+            <p className="bookSubtitle">Una storia vera di difficoltà, rinascita e trasformazione. La radice concreta del metodo che oggi applico al cambiamento professionale.</p>
+            <div className="heroActions">
+              <a className="primary" href={AMAZON_URL}>Acquista su Amazon <ArrowRight size={18} /></a>
+              <a className="ghost" href="#scopri">Scopri la storia <ArrowDown size={17} /></a>
+            </div>
+          </div>
+          <div className="bookMockup">
+            <img className="coverFront" src={bookCover} alt="Copertina del libro Respira Immagina Agisci di Gabriele Ciandrini" />
+            <img className="coverBack" src={bookBack} alt="Retro del libro Respira Immagina Agisci" />
+            <div className="bookBadge">Disponibile<br /><strong>su Amazon</strong></div>
+          </div>
+        </section>
+
+        <section className="bookLead sectionPad" id="scopri">
+          <div className="sectionNumber">01 / LA STORIA</div>
+          <div className="bookLeadGrid">
+            <h2>Non un libro motivazionale.<br /><em>Una storia trasformata in metodo.</em></h2>
+            <div>
+              <p><strong>Respira. Immagina. Agisci.</strong> non è soltanto un titolo. È il punto di partenza di un metodo nato da una storia concreta: malattia, difficoltà, decisioni, cadute e ripartenze.</p>
+              <p>Racconta le tre azioni che mi hanno permesso di trasformare la malattia e le difficoltà in opportunità. Non nasce da una teoria astratta e non vuole essere motivazione fine a sé stessa.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bookMethod">
+          <div className="sectionNumber light">02 / LE TRE AZIONI</div>
+          <div className="bookMethodGrid">
+            {method.map((item, index) => (
+              <article key={item.word}>
+                <span className="bookMethodNumber">0{index + 1}</span>
+                <div className="methodOrb" style={{ background: item.color }} />
+                <h2>{item.word}</h2>
+                <p>{item.word === 'Respira' && 'Fermati, gestisci il tuo stato emotivo e torna lucido. Prima di una decisione importante devi recuperare centratura.'}
+                  {item.word === 'Immagina' && 'Pensa alla soluzione, visualizza chi vuoi diventare e definisci una direzione. Senza visione il cambiamento resta confuso.'}
+                  {item.word === 'Agisci' && 'Trasforma la direzione in un piano concreto. Costruisci azioni sostenibili, progressive e verificabili.'}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="bookWork sectionPad">
+          <div className="bookWorkVisual"><img src={images.hero} alt="Gabriele Ciandrini, autore di Respira Immagina Agisci" /></div>
+          <div className="bookWorkCopy">
+            <div className="sectionNumber">03 / DAL LIBRO AL LAVORO</div>
+            <h2>Il cambiamento personale diventa una direzione professionale.</h2>
+            <p>Cambiare lavoro, cambiare direzione o passare da dipendente a indipendente non significa buttarsi nel vuoto. Significa ritrovare lucidità, costruire una visione e poi agire con metodo.</p>
+            <p>Il libro crea un ponte tra quello che senti, quello che vuoi costruire e quello che puoi fare concretamente.</p>
+            <blockquote><Quote size={26} /><p>La storia personale è la radice. Il metodo è la struttura. Il percorso individuale è l’applicazione concreta.</p></blockquote>
+          </div>
+        </section>
+
+        <section className="bookAudience">
+          <div>
+            <div className="sectionNumber light">04 / A CHI PUÒ ESSERE UTILE</div>
+            <h2>Per chi sente che è arrivato il momento di cambiare davvero.</h2>
+          </div>
+          <ul>
+            <li><Check /> A chi non si riconosce più nel lavoro attuale.</li>
+            <li><Check /> A chi vive una fase di blocco, paura o indecisione.</li>
+            <li><Check /> A chi vuole trasformare un momento difficile in una nuova direzione.</li>
+            <li><Check /> A chi cerca un metodo concreto, non una promessa motivazionale.</li>
+          </ul>
+        </section>
+
+        <section className="amazonCta">
+          <div className="amazonCover"><img src={bookCover} alt="" /></div>
+          <div>
+            <p className="eyebrow"><span /> Disponibile ora</p>
+            <h2>Inizia il viaggio.<br /><em>Una pagina alla volta.</em></h2>
+            <p>Acquista il libro su Amazon oppure parti da un incontro conoscitivo gratuito per applicare il metodo al momento professionale che stai vivendo.</p>
+            <div className="heroActions">
+              <a className="primary" href={AMAZON_URL}>Acquista su Amazon <ArrowRight /></a>
+              <a className="ghost" href={whatsappBook}><MessageCircle /> Parliamone</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="bookFooter">
+        <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
+        <div className="footerLinks"><a href="/">Home</a><a href="/#metodo">Metodo</a><a href={AMAZON_URL}>Amazon</a></div>
+        <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini</p>
+      </footer>
+    </div>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState('')
@@ -101,6 +235,7 @@ function App() {
         <nav className={menuOpen ? 'links open' : 'links'} aria-label="Navigazione principale">
           <a href="#percorsi" onClick={() => setMenuOpen(false)}>Percorsi</a>
           <a href="#metodo" onClick={() => setMenuOpen(false)}>Metodo</a>
+          <a href={BOOK_URL} onClick={() => setMenuOpen(false)}>Il libro</a>
           <a href="#chi-sono" onClick={() => setMenuOpen(false)}>Chi sono</a>
           <a href="#risorse" onClick={() => setMenuOpen(false)}>Risorse</a>
           <a className="navCta" href={WHATSAPP}>Parliamone <ArrowRight size={16} /></a>
@@ -242,8 +377,8 @@ function App() {
             <p>La storia vera da cui nasce il cuore del mio metodo: dalla malattia affrontata fin da bambino alle crisi, ai cambiamenti professionali e alle ripartenze.</p>
           </div>
           <div className="bookActions">
-            <ArrowLink href={`${oldSite}/libro-respira-immagina-agisci/`}>Scopri il libro</ArrowLink>
-            <a href="https://amzn.eu/d/0QFY4n5" className="smallLink">Acquista su Amazon <ChevronRight size={15} /></a>
+            <ArrowLink href={BOOK_URL}>Scopri il libro</ArrowLink>
+            <a href={AMAZON_URL} className="smallLink">Acquista su Amazon <ChevronRight size={15} /></a>
           </div>
         </section>
 
@@ -306,4 +441,7 @@ function App() {
   )
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>)
+const isBookPage = window.location.pathname.replace(/\/+$/, '') === BOOK_URL.replace(/\/+$/, '')
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>{isBookPage ? <BookPage /> : <App />}</React.StrictMode>
+)
