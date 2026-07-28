@@ -84,6 +84,7 @@ const method = [
 ]
 
 const articles = [
+  ['Il blocco non è una colpa: cosa ti impedisce di cambiare lavoro', '/2026/07/29/il-blocco-non-e-una-colpa-cambiare-lavoro/', 'Blocchi'],
   ['Cambiare lavoro senza buttarsi nel vuoto: da dove iniziare', '/2026/07/08/cambiare-lavoro-senza-buttarsi-nel-vuoto/', 'Cambiamento'],
   ['Quanto ti stanno pagando per non farti realizzare i tuoi sogni?', '/2026/07/20/quanto-ti-stanno-pagando-per-non-farti-realizzare-i-tuoi-sogni/', 'Scelte'],
   ['Rompere le etichette per liberare il tuo successo', '/2023/10/16/titolo-rompere-le-etichette-per-liberare-il-tuo-successo/', 'Identità'],
@@ -97,7 +98,7 @@ const normalizePath = (value) => {
   return path === '/' ? path : `${path.replace(/\/+$/, '')}/`
 }
 
-function usePageMeta({ title, description, type = 'website', date }) {
+function usePageMeta({ title, description, type = 'website', date, image = '/media/career-bridge-og.png' }) {
   useEffect(() => {
     const canonicalUrl = `https://gabrieleciandrini.com${normalizePath(window.location.pathname)}`
     document.title = title
@@ -116,6 +117,8 @@ function usePageMeta({ title, description, type = 'website', date }) {
     setMeta('meta[property="og:description"]', ['property', 'og:description'], description)
     setMeta('meta[property="og:type"]', ['property', 'og:type'], type)
     setMeta('meta[property="og:url"]', ['property', 'og:url'], canonicalUrl)
+    setMeta('meta[property="og:image"]', ['property', 'og:image'], new URL(image, window.location.origin).href)
+    setMeta('meta[name="twitter:image"]', ['name', 'twitter:image'], new URL(image, window.location.origin).href)
     if (date) setMeta('meta[property="article:published_time"]', ['property', 'article:published_time'], date)
     let canonical = document.head.querySelector('link[rel="canonical"]')
     if (!canonical) {
@@ -124,7 +127,7 @@ function usePageMeta({ title, description, type = 'website', date }) {
       document.head.appendChild(canonical)
     }
     canonical.href = canonicalUrl
-  }, [title, description, type, date])
+  }, [title, description, type, date, image])
 }
 
 function SiteHeader() {
@@ -160,7 +163,7 @@ function SiteFooter() {
 
 function ContentPage({ item, posts }) {
   const description = item.excerpt || `${item.title}. Scopri il percorso e le risorse di Gabriele Ciandrini per il cambiamento professionale.`
-  usePageMeta({ title: `${item.title} | Gabriele Ciandrini`, description, type: item.type === 'post' ? 'article' : 'website', date: item.date })
+  usePageMeta({ title: `${item.title} | Gabriele Ciandrini`, description, type: item.type === 'post' ? 'article' : 'website', date: item.date, image: item.featuredImage })
   const related = posts.filter((post) => post.id !== item.id).slice(0, 3)
   return (
     <div className={`contentPage ${item.type}`}>
@@ -606,11 +609,11 @@ function App() {
         <section className="pain sectionPad">
           <div className="sectionNumber">00 / IL PUNTO DI PARTENZA</div>
           <div className="painGrid">
-            <h2>Non sei pigro.<br />Non sei bloccato.<br /><em>Sei senza una direzione che senti tua.</em></h2>
+            <h2>Il blocco non è una colpa.<br /><em>È qualcosa da comprendere.</em></h2>
             <div>
-              <p>Molte persone non si riconoscono più nel proprio lavoro: poca motivazione, la sensazione di sprecare tempo, il desiderio di qualcosa di più libero e coerente.</p>
-              <p>Il cambiamento non va improvvisato. Prima capiamo se per te ha senso crescere come dipendente, costruire una strada indipendente o preparare un passaggio graduale.</p>
-              <ArrowLink href={WHATSAPP}>Partiamo dalla tua situazione reale</ArrowLink>
+              <p>Se continui a rimandare, forse non ti manca il coraggio. Potrebbero mancare informazioni, energia, una competenza, una soglia di sicurezza o un primo passo abbastanza piccolo da verificare.</p>
+              <p>Non partiamo dal giudizio e nemmeno dal nuovo lavoro. Partiamo da una diagnosi precisa: che cosa rende difficile questo passaggio, esattamente?</p>
+              <ArrowLink href="/2026/07/29/il-blocco-non-e-una-colpa-cambiare-lavoro/">Scopri le 7 domande che sbloccano la scelta</ArrowLink>
             </div>
           </div>
         </section>
@@ -654,7 +657,7 @@ function App() {
           <div className="methodCopy">
             <div className="sectionNumber light">02 / IL METODO</div>
             <h2>Respira.<br />Immagina.<br /><em>Agisci.</em></h2>
-            <p className="methodIntro">Prima ritrovi lucidità. Poi costruisci una visione. Infine la trasformi in azione concreta.</p>
+            <p className="methodIntro">Non è uno slogan e non è un invito a mollare tutto. È un ciclo: crei spazio, dai forma alla direzione e scegli il prossimo passo che puoi verificare.</p>
             <div className="methodSteps">
               {method.map((item, index) => (
                 <article key={item.word}>

@@ -50,6 +50,11 @@ const homeBody = `
     <h1>Il lavoro giusto non si trova a caso. Si costruisce con metodo.</h1>
     <p>Ti aiuto a capire quale direzione professionale ha davvero senso per te e a trasformarla in un piano concreto, sostenibile e coerente con i tuoi valori.</p>
     <section>
+      <h2>Il blocco non è una colpa: è qualcosa da comprendere</h2>
+      <p>Se continui a rimandare, forse non ti manca il coraggio. Potrebbero mancare informazioni, energia, una competenza, una soglia di sicurezza o un primo passo abbastanza piccolo da verificare.</p>
+      <a href="${origin}/2026/07/29/il-blocco-non-e-una-colpa-cambiare-lavoro/">Scopri le sette domande che sbloccano la scelta</a>
+    </section>
+    <section>
       <h2>Un percorso unico: dalla confusione a una direzione che puoi costruire</h2>
       <p>Un percorso individuale per cambiare lavoro, crescere come dipendente o preparare un progetto indipendente. Ad Ancona e online in tutta Italia.</p>
       <ol>
@@ -60,7 +65,7 @@ const homeBody = `
     </section>
     <section>
       <h2>Respira. Immagina. Agisci.</h2>
-      <p>Prima ritrovi lucidità. Poi costruisci una visione. Infine la trasformi in azione concreta.</p>
+      <p>Non è uno slogan e non è un invito a mollare tutto. È un ciclo: crei spazio, dai forma alla direzione e scegli il prossimo passo che puoi verificare.</p>
       <a href="${origin}/metodo-respira-immagina-agisci/">Scopri il metodo completo</a>
     </section>
     <section>
@@ -169,10 +174,10 @@ const replaceOrInsertMeta = (html, selector, tag) => {
   return html.replace('</head>', `    ${tag}\n  </head>`)
 }
 
-const render = ({ route, title, description, body, type = 'website', date = null, extraSchema = null }) => {
+const render = ({ route, title, description, body, type = 'website', date = null, image = defaultImage, extraSchema = null }) => {
   const normalizedRoute = normalizeRoute(route)
   const canonical = `${origin}${normalizedRoute}`
-  const schemas = [schemaFor({ route: normalizedRoute, title, description, type, date })]
+  const schemas = [schemaFor({ route: normalizedRoute, title, description, type, date, image })]
   if (extraSchema) schemas.push(extraSchema)
 
   let html = template
@@ -185,8 +190,10 @@ const render = ({ route, title, description, body, type = 'website', date = null
     .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 
   html = replaceOrInsertMeta(html, /<meta property="og:url" content="[^"]*"\s*\/?>/i, `<meta property="og:url" content="${canonical}" />`)
+  html = replaceOrInsertMeta(html, /<meta property="og:image" content="[^"]*"\s*\/?>/i, `<meta property="og:image" content="${image}" />`)
   html = replaceOrInsertMeta(html, /<meta name="twitter:title" content="[^"]*"\s*\/?>/i, `<meta name="twitter:title" content="${escapeHtml(title)}" />`)
   html = replaceOrInsertMeta(html, /<meta name="twitter:description" content="[^"]*"\s*\/?>/i, `<meta name="twitter:description" content="${escapeHtml(description)}" />`)
+  html = replaceOrInsertMeta(html, /<meta name="twitter:image" content="[^"]*"\s*\/?>/i, `<meta name="twitter:image" content="${image}" />`)
   html = replaceOrInsertMeta(html, /<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${canonical}" />`)
   html = replaceOrInsertMeta(
     html,
@@ -272,6 +279,7 @@ for (const item of content) {
     body: contentBody(item),
     type: item.type === 'post' ? 'article' : 'website',
     date: item.date,
+    image: item.featuredImage ? `${origin}${item.featuredImage}` : defaultImage,
   })
 }
 

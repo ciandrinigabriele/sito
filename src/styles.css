@@ -378,6 +378,18 @@ footer { background: #080c0b; color: #9ca4a1; padding: 70px max(24px, calc((100%
 .wpContent figcaption { padding-top: 9px; color: #777d79; font-size: 12px; }
 .wpContent blockquote { margin: 48px 0; padding: 32px; border: 0; border-left: 5px solid var(--lime); border-radius: 0 20px 20px 0; background: #e8e4da; }
 .wpContent blockquote p { font-size: 24px; }
+.wpContent .has-large-font-size { font-size: 24px; line-height: 1.55; color: var(--ink); }
+.ria-article-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 38px 0; }
+.ria-article-grid article { min-height: 310px; padding: 26px; border-radius: 22px; background: var(--ink); color: white; }
+.ria-article-grid article:nth-child(2) { background: #5445c7; }
+.ria-article-grid article:nth-child(3) { background: #d9ff73; color: var(--ink); }
+.ria-article-grid span { display: block; margin-bottom: 54px; font-size: 12px; font-weight: 800; letter-spacing: 1px; opacity: .7; }
+.ria-article-grid h3 { margin: 0 0 14px; color: inherit; }
+.ria-article-grid p { font-size: 15px; line-height: 1.65; }
+.reflection-list { padding: 28px 28px 18px 50px !important; border-radius: 22px; background: #e8e4da; color: var(--ink); }
+.article-exercise { margin: 64px 0; padding: 42px; border-radius: 26px; background: #243e38; color: white; }
+.article-exercise h2 { margin-top: 10px; color: white; }
+.article-exercise p:not(.eyebrow) { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.18); }
 .wpContent .wp-block-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0; }
 .wpContent .wp-block-button__link, .wpContent a.wp-element-button { display: inline-flex; padding: 14px 20px; border-radius: 999px; background: var(--ink); color: white; text-decoration: none; font-size: 14px; font-weight: 800; }
 .wpContent .wp-block-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
@@ -457,6 +469,10 @@ footer { background: #080c0b; color: #9ca4a1; padding: 70px max(24px, calc((100%
   .wpContent { font-size: 17px; line-height: 1.72; }
   .wpContent h2 { margin-top: 48px; }
   .wpContent .wp-block-columns { grid-template-columns: 1fr; }
+  .ria-article-grid { grid-template-columns: 1fr; }
+  .ria-article-grid article { min-height: 240px; }
+  .ria-article-grid span { margin-bottom: 34px; }
+  .article-exercise { margin: 48px 0; padding: 28px 22px; }
   .wpContent .wp-block-cover { min-height: 360px; padding: 24px; }
   .contentAside { position: static; }
   .relatedGrid, .archiveGrid { grid-template-columns: 1fr; }
