@@ -57,4 +57,43 @@ const foreignUrl = await invoke({
 })
 if (foreignUrl.statusCode !== 400) throw new Error('Il publisher accetta URL di articoli esterni al sito')
 
-console.log('Meta publisher verification passed: auth, dry run and domain validation.')
+process.env.META_GRAPH_API_VERSION = 'v24.0'
+process.env.META_PAGE_ID = '182800505570849'
+process.env.META_PAGE_ACCESS_TOKEN = 'server-only-test-token'
+const originalFetch = globalThis.fetch
+globalThis.fetch = async (url, options) => {
+  if (options?.method !== 'GET') throw new Error('La verifica account deve essere non distruttiva')
+  const parsed = new URL(url)
+  if (parsed.searchParams.get('access_token') !== 'server-only-test-token') {
+    throw new Error('Token Meta assente dalla richiesta di verifica')
+  }
+  return {
+    ok: true,
+    status: 200,
+    async json() {
+      return {
+        id: '182800505570849',
+        name: 'Life coach Gabriele Ciandrini',
+        instagram_business_account: {
+          id: '17841400000000000',
+          username: 'gabriele_ciandrini_coach',
+        },
+      }
+    },
+  }
+}
+
+const verifiedAccounts = await invoke({
+  authorization: 'Bearer local-verification-secret',
+  body: { action: 'verify' },
+})
+globalThis.fetch = originalFetch
+if (
+  verifiedAccounts.statusCode !== 200
+  || verifiedAccounts.payload?.accounts?.facebook?.id !== '182800505570849'
+  || verifiedAccounts.payload?.accounts?.instagram?.username !== 'gabriele_ciandrini_coach'
+) {
+  throw new Error(`Verifica account Meta non valida: ${JSON.stringify(verifiedAccounts.payload)}`)
+}
+
+console.log('Meta publisher verification passed: auth, dry run, domain validation and account discovery.')

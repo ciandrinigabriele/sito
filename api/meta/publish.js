@@ -10,13 +10,19 @@ const requireEnv = (names) => {
   if (missing.length) throw new Error(`Configurazione server incompleta: ${missing.join(', ')}`)
 }
 
-const graphRequest = async (path, fields) => {
+const graphRequest = async (path, fields = {}, method = 'POST') => {
   const version = process.env.META_GRAPH_API_VERSION
   const endpoint = new URL(`https://graph.facebook.com/${version}/${path}`)
+  const parameters = new URLSearchParams(fields)
+  if (method === 'GET') endpoint.search = parameters
   const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(fields),
+    method,
+    ...(method === 'POST'
+      ? {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: parameters,
+        }
+      : {}),
   })
   const payload = await response.json()
   if (!response.ok || payload.error) {
@@ -27,6 +33,19 @@ const graphRequest = async (path, fields) => {
     throw error
   }
   return payload
+}
+
+const getConnectedAccounts = async () => {
+  requireEnv(['META_GRAPH_API_VERSION', 'META_PAGE_ID', 'META_PAGE_ACCESS_TOKEN'])
+  const page = await graphRequest(process.env.META_PAGE_ID, {
+    fields: 'id,name,instagram_business_account{id,username}',
+    access_token: process.env.META_PAGE_ACCESS_TOKEN,
+  }, 'GET')
+  const instagram = page.instagram_business_account || null
+  return {
+    facebook: { id: page.id, name: page.name },
+    instagram: instagram ? { id: instagram.id, username: instagram.username || null } : null,
+  }
 }
 
 const normalizePlatforms = (value) => {
@@ -54,9 +73,10 @@ export default async function handler(request, response) {
         process.env.META_GRAPH_API_VERSION
         && process.env.META_PAGE_ID
         && process.env.META_PAGE_ACCESS_TOKEN
-        && process.env.META_INSTAGRAM_BUSINESS_ACCOUNT_ID
         && process.env.META_PUBLISH_SECRET
       ),
+      facebookConfigured: Boolean(process.env.META_PAGE_ID && process.env.META_PAGE_ACCESS_TOKEN),
+      instagramIdConfigured: Boolean(process.env.META_INSTAGRAM_BUSINESS_ACCOUNT_ID),
     })
   }
 
@@ -73,6 +93,11 @@ export default async function handler(request, response) {
     }
 
     const body = typeof request.body === 'string' ? JSON.parse(request.body) : (request.body || {})
+    if (body.action === 'verify') {
+      const accounts = await getConnectedAccounts()
+      return json(response, 200, { verified: true, accounts })
+    }
+
     const platforms = normalizePlatforms(body.platforms)
     const articleUrl = validatePublicUrl(body.articleUrl, 'articleUrl', { sameSite: true })
     const imageUrl = body.imageUrl ? validatePublicUrl(body.imageUrl, 'imageUrl') : null
@@ -97,7 +122,14 @@ export default async function handler(request, response) {
 
     requireEnv(['META_GRAPH_API_VERSION', 'META_PAGE_ACCESS_TOKEN'])
     if (platforms.includes('facebook')) requireEnv(['META_PAGE_ID'])
-    if (platforms.includes('instagram')) requireEnv(['META_INSTAGRAM_BUSINESS_ACCOUNT_ID'])
+    let instagramAccountId = process.env.META_INSTAGRAM_BUSINESS_ACCOUNT_ID
+    if (platforms.includes('instagram') && !instagramAccountId) {
+      const accounts = await getConnectedAccounts()
+      instagramAccountId = accounts.instagram?.id
+      if (!instagramAccountId) {
+        throw new Error('La Pagina Facebook non ha un account Instagram professionale collegato')
+      }
+    }
 
     const results = {}
     if (platforms.includes('facebook')) {
@@ -109,12 +141,12 @@ export default async function handler(request, response) {
     }
 
     if (platforms.includes('instagram')) {
-      const container = await graphRequest(`${process.env.META_INSTAGRAM_BUSINESS_ACCOUNT_ID}/media`, {
+      const container = await graphRequest(`${instagramAccountId}/media`, {
         image_url: imageUrl,
         caption: `${message}\n\n${articleUrl}`,
         access_token: process.env.META_PAGE_ACCESS_TOKEN,
       })
-      results.instagram = await graphRequest(`${process.env.META_INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish`, {
+      results.instagram = await graphRequest(`${instagramAccountId}/media_publish`, {
         creation_id: container.id,
         access_token: process.env.META_PAGE_ACCESS_TOKEN,
       })
