@@ -5,7 +5,6 @@ import {
   MapPin, Menu, MessageCircle, Quote, X
 } from 'lucide-react'
 import { supabase } from './supabase'
-import wordpressContent from './data/wordpress-content.json'
 import './styles.css'
 
 const WHATSAPP = 'https://wa.me/393497759350'
@@ -98,10 +97,6 @@ const normalizePath = (value) => {
   return path === '/' ? path : `${path.replace(/\/+$/, '')}/`
 }
 
-const posts = wordpressContent
-  .filter((item) => item.type === 'post')
-  .sort((a, b) => new Date(b.date) - new Date(a.date))
-
 function usePageMeta({ title, description, type = 'website', date }) {
   useEffect(() => {
     const canonicalUrl = `https://gabrieleciandrini.com${normalizePath(window.location.pathname)}`
@@ -163,7 +158,7 @@ function SiteFooter() {
   )
 }
 
-function ContentPage({ item }) {
+function ContentPage({ item, posts }) {
   const description = item.excerpt || `${item.title}. Scopri il percorso e le risorse di Gabriele Ciandrini per il cambiamento professionale.`
   usePageMeta({ title: `${item.title} | Gabriele Ciandrini`, description, type: item.type === 'post' ? 'article' : 'website', date: item.date })
   const related = posts.filter((post) => post.id !== item.id).slice(0, 3)
@@ -200,7 +195,7 @@ function ContentPage({ item }) {
   )
 }
 
-function ArticlesPage() {
+function ArticlesPage({ posts }) {
   usePageMeta({
     title: 'Articoli sul cambiamento professionale | Gabriele Ciandrini',
     description: 'Idee e strumenti concreti per cambiare lavoro, superare i blocchi e costruire una direzione professionale più coerente.',
@@ -777,22 +772,30 @@ function App() {
 }
 
 const currentPath = normalizePath(window.location.pathname)
-const currentItem = wordpressContent.find((item) => normalizePath(item.path) === currentPath)
 const isBookPage = currentPath === BOOK_URL
 const isArticlesPage = currentPath === '/articoli/'
 const isAboutPage = currentPath === '/about-2/'
-const page = currentPath === '/'
-  ? <App />
-  : isBookPage
-    ? <BookPage />
-    : isArticlesPage
-      ? <ArticlesPage />
-      : isAboutPage
-        ? <AboutPage />
-      : currentItem
-        ? <ContentPage item={currentItem} />
-        : <NotFoundPage />
+const root = ReactDOM.createRoot(document.getElementById('root'))
+const renderPage = (page) => root.render(<React.StrictMode>{page}</React.StrictMode>)
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>{page}</React.StrictMode>
-)
+if (currentPath === '/') {
+  renderPage(<App />)
+} else if (isBookPage) {
+  renderPage(<BookPage />)
+} else if (isAboutPage) {
+  renderPage(<AboutPage />)
+} else {
+  import('./data/wordpress-content.json').then(({ default: wordpressContent }) => {
+    const posts = wordpressContent
+      .filter((item) => item.type === 'post')
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+    const currentItem = wordpressContent.find((item) => normalizePath(item.path) === currentPath)
+    renderPage(
+      isArticlesPage
+        ? <ArticlesPage posts={posts} />
+        : currentItem
+          ? <ContentPage item={currentItem} posts={posts} />
+          : <NotFoundPage />
+    )
+  }).catch(() => renderPage(<NotFoundPage />))
+}

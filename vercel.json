@@ -1,3 +1,286 @@
 {
-  "trailingSlash": true
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/tag/:path*",
+      "destination": "/articoli/",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/articoli/",
+      "permanent": true
+    },
+    {
+      "source": "/author/:path*",
+      "destination": "/about-2/",
+      "permanent": true
+    },
+    {
+      "source": "/feed/",
+      "destination": "/articoli/",
+      "permanent": true
+    },
+    {
+      "source": "/comments/feed/",
+      "destination": "/articoli/",
+      "permanent": true
+    },
+    {
+      "source": "/195062506_147408467380623_998562397874516418_n/",
+      "destination": "/2022/01/13/ostacoli/",
+      "permanent": true
+    },
+    {
+      "source": "/2022/01/13/il-tuo-valore/file_00000000b2d071f4ac8390e4259d7342323853315820473349/",
+      "destination": "/2022/01/13/il-tuo-valore/",
+      "permanent": true
+    },
+    {
+      "source": "/2022/01/13/sogni-obiettivi/file_00000000682871f4ba93ca38e0871f8d4381120669984510056/",
+      "destination": "/2022/01/13/sogni-obiettivi/",
+      "permanent": true
+    },
+    {
+      "source": "/2023/09/12/affrontare-le-paure-e-le-insicurezze-per-una-vita-piu-fiduciosa-e-appagante/file_000000003308720a81554b1192760fc86196139938988879361/",
+      "destination": "/2023/09/12/affrontare-le-paure-e-le-insicurezze-per-una-vita-piu-fiduciosa-e-appagante/",
+      "permanent": true
+    },
+    {
+      "source": "/2023/09/12/la-forza-del-devo-quando-il-senso-del-dovere-ci-guida-verso-il-successo/file_00000000ecc0720aafb355b8a188bb052452993956980898360/",
+      "destination": "/2023/09/12/la-forza-del-devo-quando-il-senso-del-dovere-ci-guida-verso-il-successo/",
+      "permanent": true
+    },
+    {
+      "source": "/2023/09/12/quando-inizi-a-inventare-scuse-stai-minando-il-tuo-futuro/file_00000000b2807243a7d89bd21d387e52530710798935457748/",
+      "destination": "/2023/09/12/quando-inizi-a-inventare-scuse-stai-minando-il-tuo-futuro/",
+      "permanent": true
+    },
+    {
+      "source": "/2026/07/20/quanto-ti-stanno-pagando-per-non-farti-realizzare-i-tuoi-sogni/exec-3f75681e-f5e4-4bc9-9522-d316bc558917/",
+      "destination": "/2026/07/20/quanto-ti-stanno-pagando-per-non-farti-realizzare-i-tuoi-sogni/",
+      "permanent": true
+    },
+    {
+      "source": "/about-2/fitness-coach/incollage_20230219_135025694/",
+      "destination": "/about-2/fitness-coach/",
+      "permanent": true
+    },
+    {
+      "source": "/about-2/fitness-coach/incollage_20230219_135712555/",
+      "destination": "/about-2/fitness-coach/",
+      "permanent": true
+    },
+    {
+      "source": "/articoli/chatgpt-image-30-giu-2026-16_30_06/",
+      "destination": "/articoli/",
+      "permanent": true
+    },
+    {
+      "source": "/beautiful-sun-rising-sky-with-asphalt-highways-road-in-rural-sce/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/chatgpt-image-29-giu-2026-21_51_17-1/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/chatgpt-image-29-giu-2026-21_51_17-2/",
+      "destination": "/2026/06/29/cambiare-lavoro-con-metodo/",
+      "permanent": true
+    },
+    {
+      "source": "/chatgpt-image-29-giu-2026-21_51_17-3/",
+      "destination": "/2026/06/29/come-capire-se-e-il-momento-di-cambiare-lavoro/",
+      "permanent": true
+    },
+    {
+      "source": "/coach-cambiamento-professionale-ancona/file_0000000009c87246a6cab8c92bd8d8ad1239451629560705555/",
+      "destination": "/cambiare-lavoro-ancona/",
+      "permanent": true
+    },
+    {
+      "source": "/coach-cambiamento-professionale-ancona/file_00000000522c72468e26e424d7c1b73b6993375674973984405/",
+      "destination": "/coach-cambiamento-professionale-ancona/",
+      "permanent": true
+    },
+    {
+      "source": "/coach-cambiamento-professionale-online/file_00000000ebdc720ab1c5f63bf06d25cf4262052293604931818/",
+      "destination": "/coach-cambiamento-professionale-online/",
+      "permanent": true
+    },
+    {
+      "source": "/coach-showing-the-right-way-to-follow/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/da-dipendente-a-indipendente/chatgpt-image-30-giu-2026-10_51_25-1/",
+      "destination": "/da-dipendente-a-indipendente/",
+      "permanent": true
+    },
+    {
+      "source": "/esempio-ruota/",
+      "destination": "/ruota-della-vita/",
+      "permanent": true
+    },
+    {
+      "source": "/file_0000000007a871f4b44b4904195497cf/",
+      "destination": "/2023/09/14/dai-un-pesce-ad-un-uomo-e-lo-nutrirai-per-un-giorno-insegnagli-a-pescare-e-lo-nutrirai-per-tutta-la-vita/",
+      "permanent": true
+    },
+    {
+      "source": "/file_000000000b9c71f4bb05cc5a8d0af938/",
+      "destination": "/2023/09/14/gestire-lo-stato-emotivo/",
+      "permanent": true
+    },
+    {
+      "source": "/file_0000000015ac71f4a921e4f1f24fbfea/",
+      "destination": "/2023/09/20/la-differenza-tra-psicologo-e-life-coach-due-figure-diverse-ma-complementari-nel-percorso-di-crescita-personale/",
+      "permanent": true
+    },
+    {
+      "source": "/file_00000000343c71f4a0d9890a811b24de/",
+      "destination": "/2023/09/26/lavori-solo-per-soldi-oppure-anche-per-la-passione-due-approcci-diversi-per-una-vita-significativa/",
+      "permanent": true
+    },
+    {
+      "source": "/file_00000000352071f4a0ca9cbbb74a09a5/",
+      "destination": "/2023/09/23/il-trio-vincente-pazienza-tempo-e-perseveranza/",
+      "permanent": true
+    },
+    {
+      "source": "/file_0000000045a071f4b96118f28c14955a/",
+      "destination": "/2023/09/25/la-resilienza-la-chiave-per-superare-le-avversita-e-realizzare-cio-che-desideri/",
+      "permanent": true
+    },
+    {
+      "source": "/file_00000000531071f4a9de603db791296b/",
+      "destination": "/2023/09/12/hai-mai-sentito-parlare-di-life-coach/",
+      "permanent": true
+    },
+    {
+      "source": "/file_00000000a6ec71f49a3635d5a7f2b71a/",
+      "destination": "/2023/09/21/focalizzarsi-sulla-soluzione-la-chiave-per-migliorare-la-tua-vita/",
+      "permanent": true
+    },
+    {
+      "source": "/file_00000000f15c71f4b89835588867441a/",
+      "destination": "/2023/09/17/rompi-il-loop-dei-pensieri-e-comportamenti-sii-lartefice-del-tuo-destino/",
+      "permanent": true
+    },
+    {
+      "source": "/gabriele-2-sito/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gestione-stato-emotivo/incollage_20250311_221224715/",
+      "destination": "/gestione-stato-emotivo/",
+      "permanent": true
+    },
+    {
+      "source": "/home-2/immagine-cambiamento/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/icona-info-2/",
+      "destination": "/2022/01/13/sogni-obiettivi/",
+      "permanent": true
+    },
+    {
+      "source": "/incontro-gratuito/file_00000000445c71f4b73cec2a8c1eec941441241425129991746/",
+      "destination": "/incontro-gratuito/",
+      "permanent": true
+    },
+    {
+      "source": "/libro-respira-immagina-agisci/screenshot_20260624_114707_amazon-shopping8683529740896719166/",
+      "destination": "/libro-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/libro-respira-immagina-agisci/screenshot_20260624_114714_amazon-shopping7138699582475312819/",
+      "destination": "/libro-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/limiti-e-risorse/psx_20250311_232124/",
+      "destination": "/limiti-e-risorse/",
+      "permanent": true
+    },
+    {
+      "source": "/logo-nero/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/metodo-respira-immagina-agisci/dall%C2%B7e-2025-03-09-20-18-57-a-serene-and-powerful-depiction-of-controlled-breathing-and-state-management-a-person-stands-in-a-meditative-pose-surrounded-by-a-flowing-aura-of-en/",
+      "destination": "/metodo-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/metodo-respira-immagina-agisci/dall%C2%B7e-2025-03-09-20-20-27-a-surreal-and-artistic-depiction-of-imagination-a-person-with-their-eyes-closed-with-a-luminous-explosion-of-colors-abstract-shapes-and-dreamlike/",
+      "destination": "/metodo-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/metodo-respira-immagina-agisci/psx_20250313_101755200509033315779442/",
+      "destination": "/metodo-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/metodo-respira-immagina-agisci/res/",
+      "destination": "/metodo-respira-immagina-agisci/",
+      "permanent": true
+    },
+    {
+      "source": "/photocollage_2019927142157903/",
+      "destination": "/ruota-della-vita/",
+      "permanent": true
+    },
+    {
+      "source": "/piano-dazione/psx_20250311_230651/",
+      "destination": "/piano-dazione/",
+      "permanent": true
+    },
+    {
+      "source": "/studio1/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/studio2/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/studio3/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/studio-4/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/studio5/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/valore-4/",
+      "destination": "/valori-4/",
+      "permanent": true
+    },
+    {
+      "source": "/valori/",
+      "destination": "/valori-4/",
+      "permanent": true
+    }
+  ]
 }
