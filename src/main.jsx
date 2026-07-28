@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   ArrowDown, ArrowLeft, ArrowRight, BookOpen, CalendarDays, Check, ChevronRight, Compass,
-  MapPin, Menu, MessageCircle, Quote, Sparkles, Target, X
+  MapPin, Menu, MessageCircle, Quote, X
 } from 'lucide-react'
 import { supabase } from './supabase'
 import wordpressContent from './data/wordpress-content.json'
@@ -21,27 +21,60 @@ const images = {
   method: '/media/method.png',
 }
 
-const paths = [
+const journeyPhases = [
   {
-    number: '01', icon: Compass, accent: 'lime',
-    title: 'Trovare la tua direzione',
-    text: 'Per chi non si riconosce più nel proprio lavoro e vuole capire quale strada sia davvero coerente con valori, capacità e vita reale.',
-    href: '/coach-cambiamento-professionale-ancona/',
-    label: 'Ad Ancona e online'
+    number: '01',
+    title: 'Fermati e fai chiarezza',
+    text: 'Mettiamo a fuoco cosa ti pesa, cosa vuoi proteggere e quali paure stanno confondendo la scelta.'
   },
   {
-    number: '02', icon: Target, accent: 'coral',
-    title: 'Cambiare lavoro con metodo',
-    text: 'Un passaggio costruito senza improvvisare: situazione attuale, competenze, limiti, risorse, obiettivo e piano d’azione sostenibile.',
-    href: '/cambiare-lavoro-ancona/',
-    label: 'Percorso professionale'
+    number: '02',
+    title: 'Costruisci la direzione',
+    text: 'Trasformiamo valori, capacità e desideri in una possibilità professionale concreta, adatta alla tua vita reale.'
   },
   {
-    number: '03', icon: Sparkles, accent: 'violet',
-    title: 'Da dipendente a indipendente',
-    text: 'Trasforma il desiderio di qualcosa di tuo in un progetto realistico, graduale e capace di reggere nel tempo.',
-    href: '/da-dipendente-a-indipendente/',
-    label: 'Progetto indipendente'
+    number: '03',
+    title: 'Prepara il passaggio',
+    text: 'Definiamo priorità, risorse, tempi e azioni. Il cambiamento diventa un ponte da attraversare, non un salto nel vuoto.'
+  },
+]
+
+const storyMilestones = [
+  {
+    year: '2000',
+    kicker: 'La domanda',
+    title: '“Che vita avrò tra dieci anni?”',
+    text: 'A 27 anni capisco che l’impresa di famiglia non ha più futuro. Decido di chiuderla: una scelta dolorosa, ma necessaria per smettere di subire il lavoro e tornare a scegliere.'
+  },
+  {
+    year: '2001',
+    kicker: 'Il ponte',
+    title: 'Entro in fabbrica. Non è la meta.',
+    text: 'Il contratto e lo stipendio stabile mi danno sicurezza. Li uso per studiare, esplorare e costruire il futuro senza mettere a rischio tutto ciò che avevo.'
+  },
+  {
+    year: '18.09.2003',
+    kicker: 'La prima svolta',
+    title: 'Lascio la fabbrica per iniziare dal basso.',
+    text: 'Passo da 14,50 a 5 euro l’ora e comincio in palestra. Non è incoscienza: avevo studiato, fatto esperienza e preparato un piano alternativo.'
+  },
+  {
+    year: '2004—2008',
+    kicker: 'La costruzione',
+    title: 'Autista di giorno. Personal trainer fino a sera.',
+    text: 'Cambio più impieghi, guido autobus, studio e seguo clienti. Ogni lavoro temporaneo sostiene il progetto successivo finché, il 31 luglio 2008, divento lavoratore autonomo.'
+  },
+  {
+    year: '31.03.2011',
+    kicker: 'Lo spazio mio',
+    title: 'Apro il mio studio ad Ancona.',
+    text: 'Dopo anni di preparazione nasce Personal Training Lab: il luogo in cui il lavoro individuale su corpo, postura e persona diventa il centro della mia professione.'
+  },
+  {
+    year: '2015',
+    kicker: 'La direzione di oggi',
+    title: 'Scopro il coaching e riconosco il filo.',
+    text: 'Formazione, ascolto e parole diventano nuovi strumenti. Capisco che tutte le mie svolte possono aiutare altre persone a trovare la propria direzione e trasformarla in azione.'
   },
 ]
 
@@ -105,7 +138,7 @@ function SiteHeader() {
     <header className="nav scrolled">
       <a className="brand" href="/" aria-label="Gabriele Ciandrini, home"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a>
       <nav className={menuOpen ? 'links open' : 'links'} aria-label="Navigazione principale">
-        <a href="/#percorsi">Percorsi</a>
+        <a href="/#percorso">Il percorso</a>
         <a href="/metodo-respira-immagina-agisci/">Metodo</a>
         <a href={BOOK_URL}>Il libro</a>
         <a href="/about-2/">Chi sono</a>
@@ -123,7 +156,7 @@ function SiteFooter() {
   return (
     <footer>
       <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-      <div className="footerLinks"><a href="/#percorsi">Percorsi</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a></div>
+      <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a></div>
       <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a></div>
       <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
     </footer>
@@ -244,7 +277,7 @@ function BookPage() {
       <header className="nav scrolled">
         <a className="brand" href="/" aria-label="Gabriele Ciandrini, home"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a>
         <nav className="links bookNav" aria-label="Navigazione principale">
-          <a href="/#percorsi">Percorsi</a><a href="/#metodo">Metodo</a><a className="activeNav" href={BOOK_URL}>Il libro</a><a href="/#chi-sono">Chi sono</a>
+          <a href="/#percorso">Il percorso</a><a href="/#metodo">Metodo</a><a className="activeNav" href={BOOK_URL}>Il libro</a><a href="/about-2/">Chi sono</a>
           <a className="navCta" href={AMAZON_URL}>Acquista <ArrowRight size={16} /></a>
         </nav>
         <a className="bookMobileBuy" href={AMAZON_URL}>Acquista</a>
@@ -344,6 +377,146 @@ function BookPage() {
   )
 }
 
+function AboutPage() {
+  const [situation, setSituation] = useState('Non so ancora quale direzione prendere')
+  const whatsappStory = `${WHATSAPP}?text=${encodeURIComponent(`Ciao Gabriele, ho letto la tua storia. ${situation} e vorrei capire da dove iniziare.`)}`
+
+  usePageMeta({
+    title: 'Chi sono | Gabriele Ciandrini, coach per il cambiamento professionale',
+    description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia vera con cui Gabriele Ciandrini aiuta a cambiare lavoro con metodo.',
+  })
+
+  useEffect(() => {
+    const schema = document.createElement('script')
+    schema.type = 'application/ld+json'
+    schema.id = 'person-schema'
+    schema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Gabriele Ciandrini',
+      jobTitle: 'Coach per il cambiamento professionale',
+      url: 'https://gabrieleciandrini.com/about-2/',
+      sameAs: ['https://www.facebook.com/coachgabrieleciandrini'],
+      knowsAbout: ['cambiamento professionale', 'coaching', 'PNL', 'personal training', 'postura']
+    })
+    document.head.appendChild(schema)
+    return () => schema.remove()
+  }, [])
+
+  return (
+    <div className="storyPage">
+      <SiteHeader />
+      <main>
+        <section className="storyHero">
+          <div className="storyHeroCopy">
+            <p className="eyebrow"><span /> La mia storia</p>
+            <h1>Non insegno il cambiamento.<br /><em>L’ho attraversato.</em></h1>
+            <p className="storyHeroLead">Ho chiuso un’impresa di famiglia, lavorato in fabbrica, guidato autobus, ricominciato a 5 euro l’ora, aperto uno studio e scoperto nel coaching il filo che univa ogni svolta.</p>
+            <div className="heroActions">
+              <a className="primary" href="#svolte">Entra nella storia <ArrowDown size={18} /></a>
+              <a className="ghost" href={whatsappStory}>Raccontami la tua <MessageCircle size={18} /></a>
+            </div>
+          </div>
+          <div className="storyHeroPortrait">
+            <img src={images.hero} alt="Gabriele Ciandrini nel suo studio ad Ancona" />
+            <div className="storyQuestion">
+              <span>La domanda che ha aperto tutto</span>
+              <strong>“Che vita avrò<br />tra dieci anni?”</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="storyManifesto">
+          <p>La mia esperienza non nasce soltanto dallo studio.</p>
+          <h2>Nasce dalle volte in cui ho dovuto scegliere tra restare fermo e costruire una via d’uscita.</h2>
+          <div className="storyManifestoFacts">
+            <span><strong>6</strong> svolte professionali</span>
+            <span><strong>2003</strong> inizio nel lavoro individuale</span>
+            <span><strong>2015</strong> coaching e PNL</span>
+          </div>
+        </section>
+
+        <section className="storyTimeline sectionPad" id="svolte">
+          <div className="storyTimelineIntro">
+            <div className="sectionNumber">01 / LE SVOLTE</div>
+            <h2>Non è stato un salto.<br /><em>È stato un ponte.</em></h2>
+            <p>Ogni passaggio ha protetto qualcosa di importante e preparato quello successivo. È lo stesso principio che porto oggi nel cambiamento professionale.</p>
+          </div>
+          <div className="storyTimelineList">
+            {storyMilestones.map((item, index) => (
+              <article className="storyMoment" key={item.year}>
+                <div className="storyMomentMarker"><span>{String(index + 1).padStart(2, '0')}</span></div>
+                <div>
+                  <p className="storyYear">{item.year} · {item.kicker}</p>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="storyLesson">
+          <div className="storyLessonQuote">
+            <Quote />
+            <p>Non devi lasciare tutto domani. Devi smettere di lasciare al caso il tuo domani.</p>
+          </div>
+          <div className="storyLessonCopy">
+            <div className="sectionNumber light">02 / COSA HO IMPARATO</div>
+            <h2>La sicurezza non è il contrario del cambiamento.</h2>
+            <p>Può diventarne la base. Un lavoro ponte, una competenza nuova, un tempo protetto o un piano B possono darti lo spazio necessario per scegliere senza paura e senza improvvisare.</p>
+            <p>Per questo non ti dirò di mollare tutto. Ti aiuterò a capire cosa vuoi costruire, cosa devi proteggere e qual è il primo passo sostenibile.</p>
+          </div>
+        </section>
+
+        <section className="storyBook sectionPad">
+          <div className="storyBookCover">
+            <img src="/media/book-cover.jpg" alt="Copertina di Respira Immagina Agisci di Gabriele Ciandrini" />
+          </div>
+          <div>
+            <div className="sectionNumber">03 / IL LIBRO</div>
+            <h2>La storia intera è diventata un metodo.</h2>
+            <p><strong>Respira. Immagina. Agisci.</strong> racconta da dove nasce il mio modo di lavorare: ritrovare lucidità, immaginare una direzione concreta e trasformarla in azioni sostenibili.</p>
+            <p>Non è una biografia esposta in vetrina. È la prova che una vita professionale può essere riscritta più di una volta.</p>
+            <div className="heroActions">
+              <a className="primary" href={BOOK_URL}>Scopri il libro <BookOpen size={18} /></a>
+              <a className="ghost darkGhost" href={AMAZON_URL}>Acquista su Amazon <ArrowRight size={18} /></a>
+            </div>
+          </div>
+        </section>
+
+        <section className="storyConversion sectionPad">
+          <div>
+            <p className="eyebrow"><span /> Ora parliamo di te</p>
+            <h2>In quale punto della tua storia ti trovi?</h2>
+            <p>Non serve avere già la risposta. Scegli la frase che ti somiglia di più: il messaggio sarà pronto e partiremo da lì.</p>
+          </div>
+          <div className="storyChoices" role="group" aria-label="Scegli la situazione che ti rappresenta">
+            {[
+              'Non so ancora quale direzione prendere',
+              'So cosa vorrei fare, ma ho paura di rischiare',
+              'Ho un progetto e voglio trasformarlo in un piano'
+            ].map((choice) => (
+              <button
+                className={situation === choice ? 'active' : ''}
+                type="button"
+                onClick={() => setSituation(choice)}
+                key={choice}
+              >
+                <span>{situation === choice ? <Check size={17} /> : null}</span>{choice}
+              </button>
+            ))}
+            <a className="storyWhatsapp" href={whatsappStory}><MessageCircle /> Raccontami dove sei <ArrowRight /></a>
+            <small>Incontro conoscitivo gratuito · ad Ancona oppure online</small>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+      <a className="mobileWhatsapp" href={whatsappStory}><MessageCircle size={18} /> Raccontami la tua situazione</a>
+    </div>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState('')
@@ -381,10 +554,10 @@ function App() {
           <span className="brandDot" /> Gabriele <strong>Ciandrini</strong>
         </a>
         <nav className={menuOpen ? 'links open' : 'links'} aria-label="Navigazione principale">
-          <a href="#percorsi" onClick={() => setMenuOpen(false)}>Percorsi</a>
+          <a href="#percorso" onClick={() => setMenuOpen(false)}>Il percorso</a>
           <a href="#metodo" onClick={() => setMenuOpen(false)}>Metodo</a>
           <a href={BOOK_URL} onClick={() => setMenuOpen(false)}>Il libro</a>
-          <a href="#chi-sono" onClick={() => setMenuOpen(false)}>Chi sono</a>
+          <a href="/about-2/" onClick={() => setMenuOpen(false)}>Chi sono</a>
           <a href="#risorse" onClick={() => setMenuOpen(false)}>Risorse</a>
           <a className="navCta" href={WHATSAPP}>Parliamone <ArrowRight size={16} /></a>
         </nav>
@@ -404,7 +577,7 @@ function App() {
             <p className="lead">Ti aiuto a capire quale direzione professionale ha davvero senso per te e a trasformarla in un piano concreto, sostenibile e coerente con i tuoi valori.</p>
             <div className="heroActions">
               <a className="primary" href={WHATSAPP}>Incontro conoscitivo gratuito <ArrowRight size={18} /></a>
-              <a className="ghost" href="#percorsi">Esplora i percorsi <ArrowDown size={17} /></a>
+              <a className="ghost" href="#percorso">Scopri il percorso <ArrowDown size={17} /></a>
             </div>
             <div className="heroMeta">
               <span><MapPin size={15} /> Studio ad Ancona</span>
@@ -447,21 +620,34 @@ function App() {
           </div>
         </section>
 
-        <section className="paths sectionPad" id="percorsi">
+        <section className="paths sectionPad" id="percorso">
           <div className="sectionHead">
-            <div className="sectionNumber">01 / PERCORSI</div>
-            <h2>Tre strade.<br />Una sola deve essere <em>la tua.</em></h2>
+            <div className="sectionNumber">01 / UN PERCORSO UNICO</div>
+            <h2>Dalla confusione a una direzione che <em>puoi costruire.</em></h2>
+            <p className="singlePathIntro">Un percorso individuale per cambiare lavoro, crescere come dipendente o preparare un progetto indipendente. La meta cambia; il metodo resta uno.</p>
           </div>
-          <div className="pathCards">
-            {paths.map(({ icon: Icon, ...path }) => (
-              <a className={`pathCard ${path.accent}`} href={path.href} key={path.number}>
-                <div className="cardTop"><span>{path.number}</span><Icon size={30} strokeWidth={1.5} /></div>
-                <p className="cardLabel">{path.label}</p>
-                <h3>{path.title}</h3>
-                <p>{path.text}</p>
-                <span className="cardArrow"><ArrowRight /></span>
-              </a>
-            ))}
+          <div className="singlePath">
+            <div className="singlePathTop">
+              <p><span className="pulse" /> Ad Ancona e online</p>
+              <Compass size={38} strokeWidth={1.4} />
+            </div>
+            <div className="singlePathPromise">
+              <span>IL PERCORSO DIREZIONE</span>
+              <h3>Non ti aiuto a “mollare tutto”.<br />Ti aiuto a costruire il passaggio.</h3>
+            </div>
+            <div className="singlePathPhases">
+              {journeyPhases.map((phase) => (
+                <article key={phase.number}>
+                  <span>{phase.number}</span>
+                  <h4>{phase.title}</h4>
+                  <p>{phase.text}</p>
+                </article>
+              ))}
+            </div>
+            <div className="singlePathAction">
+              <p>Partiamo dalla tua situazione reale, senza formule standard.</p>
+              <a className="primary" href={`${WHATSAPP}?text=${encodeURIComponent('Ciao Gabriele, vorrei capire se il Percorso Direzione è adatto alla mia situazione professionale.')}`}>Prenota l’incontro gratuito <ArrowRight size={18} /></a>
+            </div>
           </div>
         </section>
 
@@ -494,10 +680,11 @@ function App() {
           </div>
           <div className="aboutCopy">
             <div className="sectionNumber">03 / CHI SONO</div>
-            <h2>La mia esperienza non nasce soltanto dallo studio.</h2>
-            <p className="bigText">Nasce da una vita attraversata da malattia, cambiamenti di lavoro, scelte imprenditoriali, crisi e ripartenze.</p>
-            <p>Dal 2003 lavoro sul rapporto tra corpo, disciplina e benessere; dal 2015 ho integrato coaching e PNL. Oggi unisco esperienza vissuta, formazione e metodo per trasformare una decisione professionale in un piano realistico.</p>
-            <blockquote><Quote size={26} /><p>Non devi diventare qualcun altro. Devi creare le condizioni per tornare a essere te.</p></blockquote>
+            <h2>Non insegno il cambiamento. L’ho attraversato.</h2>
+            <p className="bigText">Impresa di famiglia, fabbrica, autobus, personal training, studio privato, coaching: ho cambiato lavoro più volte senza affidare il futuro al caso.</p>
+            <p>Ho usato impieghi stabili come ponti, studiato mentre lavoravo e accettato di ricominciare dal basso. Oggi porto quella stessa concretezza nel percorso di chi vuole cambiare direzione.</p>
+            <blockquote><Quote size={26} /><p>La mia storia non è il centro del percorso. È la prova che un passaggio può essere preparato.</p></blockquote>
+            <ArrowLink href="/about-2/">Leggi la storia delle mie svolte</ArrowLink>
           </div>
         </section>
 
@@ -581,7 +768,7 @@ function App() {
 
       <footer>
         <div><a className="brand footerBrand" href="#top"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-        <div className="footerLinks"><a href="#percorsi">Percorsi</a><a href="#metodo">Metodo</a><a href="#chi-sono">Chi sono</a><a href="#risorse">Articoli</a></div>
+        <div className="footerLinks"><a href="#percorso">Il percorso</a><a href="#metodo">Metodo</a><a href="/about-2/">Chi sono</a><a href="#risorse">Articoli</a></div>
         <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a></div>
         <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini</p>
       </footer>
@@ -593,12 +780,15 @@ const currentPath = normalizePath(window.location.pathname)
 const currentItem = wordpressContent.find((item) => normalizePath(item.path) === currentPath)
 const isBookPage = currentPath === BOOK_URL
 const isArticlesPage = currentPath === '/articoli/'
+const isAboutPage = currentPath === '/about-2/'
 const page = currentPath === '/'
   ? <App />
   : isBookPage
     ? <BookPage />
     : isArticlesPage
       ? <ArticlesPage />
+      : isAboutPage
+        ? <AboutPage />
       : currentItem
         ? <ContentPage item={currentItem} />
         : <NotFoundPage />

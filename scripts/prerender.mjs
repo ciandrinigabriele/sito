@@ -49,8 +49,15 @@ render({
   type: 'book',
 })
 
+render({
+  route: '/about-2/',
+  title: 'Chi sono | Gabriele Ciandrini, coach per il cambiamento professionale',
+  description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia vera con cui Gabriele Ciandrini aiuta a cambiare lavoro con metodo.',
+  type: 'profile',
+})
+
 for (const item of content) {
-  if (item.path === '/' || item.path === '/articoli/' || item.path === '/libro-respira-immagina-agisci/') continue
+  if (item.path === '/' || item.path === '/articoli/' || item.path === '/libro-respira-immagina-agisci/' || item.path === '/about-2/') continue
   render({
     route: item.path,
     title: `${item.title} | Gabriele Ciandrini`,
