@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #20352f;
+  background: #f4efe7;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+
+.nav {
+  width: min(1180px, calc(100% - 40px));
+  height: 86px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand { font-size: 20px; letter-spacing: -.5px; }
+.brand span { font-weight: 600; }
+.links { display: flex; align-items: center; gap: 32px; font-size: 14px; }
+.navCta { display: flex; align-items: center; gap: 8px; border: 1px solid #20352f; border-radius: 999px; padding: 12px 18px; }
+.menuButton { display: none; border: 0; background: none; color: inherit; }
+
+.hero {
+  min-height: 680px;
+  width: min(1180px, calc(100% - 40px));
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  align-items: center;
+  gap: 70px;
+  padding: 48px 0 90px;
+}
+.eyebrow { color: #c16744; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; font-weight: 600; }
+h1, h2 { font-family: 'Playfair Display', serif; font-weight: 600; margin: 0; letter-spacing: -2px; line-height: 1.03; }
+h1 { font-size: clamp(54px, 6vw, 86px); max-width: 760px; }
+h1 em { color: #c16744; font-weight: 600; }
+.lead { font-size: 19px; line-height: 1.65; max-width: 620px; color: #53615c; margin: 28px 0; }
+.heroActions { display: flex; align-items: center; gap: 28px; }
+.primary { border: 0; background: #20352f; color: white; border-radius: 999px; padding: 16px 22px; display: inline-flex; gap: 10px; align-items: center; cursor: pointer; }
+.textLink { border-bottom: 1px solid #20352f; padding-bottom: 3px; }
+.trust { display: flex; gap: 28px; margin-top: 28px; font-size: 13px; color: #68736f; }
+.trust span { display: flex; align-items: center; gap: 6px; }
+
+.heroVisual {
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 260px 260px 28px 28px;
+  background: #b9cec0;
+  display: grid;
+  place-items: center;
+}
+.heroVisual p { position: relative; z-index: 3; color: white; font-family: 'Playfair Display', serif; font-size: 44px; line-height: 1.1; transform: rotate(-5deg); }
+.sun { position: absolute; width: 210px; height: 210px; border-radius: 50%; background: #e9aa68; right: -20px; top: 70px; }
+.path { position: absolute; width: 180%; height: 270px; border-radius: 50%; background: #87a894; transform: rotate(-13deg); bottom: -70px; left: -55%; }
+.pathTwo { background: #6c8c7b; bottom: -155px; left: -15%; transform: rotate(15deg); }
+
+.manifesto { background: #20352f; color: white; text-align: center; padding: 110px 20px; }
+.manifesto p { color: #d9b99d; }
+.manifesto h2 { font-size: clamp(38px, 5vw, 64px); max-width: 920px; margin: 20px auto 0; }
+.process { width: min(1180px, calc(100% - 40px)); margin: auto; padding: 120px 0; }
+.sectionIntro { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 80px; margin-bottom: 60px; }
+.sectionIntro .eyebrow { grid-column: 1 / -1; }
+.sectionIntro h2, .about h2, .contact h2 { font-size: clamp(40px, 5vw, 62px); }
+.sectionIntro > p:last-child, .aboutCopy > p, .contact > div > p:last-child { color: #65706b; line-height: 1.7; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #c9c4ba; }
+.step { padding: 42px 38px 25px 0; position: relative; border-right: 1px solid #c9c4ba; }
+.step + .step { padding-left: 38px; }
+.step:last-child { border: 0; }
+.stepNumber { position: absolute; right: 30px; color: #b1aaa0; font-size: 13px; }
+.step h3 { font-family: 'Playfair Display', serif; font-size: 28px; margin: 28px 0 10px; }
+.step p { color: #65706b; line-height: 1.6; }
+
+.about { background: #dfe7df; padding: 100px max(20px, calc((100% - 1180px) / 2)); display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; align-items: center; }
+.portrait { min-height: 540px; background: #c16744; border-radius: 24px 240px 24px 24px; display: grid; place-items: center; }
+.portrait span { font-family: 'Playfair Display', serif; font-size: 120px; color: #f3d8c4; }
+.aboutCopy blockquote { margin: 34px 0 0; padding: 24px 0 0; border-top: 1px solid #aebcb2; display: flex; gap: 16px; }
+.aboutCopy blockquote p { margin: 0; font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1.4; }
+
+.contact { padding: 120px max(20px, calc((100% - 1180px) / 2)); display: grid; grid-template-columns: 1fr .85fr; gap: 100px; }
+form { display: grid; gap: 20px; }
+label { display: grid; gap: 8px; font-size: 13px; font-weight: 600; }
+input, textarea { width: 100%; border: 0; border-bottom: 1px solid #a8aaa4; background: transparent; padding: 12px 2px; outline: none; resize: vertical; }
+input:focus, textarea:focus { border-color: #c16744; }
+form .primary { justify-self: start; margin-top: 8px; }
+.formStatus { font-size: 14px; line-height: 1.5; color: #56645e; }
+footer { background: #192b26; color: white; padding: 38px max(20px, calc((100% - 1180px) / 2)); display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+
+@media (max-width: 800px) {
+  .menuButton { display: block; z-index: 11; }
+  .links { display: none; position: absolute; z-index: 10; inset: 0 0 auto; padding: 110px 30px 40px; background: #f4efe7; flex-direction: column; align-items: flex-start; font-size: 20px; }
+  .links.open { display: flex; }
+  .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 25px; }
+  .heroVisual { min-height: 420px; }
+  .heroActions, .trust { align-items: flex-start; flex-direction: column; }
+  .sectionIntro, .about, .contact { grid-template-columns: 1fr; gap: 44px; }
+  .steps { grid-template-columns: 1fr; }
+  .step, .step + .step { padding: 34px 0; border-right: 0; border-bottom: 1px solid #c9c4ba; }
+  .portrait { min-height: 400px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+}
