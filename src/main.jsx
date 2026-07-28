@@ -145,6 +145,13 @@ function App() {
           <div>CHIAREZZA <span>✦</span> DIREZIONE <span>✦</span> METODO <span>✦</span> AZIONE <span>✦</span> CHIAREZZA <span>✦</span> DIREZIONE</div>
         </section>
 
+        <section className="credibility" aria-label="Esperienza e modalità di lavoro">
+          <article><strong>2003</strong><span>Inizio del lavoro<br />sulla persona</span></article>
+          <article><strong>2015</strong><span>Coaching e PNL<br />integrati nel metodo</span></article>
+          <article><strong>Ancona</strong><span>In studio,<br />in un ambiente riservato</span></article>
+          <article><strong>Online</strong><span>Incontri disponibili<br />in tutta Italia</span></article>
+        </section>
+
         <section className="pain sectionPad">
           <div className="sectionNumber">00 / IL PUNTO DI PARTENZA</div>
           <div className="painGrid">
