@@ -1,5 +1,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import {
+  DEFAULT_SOCIAL_IMAGE,
+  imageForItem,
+  optimizedHtmlFor,
+  seoDescriptionFor,
+  seoTitleFor,
+} from '../src/data/seo-meta.js'
 
 const root = process.cwd()
 const dist = path.join(root, 'dist')
@@ -8,7 +15,7 @@ const inventory = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wor
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 const origin = 'https://gabrieleciandrini.com'
 const isProduction = process.env.VERCEL_ENV === 'production'
-const defaultImage = `${origin}/media/career-bridge-og.png`
+const defaultImage = `${origin}${DEFAULT_SOCIAL_IMAGE}`
 
 const escapeHtml = (value = '') => String(value)
   .replace(/&/g, '&amp;')
@@ -21,9 +28,6 @@ const normalizeRoute = (value) => {
   return route === '/' ? route : `${route.replace(/\/+$/, '')}/`
 }
 
-const descriptionFor = (item) => item.excerpt
-  || `${item.title}. Percorsi, strumenti e idee di Gabriele Ciandrini per il cambiamento professionale.`
-
 const nav = `
   <header>
     <a href="${origin}/">Gabriele Ciandrini</a>
@@ -32,6 +36,7 @@ const nav = `
       <a href="${origin}/libro-respira-immagina-agisci/">Il libro</a>
       <a href="${origin}/about-2/">Chi sono</a>
       <a href="${origin}/articoli/">Articoli</a>
+      <a href="${origin}/ruota-della-vita/">Ruota della Vita</a>
       <a href="https://wa.me/393497759350">Incontro conoscitivo gratuito</a>
     </nav>
   </header>`
@@ -40,6 +45,7 @@ const footer = `
   <footer>
     <p>Gabriele Ciandrini, coach per il cambiamento professionale ad Ancona e online in tutta Italia.</p>
     <a href="${origin}/contatti/">Contatti</a>
+    <a href="${origin}/ruota-della-vita/">Ruota della Vita</a>
     <a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a>
   </footer>`
 
@@ -78,6 +84,11 @@ const homeBody = `
       <p>Qual è la strada professionale più giusta per te?</p>
       <a href="https://wa.me/393497759350">Prenota un incontro conoscitivo gratuito</a>
     </section>
+    <section>
+      <h2>Uno strumento per osservare la situazione completa</h2>
+      <p>La Ruota della Vita aiuta a leggere lavoro, salute, relazioni, tempo e crescita prima di scegliere da dove ripartire.</p>
+      <a href="${origin}/ruota-della-vita/">Scopri la Ruota della Vita</a>
+    </section>
   </main>
   ${footer}`
 
@@ -113,6 +124,9 @@ const aboutBody = `
     </ol>
     <h2>Non devi lasciare tutto domani</h2>
     <p>Devi smettere di lasciare al caso il tuo domani. Un lavoro ponte, una competenza nuova e un piano possono creare lo spazio per scegliere.</p>
+    <h2>Il lavoro sulla persona</h2>
+    <p>Il mio percorso comprende anche anni di lavoro individuale su movimento, postura e consapevolezza corporea.</p>
+    <a href="${origin}/about-2/fitness-coach/">Scopri il percorso Fitness e Postura</a>
     <a href="https://wa.me/393497759350">Raccontami dove sei nella tua storia</a>
   </main>
   ${footer}`
@@ -122,6 +136,7 @@ const articlesBody = `
   <main>
     <h1>Articoli sul cambiamento professionale</h1>
     <p>Idee e strumenti concreti per cambiare lavoro, superare i blocchi e costruire una direzione professionale più coerente.</p>
+    <h2>Guide e approfondimenti recenti</h2>
     <ol>
       ${content
         .filter((item) => item.type === 'post')
@@ -141,7 +156,7 @@ const contentBody = (item) => `
         <h1>${escapeHtml(item.title)}</h1>
         ${item.date ? `<time datetime="${escapeHtml(item.date)}">${escapeHtml(item.date)}</time>` : ''}
       </header>
-      ${item.html}
+      ${optimizedHtmlFor(item)}
     </article>
     <aside>
       <h2>Facciamo chiarezza insieme</h2>
@@ -164,9 +179,21 @@ const schemaFor = ({ route, title, description, type, date, image = defaultImage
     isPartOf: { '@type': 'WebSite', name: 'Gabriele Ciandrini', url: origin },
     author: { '@type': 'Person', name: 'Gabriele Ciandrini', url: `${origin}/about-2/` },
     publisher: { '@type': 'Person', name: 'Gabriele Ciandrini', url: origin },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
   }
   if (type === 'article' && date) base.datePublished = date
   return base
+}
+
+const breadcrumbSchemaFor = ({ route, title, type }) => {
+  const items = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${origin}/` }]
+  if (type === 'article') {
+    items.push({ '@type': 'ListItem', position: 2, name: 'Articoli', item: `${origin}/articoli/` })
+  }
+  if (route !== '/') {
+    items.push({ '@type': 'ListItem', position: items.length + 1, name: title, item: `${origin}${route}` })
+  }
+  return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items }
 }
 
 const replaceOrInsertMeta = (html, selector, tag) => {
@@ -177,7 +204,10 @@ const replaceOrInsertMeta = (html, selector, tag) => {
 const render = ({ route, title, description, body, type = 'website', date = null, image = defaultImage, extraSchema = null }) => {
   const normalizedRoute = normalizeRoute(route)
   const canonical = `${origin}${normalizedRoute}`
-  const schemas = [schemaFor({ route: normalizedRoute, title, description, type, date, image })]
+  const schemas = [
+    schemaFor({ route: normalizedRoute, title, description, type, date, image }),
+    breadcrumbSchemaFor({ route: normalizedRoute, title, type }),
+  ]
   if (extraSchema) schemas.push(extraSchema)
 
   let html = template
@@ -256,8 +286,8 @@ render({
 
 render({
   route: '/about-2/',
-  title: 'Chi sono | Gabriele Ciandrini, coach per il cambiamento professionale',
-  description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia vera con cui Gabriele Ciandrini aiuta a cambiare lavoro con metodo.',
+  title: 'Chi sono | Coach per il cambiamento professionale',
+  description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia con cui Gabriele Ciandrini aiuta a cambiare lavoro.',
   body: aboutBody,
   type: 'profile',
   extraSchema: {
@@ -274,12 +304,12 @@ for (const item of content) {
   if (['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/'].includes(item.path)) continue
   render({
     route: item.path,
-    title: `${item.title} | Gabriele Ciandrini`,
-    description: descriptionFor(item),
+    title: seoTitleFor(item),
+    description: seoDescriptionFor(item),
     body: contentBody(item),
     type: item.type === 'post' ? 'article' : 'website',
     date: item.date,
-    image: item.featuredImage ? `${origin}${item.featuredImage}` : defaultImage,
+    image: imageForItem(item).startsWith('http') ? imageForItem(item) : `${origin}${imageForItem(item)}`,
   })
 }
 

@@ -5,6 +5,7 @@ import {
   MapPin, Menu, MessageCircle, Quote, X
 } from 'lucide-react'
 import { supabase } from './supabase'
+import { imageForItem, optimizedHtmlFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
 
 const WHATSAPP = 'https://wa.me/393497759350'
@@ -154,7 +155,7 @@ function SiteFooter() {
   return (
     <footer>
       <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-      <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a></div>
+      <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a><a href="/ruota-della-vita/">Ruota della Vita</a></div>
       <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a></div>
       <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
     </footer>
@@ -162,8 +163,8 @@ function SiteFooter() {
 }
 
 function ContentPage({ item, posts }) {
-  const description = item.excerpt || `${item.title}. Scopri il percorso e le risorse di Gabriele Ciandrini per il cambiamento professionale.`
-  usePageMeta({ title: `${item.title} | Gabriele Ciandrini`, description, type: item.type === 'post' ? 'article' : 'website', date: item.date, image: item.featuredImage })
+  const description = seoDescriptionFor(item)
+  usePageMeta({ title: seoTitleFor(item), description, type: item.type === 'post' ? 'article' : 'website', date: item.date, image: imageForItem(item) })
   const related = posts.filter((post) => post.id !== item.id).slice(0, 3)
   return (
     <div className={`contentPage ${item.type}`}>
@@ -176,7 +177,7 @@ function ContentPage({ item, posts }) {
           {item.date && <p className="contentDate"><CalendarDays size={16} /> {new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(item.date))}</p>}
         </header>
         <div className="contentLayout">
-          <article className="wpContent" dangerouslySetInnerHTML={{ __html: item.html }} />
+          <article className="wpContent" dangerouslySetInnerHTML={{ __html: optimizedHtmlFor(item) }} />
           <aside className="contentAside">
             <p>Vuoi applicarlo alla tua situazione?</p>
             <h2>Facciamo chiarezza insieme.</h2>
@@ -380,8 +381,8 @@ function AboutPage() {
   const whatsappStory = `${WHATSAPP}?text=${encodeURIComponent(`Ciao Gabriele, ho letto la tua storia. ${situation} e vorrei capire da dove iniziare.`)}`
 
   usePageMeta({
-    title: 'Chi sono | Gabriele Ciandrini, coach per il cambiamento professionale',
-    description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia vera con cui Gabriele Ciandrini aiuta a cambiare lavoro con metodo.',
+    title: 'Chi sono | Coach per il cambiamento professionale',
+    description: 'Dall’impresa di famiglia alla fabbrica, dagli autobus al personal training e al coaching: la storia con cui Gabriele Ciandrini aiuta a cambiare lavoro.',
   })
 
   useEffect(() => {
