@@ -18,7 +18,7 @@ const images = {
   studio2: '/media/studio2.jpg',
   studio3: '/media/studio3.jpg',
   studio4: '/media/studio4.jpg',
-  method: '/media/method.png',
+  method: '/media/method-cinematic.webp',
 }
 
 const journeyPhases = [
