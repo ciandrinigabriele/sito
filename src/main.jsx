@@ -13,7 +13,7 @@ const BOOK_URL = '/libro-respira-immagina-agisci/'
 const AMAZON_URL = 'https://amzn.eu/d/0ec3bLMb'
 
 const images = {
-  hero: '/media/hero.jpg',
+  hero: '/media/method-gabriele-cinematic.webp',
   studio1: '/media/studio1.jpg',
   studio2: '/media/studio2.jpg',
   studio3: '/media/studio3.jpg',
@@ -521,6 +521,15 @@ function App() {
   const [status, setStatus] = useState('')
   const [sending, setSending] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === 'undefined') return false
+    try {
+      return window.sessionStorage.getItem('ria-intro-seen') !== '1'
+    } catch {
+      return true
+    }
+  })
+  const [introLeaving, setIntroLeaving] = useState(false)
   const heroRef = useRef(null)
 
   useEffect(() => {
@@ -539,7 +548,6 @@ function App() {
     let scrollFrame = 0
 
     document.body.classList.add('motion-ready')
-    requestAnimationFrame(() => hero?.classList.add('heroEntered'))
 
     const observer = !reduceMotion && 'IntersectionObserver' in window
       ? new IntersectionObserver((entries) => {
@@ -569,9 +577,12 @@ function App() {
     }
 
     const onScrollMotion = () => {
-      if (!hero || reduceMotion) return
       cancelAnimationFrame(scrollFrame)
       scrollFrame = requestAnimationFrame(() => {
+        const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
+        const pageProgress = Math.min(window.scrollY / scrollable, 1)
+        document.documentElement.style.setProperty('--page-progress', pageProgress.toFixed(4))
+        if (!hero || reduceMotion) return
         const progress = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)
         hero.style.setProperty('--hero-scroll', progress.toFixed(3))
       })
@@ -587,8 +598,46 @@ function App() {
       window.removeEventListener('pointermove', onPointerMove)
       window.removeEventListener('scroll', onScrollMotion)
       document.body.classList.remove('motion-ready')
+      document.documentElement.style.removeProperty('--page-progress')
     }
   }, [])
+
+  useEffect(() => {
+    if (!showIntro) return
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      try {
+        window.sessionStorage.setItem('ria-intro-seen', '1')
+      } catch {
+        // The intro can still be skipped when browser storage is unavailable.
+      }
+      setShowIntro(false)
+      return
+    }
+
+    document.body.classList.add('intro-lock')
+    const leaveTimer = window.setTimeout(() => setIntroLeaving(true), 1950)
+    const finishTimer = window.setTimeout(() => {
+      try {
+        window.sessionStorage.setItem('ria-intro-seen', '1')
+      } catch {
+        // The page remains fully usable even without browser storage.
+      }
+      setShowIntro(false)
+    }, 2850)
+
+    return () => {
+      window.clearTimeout(leaveTimer)
+      window.clearTimeout(finishTimer)
+      document.body.classList.remove('intro-lock')
+    }
+  }, [showIntro])
+
+  useEffect(() => {
+    if (showIntro && !introLeaving) return
+    const frame = requestAnimationFrame(() => heroRef.current?.classList.add('heroEntered'))
+    return () => cancelAnimationFrame(frame)
+  }, [showIntro, introLeaving])
 
   const submit = async (event) => {
     event.preventDefault()
@@ -609,6 +658,22 @@ function App() {
 
   return (
     <>
+      {showIntro && (
+        <div className={`cinematicIntro ${introLeaving ? 'isLeaving' : ''}`} aria-hidden="true">
+          <div className="introPanel introPanelLeft" />
+          <div className="introPanel introPanelRight" />
+          <div className="introAtmosphere" />
+          <div className="introBrand"><span /> Gabriele Ciandrini</div>
+          <div className="introSequence">
+            <span className="introWord introWordOne"><small>01</small>Respira.</span>
+            <span className="introWord introWordTwo"><small>02</small>Immagina.</span>
+            <span className="introWord introWordThree"><small>03</small>Agisci.</span>
+          </div>
+          <p className="introPromise">Il cambiamento comincia quando scegli una direzione.</p>
+          <div className="introSweep" />
+        </div>
+      )}
+      <div className="pageProgress" aria-hidden="true"><span /></div>
       <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <a className="brand" href="#top" aria-label="Gabriele Ciandrini, home">
           <span className="brandDot" /> Gabriele <strong>Ciandrini</strong>
@@ -633,6 +698,7 @@ function App() {
           <div className="cinemaGrid" aria-hidden="true" />
           <div className="filmGrain" aria-hidden="true" />
           <div className="cinemaVignette" aria-hidden="true" />
+          <div className="heroSignal" aria-hidden="true" />
           <div className="heroCopy">
             <p className="eyebrow"><span /> Coaching per il cambiamento professionale</p>
             <h1><span className="heroLine">Il lavoro giusto</span><span className="heroLine">non si trova <em>a caso.</em></span></h1>
@@ -650,7 +716,7 @@ function App() {
           <div className="heroPortrait">
             <div className="portraitAura" aria-hidden="true" />
             <div className="portraitFrame">
-              <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" />
+              <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchPriority="high" decoding="async" />
             </div>
             <div className="floatingCard">
               <span className="pulse" />
