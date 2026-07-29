@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   ArrowDown, ArrowLeft, ArrowRight, BookOpen, CalendarDays, Check, ChevronRight, Compass,
@@ -521,12 +521,73 @@ function App() {
   const [status, setStatus] = useState('')
   const [sending, setSending] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const hero = heroRef.current
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const finePointer = window.matchMedia('(pointer: fine)').matches
+    const revealItems = [...document.querySelectorAll('[data-reveal]')]
+    let pointerFrame = 0
+    let scrollFrame = 0
+
+    document.body.classList.add('motion-ready')
+    requestAnimationFrame(() => hero?.classList.add('heroEntered'))
+
+    const observer = !reduceMotion && 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible')
+              observer.unobserve(entry.target)
+            }
+          })
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+      : null
+
+    revealItems.forEach((item) => {
+      if (observer) observer.observe(item)
+      else item.classList.add('is-visible')
+    })
+
+    const onPointerMove = (event) => {
+      if (!hero || reduceMotion || !finePointer) return
+      cancelAnimationFrame(pointerFrame)
+      pointerFrame = requestAnimationFrame(() => {
+        const x = ((event.clientX / window.innerWidth) - 0.5) * 2
+        const y = ((event.clientY / window.innerHeight) - 0.5) * 2
+        hero.style.setProperty('--pointer-x', x.toFixed(3))
+        hero.style.setProperty('--pointer-y', y.toFixed(3))
+      })
+    }
+
+    const onScrollMotion = () => {
+      if (!hero || reduceMotion) return
+      cancelAnimationFrame(scrollFrame)
+      scrollFrame = requestAnimationFrame(() => {
+        const progress = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)
+        hero.style.setProperty('--hero-scroll', progress.toFixed(3))
+      })
+    }
+
+    onScrollMotion()
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    window.addEventListener('scroll', onScrollMotion, { passive: true })
+    return () => {
+      observer?.disconnect()
+      cancelAnimationFrame(pointerFrame)
+      cancelAnimationFrame(scrollFrame)
+      window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener('scroll', onScrollMotion)
+      document.body.classList.remove('motion-ready')
+    }
   }, [])
 
   const submit = async (event) => {
@@ -566,12 +627,15 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="hero">
+        <section className="hero" ref={heroRef}>
           <div className="heroGlow glowOne" />
           <div className="heroGlow glowTwo" />
+          <div className="cinemaGrid" aria-hidden="true" />
+          <div className="filmGrain" aria-hidden="true" />
+          <div className="cinemaVignette" aria-hidden="true" />
           <div className="heroCopy">
             <p className="eyebrow"><span /> Coaching per il cambiamento professionale</p>
-            <h1>Il lavoro giusto non si trova <em>a caso.</em></h1>
+            <h1><span className="heroLine">Il lavoro giusto</span><span className="heroLine">non si trova <em>a caso.</em></span></h1>
             <p className="heroStatement">Si costruisce con metodo.</p>
             <p className="lead">Ti aiuto a capire quale direzione professionale ha davvero senso per te e a trasformarla in un piano concreto, sostenibile e coerente con i tuoi valori.</p>
             <div className="heroActions">
@@ -584,6 +648,7 @@ function App() {
             </div>
           </div>
           <div className="heroPortrait">
+            <div className="portraitAura" aria-hidden="true" />
             <div className="portraitFrame">
               <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" />
             </div>
@@ -593,21 +658,23 @@ function App() {
             </div>
             <div className="orbit orbitOne" />
             <div className="orbit orbitTwo" />
+            <div className="cinemaCoordinates" aria-hidden="true"><span>43.6158° N</span><span>13.5189° E</span></div>
           </div>
+          <div className="heroScrollCue" aria-hidden="true"><span>SCORRI</span><i /></div>
         </section>
 
         <section className="marquee" aria-label="Principi del percorso">
           <div>CHIAREZZA <span>✦</span> DIREZIONE <span>✦</span> METODO <span>✦</span> AZIONE <span>✦</span> CHIAREZZA <span>✦</span> DIREZIONE</div>
         </section>
 
-        <section className="credibility" aria-label="Esperienza e modalità di lavoro">
+        <section className="credibility" aria-label="Esperienza e modalità di lavoro" data-reveal="up">
           <article><strong>2003</strong><span>Inizio del lavoro<br />sulla persona</span></article>
           <article><strong>2015</strong><span>Coaching e PNL<br />integrati nel metodo</span></article>
           <article><strong>Ancona</strong><span>In studio,<br />in un ambiente riservato</span></article>
           <article><strong>Online</strong><span>Incontri disponibili<br />in tutta Italia</span></article>
         </section>
 
-        <section className="pain sectionPad">
+        <section className="pain sectionPad" data-reveal="up">
           <div className="sectionNumber">00 / IL PUNTO DI PARTENZA</div>
           <div className="painGrid">
             <h2>Il blocco non è una colpa.<br /><em>È qualcosa da comprendere.</em></h2>
@@ -619,7 +686,7 @@ function App() {
           </div>
         </section>
 
-        <section className="paths sectionPad" id="percorso">
+        <section className="paths sectionPad" id="percorso" data-reveal="up">
           <div className="sectionHead">
             <div className="sectionNumber">01 / UN PERCORSO UNICO</div>
             <h2>Dalla confusione a una direzione che <em>puoi costruire.</em></h2>
@@ -650,7 +717,7 @@ function App() {
           </div>
         </section>
 
-        <section className="method" id="metodo">
+        <section className="method" id="metodo" data-reveal="soft">
           <div className="methodVisual">
             <img src={images.method} alt="Metodo Respira Immagina Agisci" />
             <div className="methodStamp">R · I · A</div>
@@ -671,7 +738,7 @@ function App() {
           </div>
         </section>
 
-        <section className="about sectionPad" id="chi-sono">
+        <section className="about sectionPad" id="chi-sono" data-reveal="up">
           <div className="aboutImages">
             <img className="aboutMain" src={images.studio3} alt="Lo studio di coaching di Gabriele Ciandrini ad Ancona" />
             <img className="aboutDetail" src={images.studio4} alt="Dettaglio dello studio di Gabriele Ciandrini" />
@@ -687,7 +754,7 @@ function App() {
           </div>
         </section>
 
-        <section className="studio">
+        <section className="studio" data-reveal="soft">
           <div className="studioCopy">
             <div className="sectionNumber light">04 / DOVE LAVORIAMO</div>
             <h2>Uno spazio per fermarti.<br /><em>E ripartire.</em></h2>
@@ -703,7 +770,7 @@ function App() {
           </div>
         </section>
 
-        <section className="book sectionPad">
+        <section className="book sectionPad" data-reveal="up">
           <div className="bookIcon"><BookOpen size={52} /></div>
           <div>
             <div className="sectionNumber">05 / IL LIBRO</div>
@@ -716,7 +783,7 @@ function App() {
           </div>
         </section>
 
-        <section className="resources sectionPad" id="risorse">
+        <section className="resources sectionPad" id="risorse" data-reveal="up">
           <div className="sectionHead resourcesHead">
             <div className="sectionNumber">06 / RISORSE</div>
             <h2>Idee che non durano cinque minuti.</h2>
@@ -735,7 +802,7 @@ function App() {
           <ArrowLink href="/articoli/" className="allArticles">Esplora tutti gli articoli</ArrowLink>
         </section>
 
-        <section className="wheel">
+        <section className="wheel" data-reveal="soft">
           <div>
             <div className="sectionNumber light">STRUMENTO GRATUITO</div>
             <h2>Quanto è equilibrata la tua vita, davvero?</h2>
@@ -745,7 +812,7 @@ function App() {
           <div className="wheelGraphic"><span>10</span><span>8</span><span>6</span><span>4</span><span>2</span></div>
         </section>
 
-        <section className="contact sectionPad" id="contatti">
+        <section className="contact sectionPad" id="contatti" data-reveal="up">
           <div className="contactIntro">
             <p className="eyebrow"><span /> Il prossimo passo</p>
             <h2>Partiamo da una domanda concreta.</h2>
