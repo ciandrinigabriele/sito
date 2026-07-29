@@ -18,7 +18,7 @@ const images = {
   studio2: '/media/studio2.jpg',
   studio3: '/media/studio3.jpg',
   studio4: '/media/studio4.jpg',
-  method: '/media/method-cinematic.webp',
+  method: '/media/method-gabriele-cinematic.webp',
 }
 
 const journeyPhases = [
@@ -719,7 +719,7 @@ function App() {
 
         <section className="method" id="metodo" data-reveal="soft">
           <div className="methodVisual">
-            <img src={images.method} alt="Metodo Respira Immagina Agisci" />
+            <img src={images.method} alt="Gabriele Ciandrini e il percorso del metodo Respira Immagina Agisci" />
             <div className="methodStamp">R · I · A</div>
           </div>
           <div className="methodCopy">
