@@ -170,7 +170,7 @@ function LegalPage({ type }) {
   const title = isPrivacy ? 'Privacy Policy' : 'Cookie Policy'
   const description = isPrivacy
     ? 'Informativa sul trattamento dei dati personali del sito di Gabriele Ciandrini.'
-    : 'Informativa sui cookie e sugli strumenti tecnici utilizzati dal sito di Gabriele Ciandrini.'
+    : 'Informativa sui cookie, sugli strumenti tecnici di sessione e sui servizi esterni utilizzati dal sito di Gabriele Ciandrini, senza finalità di profilazione.'
 
   usePageMeta({ title: `${title} | Gabriele Ciandrini`, description })
 

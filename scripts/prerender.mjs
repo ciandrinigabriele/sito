@@ -350,7 +350,7 @@ render({
 render({
   route: '/cookie-policy/',
   title: 'Cookie Policy | Gabriele Ciandrini',
-  description: 'Informativa sui cookie e sugli strumenti tecnici utilizzati dal sito di Gabriele Ciandrini.',
+  description: 'Informativa sui cookie, sugli strumenti tecnici di sessione e sui servizi esterni utilizzati dal sito di Gabriele Ciandrini, senza finalità di profilazione.',
   body: cookieBody,
   type: 'website',
 })
