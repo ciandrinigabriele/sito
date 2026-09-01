@@ -11,6 +11,9 @@ import './styles.css'
 const WHATSAPP = 'https://wa.me/393497759350'
 const BOOK_URL = '/libro-respira-immagina-agisci/'
 const AMAZON_URL = 'https://amzn.eu/d/0ec3bLMb'
+const PRIVACY_URL = '/privacy-policy/'
+const COOKIE_URL = '/cookie-policy/'
+const PRIVACY_EMAIL = 'ciandrini.gabriele@gmail.com'
 
 const images = {
   hero: '/media/method-gabriele-cinematic.webp',
@@ -156,9 +159,149 @@ function SiteFooter() {
     <footer>
       <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
       <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a><a href="/ruota-della-vita/">Ruota della Vita</a></div>
-      <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a></div>
+      <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a><a href={PRIVACY_URL}>Privacy Policy</a><a href={COOKIE_URL}>Cookie Policy</a></div>
       <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
     </footer>
+  )
+}
+
+function LegalPage({ type }) {
+  const isPrivacy = type === 'privacy'
+  const title = isPrivacy ? 'Privacy Policy' : 'Cookie Policy'
+  const description = isPrivacy
+    ? 'Informativa sul trattamento dei dati personali del sito di Gabriele Ciandrini.'
+    : 'Informativa sui cookie e sugli strumenti tecnici utilizzati dal sito di Gabriele Ciandrini.'
+
+  usePageMeta({ title: `${title} | Gabriele Ciandrini`, description })
+
+  return (
+    <div className="contentPage legalPage">
+      <SiteHeader />
+      <main>
+        <header className="contentHero legalHero">
+          <a className="contentBack" href="/"><ArrowLeft size={16} /> Torna alla home</a>
+          <p className="eyebrow"><span /> Trasparenza e protezione dei dati</p>
+          <h1>{title}</h1>
+          <p className="legalUpdated">Ultimo aggiornamento: 1 settembre 2026</p>
+        </header>
+
+        {isPrivacy ? (
+          <article className="legalContent">
+            <p className="legalLead">Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com o invii una richiesta tramite il modulo di contatto.</p>
+
+            <section>
+              <span className="legalNumber">01</span>
+              <h2>Titolare del trattamento</h2>
+              <p><strong>Gabriele Ciandrini</strong><br />P. IVA 02815060423<br />Corso Amendola 28, 60123 Ancona, Italia<br />E-mail: <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a></p>
+            </section>
+
+            <section>
+              <span className="legalNumber">02</span>
+              <h2>Dati trattati</h2>
+              <h3>Dati inviati tramite il modulo</h3>
+              <p>Quando utilizzi il modulo di contatto vengono raccolti nome e cognome, indirizzo e-mail e contenuto del messaggio.</p>
+              <h3>Dati tecnici di navigazione</h3>
+              <p>I sistemi che rendono disponibile il sito possono trattare indirizzo IP, data e ora della richiesta, indirizzo richiesto, tipo di browser, dispositivo ed eventuali informazioni necessarie alla sicurezza e al corretto funzionamento del servizio.</p>
+              <div className="legalNotice"><strong>Proteggi anche tu i tuoi dati.</strong><p>Il modulo serve a richiedere informazioni sul percorso. Ti chiediamo di non inserire dati sanitari, diagnosi o altre informazioni particolarmente delicate.</p></div>
+            </section>
+
+            <section>
+              <span className="legalNumber">03</span>
+              <h2>Finalità e basi giuridiche</h2>
+              <ul>
+                <li><strong>Rispondere alle richieste:</strong> i dati del modulo vengono usati per ricontattarti e gestire la tua richiesta. La base giuridica è l’esecuzione di misure precontrattuali richieste dall’interessato, ai sensi dell’art. 6, par. 1, lett. b del GDPR.</li>
+                <li><strong>Funzionamento e sicurezza:</strong> i dati tecnici vengono trattati per erogare il sito, prevenire abusi e risolvere problemi. La base giuridica è il legittimo interesse del titolare, ai sensi dell’art. 6, par. 1, lett. f del GDPR.</li>
+                <li><strong>Obblighi e tutela dei diritti:</strong> alcuni dati possono essere conservati quando necessario per adempiere a obblighi di legge o accertare, esercitare o difendere un diritto.</li>
+              </ul>
+              <p>Il sito non utilizza i dati del modulo per newsletter o comunicazioni promozionali e non effettua decisioni automatizzate o profilazione.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">04</span>
+              <h2>Conferimento e conservazione</h2>
+              <p>Fornire i dati nel modulo è facoltativo, ma senza nome, e-mail e messaggio non è possibile rispondere alla richiesta. I messaggi vengono conservati per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Possono essere conservati più a lungo quando nasce un rapporto professionale, quando lo richiede la legge o quando è necessario tutelare un diritto.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">05</span>
+              <h2>Fornitori e destinatari</h2>
+              <p>I dati possono essere trattati da fornitori tecnici autorizzati e vincolati alle finalità del servizio:</p>
+              <ul>
+                <li><strong>Vercel Inc.</strong>, per l’hosting e la distribuzione del sito. Consulta la <a href="https://vercel.com/legal/privacy-notice">Privacy Notice di Vercel</a>.</li>
+                <li><strong>Supabase Inc.</strong>, per la banca dati che riceve le richieste inviate dal modulo. Consulta la <a href="https://supabase.com/privacy">Privacy Policy di Supabase</a>.</li>
+              </ul>
+              <p>I dati non vengono venduti. Possono essere comunicati ad autorità o consulenti soltanto nei casi previsti dalla legge o necessari alla tutela di un diritto.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">06</span>
+              <h2>Trasferimenti fuori dallo Spazio Economico Europeo</h2>
+              <p>Alcuni fornitori possono trattare dati anche in Paesi esterni allo Spazio Economico Europeo. Quando ciò avviene, il trasferimento viene effettuato utilizzando gli strumenti previsti dal GDPR, come decisioni di adeguatezza o clausole contrattuali standard.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">07</span>
+              <h2>I tuoi diritti</h2>
+              <p>Puoi chiedere accesso, rettifica, cancellazione, limitazione del trattamento e portabilità dei dati, oppure opporti al trattamento nei casi previsti dalla legge. Puoi scrivere a <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.</p>
+              <p>Hai inoltre il diritto di proporre reclamo al <a href="https://www.garanteprivacy.it/">Garante per la protezione dei dati personali</a>.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">08</span>
+              <h2>Aggiornamenti</h2>
+              <p>Questa informativa può essere aggiornata per riflettere modifiche al sito, ai servizi utilizzati o alla normativa. La data dell’ultima revisione è indicata all’inizio della pagina.</p>
+            </section>
+          </article>
+        ) : (
+          <article className="legalContent">
+            <p className="legalLead">Questo sito non utilizza cookie pubblicitari, Meta Pixel, Google Analytics o altri strumenti di profilazione. Per questo motivo non viene mostrato un banner di consenso: non c’è un consenso non necessario da richiedere.</p>
+
+            <section>
+              <span className="legalNumber">01</span>
+              <h2>Cosa sono cookie e strumenti simili</h2>
+              <p>I cookie sono piccoli file di testo salvati dal browser. Anche tecnologie come localStorage e sessionStorage possono memorizzare informazioni nel dispositivo e, quando usate per tracciare il comportamento, sono soggette a regole analoghe.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">02</span>
+              <h2>Cosa utilizza questo sito</h2>
+              <div className="cookieTable" role="table" aria-label="Strumenti tecnici utilizzati">
+                <div className="cookieRow cookieHead" role="row"><span role="columnheader">Strumento</span><span role="columnheader">Finalità</span><span role="columnheader">Durata</span></div>
+                <div className="cookieRow" role="row"><span role="cell"><strong>ria-intro-seen</strong><small>sessionStorage, prima parte</small></span><span role="cell">Ricorda che l’animazione iniziale è già stata mostrata nella scheda corrente.</span><span role="cell">Fino alla chiusura della sessione del browser.</span></div>
+              </div>
+              <p>Questo strumento è strettamente tecnico: non identifica l’utente, non crea profili e non viene condiviso con soggetti pubblicitari.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">03</span>
+              <h2>Log tecnici</h2>
+              <p>Il servizio di hosting può produrre log tecnici delle richieste, necessari alla sicurezza e alla disponibilità del sito. Questi log non sono cookie salvati nel dispositivo e non vengono utilizzati dal titolare per pubblicità comportamentale.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">04</span>
+              <h2>Collegamenti esterni</h2>
+              <p>Il sito contiene collegamenti a WhatsApp, Facebook e Amazon. Finché non selezioni uno di questi collegamenti, il sito non carica pulsanti social incorporati né strumenti pubblicitari di tali piattaforme. Dopo il clic si applicano le informative del servizio esterno visitato.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">05</span>
+              <h2>Perché non compare il banner</h2>
+              <p>Il consenso preventivo è necessario per cookie di profilazione o altri tracciamenti non tecnici. Poiché al momento il sito utilizza soltanto uno strumento tecnico, l’informazione viene fornita direttamente in questa pagina.</p>
+              <p>Se in futuro verranno introdotti Analytics, Meta Pixel, video incorporati o altri servizi non strettamente necessari, tali strumenti saranno bloccati fino alla scelta dell’utente e verrà aggiunto un pannello per accettare, rifiutare o modificare le preferenze.</p>
+            </section>
+
+            <section>
+              <span className="legalNumber">06</span>
+              <h2>Come gestire i dati nel browser</h2>
+              <p>Puoi cancellare i dati del sito dalle impostazioni del browser. La rimozione di <strong>ria-intro-seen</strong> farà semplicemente ricomparire l’animazione iniziale alla visita successiva.</p>
+              <p>Per informazioni sul trattamento dei dati personali consulta la <a href={PRIVACY_URL}>Privacy Policy</a>. Per domande puoi scrivere a <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.</p>
+            </section>
+          </article>
+        )}
+      </main>
+      <SiteFooter />
+    </div>
   )
 }
 
@@ -369,8 +512,8 @@ function BookPage() {
 
       <footer className="bookFooter">
         <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-        <div className="footerLinks"><a href="/">Home</a><a href="/#metodo">Metodo</a><a href={AMAZON_URL}>Amazon</a></div>
-        <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini</p>
+        <div className="footerLinks"><a href="/">Home</a><a href="/#metodo">Metodo</a><a href={AMAZON_URL}>Amazon</a><a href={PRIVACY_URL}>Privacy Policy</a><a href={COOKIE_URL}>Cookie Policy</a></div>
+        <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
       </footer>
     </div>
   )
@@ -716,7 +859,7 @@ function App() {
           <div className="heroPortrait">
             <div className="portraitAura" aria-hidden="true" />
             <div className="portraitFrame">
-              <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchPriority="high" decoding="async" />
+              <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchpriority="high" decoding="async" />
             </div>
             <div className="floatingCard">
               <span className="pulse" />
@@ -887,9 +1030,10 @@ function App() {
           </div>
           <form onSubmit={submit}>
             <p>Oppure raccontami qui il tuo momento.</p>
-            <label>Come ti chiami?<input name="name" required placeholder="Nome e cognome" /></label>
-            <label>Dove posso risponderti?<input name="email" type="email" required placeholder="La tua email" /></label>
-            <label>Cosa vorresti cambiare?<textarea name="message" required rows="4" placeholder="Scrivi liberamente…" /></label>
+            <label>Come ti chiami?<input name="name" required maxLength="100" autoComplete="name" placeholder="Nome e cognome" /></label>
+            <label>Dove posso risponderti?<input name="email" type="email" required maxLength="200" autoComplete="email" placeholder="La tua email" /></label>
+            <label>Cosa vorresti cambiare?<textarea name="message" required maxLength="3000" rows="4" placeholder="Scrivi liberamente…" /></label>
+            <p className="formPrivacy">Userò questi dati solo per rispondere alla tua richiesta. Non inserire informazioni sanitarie o particolarmente delicate. Leggi la <a href={PRIVACY_URL}>Privacy Policy</a>.</p>
             <button className="primary" type="submit" disabled={sending}>{sending ? 'Invio…' : 'Invia il messaggio'} <ArrowRight size={18} /></button>
             {status && <p className="formStatus" role="status">{status}</p>}
           </form>
@@ -901,8 +1045,8 @@ function App() {
       <footer>
         <div><a className="brand footerBrand" href="#top"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
         <div className="footerLinks"><a href="#percorso">Il percorso</a><a href="#metodo">Metodo</a><a href="/about-2/">Chi sono</a><a href="#risorse">Articoli</a></div>
-        <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a></div>
-        <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini</p>
+        <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a><a href={PRIVACY_URL}>Privacy Policy</a><a href={COOKIE_URL}>Cookie Policy</a></div>
+        <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
       </footer>
     </>
   )
@@ -912,6 +1056,8 @@ const currentPath = normalizePath(window.location.pathname)
 const isBookPage = currentPath === BOOK_URL
 const isArticlesPage = currentPath === '/articoli/'
 const isAboutPage = currentPath === '/about-2/'
+const isPrivacyPage = currentPath === PRIVACY_URL
+const isCookiePage = currentPath === COOKIE_URL
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const renderPage = (page) => root.render(<React.StrictMode>{page}</React.StrictMode>)
 
@@ -921,6 +1067,10 @@ if (currentPath === '/') {
   renderPage(<BookPage />)
 } else if (isAboutPage) {
   renderPage(<AboutPage />)
+} else if (isPrivacyPage) {
+  renderPage(<LegalPage type="privacy" />)
+} else if (isCookiePage) {
+  renderPage(<LegalPage type="cookie" />)
 } else {
   import('./data/wordpress-content.json').then(({ default: wordpressContent }) => {
     const posts = wordpressContent

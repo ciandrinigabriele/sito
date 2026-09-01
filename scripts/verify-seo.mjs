@@ -6,7 +6,7 @@ const dist = path.join(root, 'dist')
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-inventory.json'), 'utf8'))
 const content = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-content.json'), 'utf8'))
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'))
-const expectedRoutes = new Set(['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', ...inventory.routes.map((item) => item.route)])
+const expectedRoutes = new Set(['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', ...inventory.routes.map((item) => item.route)])
 const failures = []
 const isProduction = process.env.VERCEL_ENV === 'production'
 

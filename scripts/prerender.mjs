@@ -46,6 +46,8 @@ const footer = `
     <p>Gabriele Ciandrini, coach per il cambiamento professionale ad Ancona e online in tutta Italia.</p>
     <a href="${origin}/contatti/">Contatti</a>
     <a href="${origin}/ruota-della-vita/">Ruota della Vita</a>
+    <a href="${origin}/privacy-policy/">Privacy Policy</a>
+    <a href="${origin}/cookie-policy/">Cookie Policy</a>
     <a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a>
   </footer>`
 
@@ -128,6 +130,43 @@ const aboutBody = `
     <p>Il mio percorso comprende anche anni di lavoro individuale su movimento, postura e consapevolezza corporea.</p>
     <a href="${origin}/about-2/fitness-coach/">Scopri il percorso Fitness e Postura</a>
     <a href="https://wa.me/393497759350">Raccontami dove sei nella tua storia</a>
+  </main>
+  ${footer}`
+
+const privacyBody = `
+  ${nav}
+  <main>
+    <article>
+      <p>Trasparenza e protezione dei dati</p>
+      <h1>Privacy Policy</h1>
+      <p>Ultimo aggiornamento: 1 settembre 2026.</p>
+      <p>Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com o invii una richiesta tramite il modulo di contatto.</p>
+      <h2>Titolare del trattamento</h2>
+      <p>Gabriele Ciandrini, P. IVA 02815060423, Corso Amendola 28, 60123 Ancona, Italia. E-mail: ciandrini.gabriele@gmail.com.</p>
+      <h2>Dati trattati e finalità</h2>
+      <p>Il modulo raccoglie nome, e-mail e messaggio esclusivamente per rispondere alla richiesta. I sistemi tecnici possono trattare dati di navigazione necessari al funzionamento e alla sicurezza del sito.</p>
+      <h2>Conservazione e fornitori</h2>
+      <p>I messaggi vengono conservati per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Vercel fornisce l’hosting e Supabase la banca dati del modulo.</p>
+      <h2>Diritti</h2>
+      <p>Puoi chiedere accesso, rettifica, cancellazione, limitazione, portabilità o opposizione scrivendo a ciandrini.gabriele@gmail.com. Puoi inoltre proporre reclamo al Garante per la protezione dei dati personali.</p>
+    </article>
+  </main>
+  ${footer}`
+
+const cookieBody = `
+  ${nav}
+  <main>
+    <article>
+      <p>Trasparenza e protezione dei dati</p>
+      <h1>Cookie Policy</h1>
+      <p>Ultimo aggiornamento: 1 settembre 2026.</p>
+      <p>Il sito non utilizza cookie pubblicitari, Meta Pixel, Google Analytics o altri strumenti di profilazione.</p>
+      <h2>Strumento tecnico utilizzato</h2>
+      <p>Il valore di sessionStorage ria-intro-seen ricorda che l’animazione iniziale è già stata mostrata nella scheda corrente. Dura fino alla chiusura della sessione del browser, non identifica l’utente e non viene condiviso con soggetti pubblicitari.</p>
+      <h2>Perché non compare il banner</h2>
+      <p>Poiché il sito utilizza soltanto uno strumento strettamente tecnico, non è richiesto il consenso preventivo. Se verranno introdotti strumenti non necessari, saranno bloccati fino alla scelta dell’utente e verrà aggiunto un pannello per accettare, rifiutare o modificare le preferenze.</p>
+      <p>Per maggiori informazioni consulta la <a href="${origin}/privacy-policy/">Privacy Policy</a>.</p>
+    </article>
   </main>
   ${footer}`
 
@@ -300,6 +339,22 @@ render({
   },
 })
 
+render({
+  route: '/privacy-policy/',
+  title: 'Privacy Policy | Gabriele Ciandrini',
+  description: 'Informativa sul trattamento dei dati personali del sito di Gabriele Ciandrini, titolare del trattamento, finalità, conservazione e diritti.',
+  body: privacyBody,
+  type: 'website',
+})
+
+render({
+  route: '/cookie-policy/',
+  title: 'Cookie Policy | Gabriele Ciandrini',
+  description: 'Informativa sui cookie e sugli strumenti tecnici utilizzati dal sito di Gabriele Ciandrini.',
+  body: cookieBody,
+  type: 'website',
+})
+
 for (const item of content) {
   if (['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/'].includes(item.path)) continue
   render({
@@ -313,7 +368,7 @@ for (const item of content) {
   })
 }
 
-const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', ...content.map((item) => item.path)]
+const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', ...content.map((item) => item.path)]
 const uniqueRoutes = [...new Set(routes.map(normalizeRoute))]
 const itemByPath = new Map(content.map((item) => [normalizeRoute(item.path), item]))
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniqueRoutes.map((route) => {
