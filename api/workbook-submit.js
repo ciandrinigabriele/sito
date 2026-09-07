@@ -81,10 +81,10 @@ const answerHtml = (sections) => sections.map((section) => `
 
 const emailShell = ({ eyebrow, title, intro, content = '', cta = '' }) => `<!doctype html><html><body style="margin:0;background:#eef0ea;padding:24px 10px"><main style="max-width:680px;margin:auto;overflow:hidden;border-radius:20px;background:#fff;box-shadow:0 14px 45px rgba(16,23,22,.1)"><header style="padding:34px;background:#101716;color:#fff"><p style="margin:0 0 20px;color:#cbff45;font:700 10px Arial,sans-serif;letter-spacing:1.5px">${eyebrow}</p><h1 style="margin:0;font:700 34px/1.04 Arial,sans-serif">${title}</h1></header><div style="padding:30px"><p style="margin:0;color:#4d5753;font:400 16px/1.65 Arial,sans-serif">${intro}</p>${content}${cta}</div><footer style="padding:20px 30px;border-top:1px solid #ecece8;color:#7a837f;font:400 11px/1.5 Arial,sans-serif">Gabriele Ciandrini · Respira. Immagina. Agisci.<br>Questa e-mail è stata inviata soltanto per consegnare il workbook richiesto.</footer></main></body></html>`
 
-const resend = async ({ apiKey, from, to, subject, html, attachment }) => {
+const resend = async ({ apiKey, from, to, subject, html, attachment, idempotencyKey }) => {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey },
     body: JSON.stringify({
       from,
       to: [to],
@@ -170,8 +170,8 @@ export default async function handler(req, res) {
     })
 
     await Promise.all([
-      resend({ apiKey: resendKey, from, to: data.email, subject: 'Il tuo workbook personale: Dove sei adesso?', html: participantHtml, attachment }),
-      resend({ apiKey: resendKey, from, to: ownerEmail, subject: `Nuovo workbook compilato - ${data.name}`, html: ownerHtml, attachment }),
+      resend({ apiKey: resendKey, from, to: data.email, subject: 'Il tuo workbook personale: Dove sei adesso?', html: participantHtml, attachment, idempotencyKey: `workbook-${data.submissionId}-participant` }),
+      resend({ apiKey: resendKey, from, to: ownerEmail, subject: `Nuovo workbook compilato - ${data.name}`, html: ownerHtml, attachment, idempotencyKey: `workbook-${data.submissionId}-owner` }),
     ])
 
     await supabaseRequest({

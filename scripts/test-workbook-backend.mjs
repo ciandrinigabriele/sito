@@ -51,6 +51,7 @@ const resendCalls = calls.filter(({ url }) => url === 'https://api.resend.com/em
 const supabaseCalls = calls.filter(({ url }) => url.includes('.supabase.co/rest/v1/workbook_responses'))
 if (resendCalls.length !== 2) throw new Error(`E-mail attese: 2, trovate: ${resendCalls.length}`)
 if (supabaseCalls.length !== 2) throw new Error(`Operazioni Supabase attese: 2, trovate: ${supabaseCalls.length}`)
+if (new Set(resendCalls.map(({ options }) => options.headers['Idempotency-Key'])).size !== 2) throw new Error('Chiavi anti-duplicazione e-mail mancanti o non univoche')
 
 const participantEmail = JSON.parse(resendCalls[0].options.body)
 const attachment = participantEmail.attachments?.[0]
