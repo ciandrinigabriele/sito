@@ -22,7 +22,7 @@
 .workbookRail li.isActive > span { border-color:var(--active-color); background:var(--active-color); color:var(--wb-ink); box-shadow:0 0 24px color-mix(in srgb,var(--active-color) 25%,transparent); }
 .workbookRail li.isDone { opacity:.72; }
 .workbookRail li.isDone > span { border-color:#6e7a75; color:var(--wb-lime); }
-.workbookRailTrack { position:absolute; z-index:1; left:59px; top:123px; width:2px; height:393px; overflow:hidden; background:#2e3935; }
+.workbookRailTrack { position:absolute; z-index:1; left:59px; top:123px; width:2px; height:598px; overflow:hidden; background:#2e3935; }
 .workbookRailTrack i { display:block; width:100%; background:linear-gradient(var(--wb-lime),#b6a7ff); transition:height .45s ease; }
 .workbookRail > p { margin:30px 0 0; padding:17px; border:1px solid #2d3834; border-radius:14px; display:grid; grid-template-columns:17px 1fr; gap:8px; color:#89938f; font-size:9px; line-height:1.45; }
 .workbookRail > p svg { color:var(--wb-lime); }
@@ -77,6 +77,16 @@
 .workbookQuestionMeta { grid-column:1/-1; margin-top:8px; display:flex; justify-content:space-between; color:#969b97; font-size:8px; }
 .workbookQuestionMeta b { color:#ce513a; }
 .workbookQuestionMeta small { margin-left:auto; }
+.workbookRatingQuestion { min-inline-size:0; margin:0; }
+.workbookRatingQuestion legend { width:100%; padding:0; display:grid; grid-template-columns:45px 1fr; gap:16px; align-items:center; }
+.workbookRatingScale { grid-column:1/-1; margin-top:25px; display:grid; grid-template-columns:repeat(11,minmax(22px,1fr)); gap:5px; }
+.workbookRatingScale button { min-width:0; min-height:45px; padding:0; border:1px solid #d2cec2; border-radius:11px; background:#f8f6f0; color:#69726e; font-family:'Manrope'; font-size:11px; font-weight:800; cursor:pointer; transition:transform .18s,border-color .18s,background .18s,color .18s,box-shadow .18s; }
+.workbookRatingScale button:hover { transform:translateY(-2px); border-color:var(--section-color); }
+.workbookRatingScale button.isSelected { transform:translateY(-2px); border-color:var(--wb-ink); background:var(--wb-ink); color:var(--section-color); box-shadow:0 9px 22px color-mix(in srgb,var(--section-color) 30%,transparent); }
+.workbookRatingScale[aria-invalid='true'] { padding:5px; border:1px solid #ed765e; border-radius:15px; }
+.workbookRatingLabels { grid-column:1/-1; margin-top:11px; display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:center; color:#7c8580; font-size:8px; line-height:1.35; }
+.workbookRatingLabels strong { padding:7px 11px; border-radius:999px; background:color-mix(in srgb,var(--section-color) 24%,white); color:var(--wb-ink); font-family:'Manrope'; font-size:10px; white-space:nowrap; }
+.workbookRatingLabels span:last-child { text-align:right; }
 .workbookNavigation { width:min(990px,calc(100% - 80px)); margin:0 auto; padding:26px 0 58px; border-top:1px solid #d9d5ca; display:flex; align-items:center; justify-content:space-between; }
 .workbookNavigation > button { min-height:46px; padding:0; border:0; display:flex; align-items:center; gap:8px; background:none; color:#65706b; font-size:10px; font-weight:800; cursor:pointer; }
 .workbookNavigation > div { display:flex; align-items:center; gap:18px; }
@@ -148,6 +158,10 @@
   .workbookQuestion textarea { min-height:143px; padding:13px; font-size:14px; }
   .workbookQuestionMeta { line-height:1.35; }
   .workbookQuestionMeta > :first-child { max-width:75%; }
+  .workbookRatingQuestion legend { grid-template-columns:35px 1fr; gap:12px; }
+  .workbookRatingScale { gap:3px; overflow:visible; }
+  .workbookRatingScale button { min-width:0; min-height:42px; border-radius:8px; font-size:10px; }
+  .workbookRatingLabels { grid-template-columns:1fr auto 1fr; font-size:7px; }
   .workbookNavigation { position:sticky; z-index:15; bottom:0; width:100%; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid #d1cec3; background:rgba(243,240,232,.95); backdrop-filter:blur(16px); }
   .workbookNavigation > div > span { display:none; }
   .workbookNavigation .workbookPrimary { min-height:48px; padding:0 17px; font-size:10px; }

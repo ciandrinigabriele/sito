@@ -25,7 +25,10 @@ const request = {
     email: 'test@example.com',
     privacyAccepted: true,
     company: '',
-    answers: Object.fromEntries(workbookQuestions.map(({ id, question }, index) => [id, `Risposta dimostrativa ${index + 1}: ${question}`])),
+    answers: Object.fromEntries(workbookQuestions.map(({ id, question, kind }, index) => [
+      id,
+      kind === 'rating' ? '7' : `Risposta dimostrativa ${index + 1}: ${question}`,
+    ])),
     tracking: { source: 'test', medium: 'local', campaign: 'workbook' },
     referrer: 'http://127.0.0.1:4173/cambia-direzione/',
     landingPath: '/cambia-direzione/',

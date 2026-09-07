@@ -1,5 +1,5 @@
 import { buildWorkbookPdf } from './lib/workbook-pdf.js'
-import { requiredQuestionIds, workbookQuestions, workbookSections } from '../src/workbookQuestions.js'
+import { ratingQuestionIds, requiredQuestionIds, workbookQuestions, workbookSections } from '../src/workbookQuestions.js'
 
 const OWNER_EMAIL = 'ciandrini.gabriele@gmail.com'
 const MAX_BODY_BYTES = 80_000
@@ -12,6 +12,9 @@ const sectionColors = {
   contesto: [0.714, 0.655, 1],
   identita: [0.471, 0.851, 1],
   direzione: [1, 0.847, 0.42],
+  oggi: [1, 0.498, 0.42],
+  desideri: [0.714, 0.655, 1],
+  azione: [0.471, 0.851, 1],
 }
 
 const clean = (value, max) => String(value || '').trim().slice(0, max)
@@ -44,7 +47,9 @@ const validate = (body) => {
   if (name.length < 2) throw new Error('INVALID_NAME')
   if (!EMAIL_PATTERN.test(email)) throw new Error('INVALID_EMAIL')
   if (!body.privacyAccepted) throw new Error('PRIVACY_REQUIRED')
-  const missing = [...requiredQuestionIds].filter((id) => answers[id].length < 2)
+  const missing = [...requiredQuestionIds].filter((id) => (
+    ratingQuestionIds.has(id) ? !/^(?:10|[0-9])$/.test(answers[id]) : answers[id].length < 2
+  ))
   if (missing.length) throw new Error('REQUIRED_ANSWERS')
   return { submissionId, name, email, answers }
 }
@@ -62,10 +67,13 @@ const trackingFrom = (body) => ({
 const responseSections = (answers) => workbookSections.map((section) => ({
   ...section,
   color: sectionColors[section.id],
-  answers: section.questions.map((question, index) => ({
-    question,
-    answer: answers[`${section.id}-${index + 1}`],
-  })),
+  answers: section.questions.map((question, index) => {
+    const id = `${section.id}-${index + 1}`
+    return {
+      question: typeof question === 'string' ? question : question.text,
+      answer: ratingQuestionIds.has(id) && answers[id] !== '' ? `${answers[id]} / 10` : answers[id],
+    }
+  }),
 }))
 
 const answerHtml = (sections) => sections.map((section) => `

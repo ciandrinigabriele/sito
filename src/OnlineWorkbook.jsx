@@ -4,7 +4,7 @@ import {
   LockKeyhole, Mail, RotateCcw, Save, Send, ShieldCheck, Sparkles,
 } from 'lucide-react'
 import { LandingBrand, PRIVACY_URL, THANK_YOU_URL, useLandingMeta } from './LandingPage'
-import { requiredQuestionIds, workbookQuestions, workbookSections } from './workbookQuestions'
+import { ratingQuestionIds, requiredQuestionIds, workbookQuestions, workbookSections } from './workbookQuestions'
 import './workbook.css'
 
 const STORAGE_KEY = 'ria-workbook-state-v1'
@@ -24,7 +24,10 @@ const emptyState = () => ({
 const loadState = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
-    if (saved?.version === 1 && saved.submissionId && saved.answers) return { ...emptyState(), ...saved }
+    if (saved?.version === 1 && saved.submissionId && saved.answers) {
+      const fresh = emptyState()
+      return { ...fresh, ...saved, answers: { ...fresh.answers, ...saved.answers } }
+    }
   } catch {
     // An unreadable local draft is ignored safely.
   }
@@ -61,7 +64,7 @@ function ProgressRail({ currentStep }) {
           const className = currentStep === step ? 'isActive' : currentStep > step ? 'isDone' : ''
           return <li className={className} key={section.id}><span>{currentStep > step ? <Check size={13} /> : section.number}</span><div><small>{section.label}</small><strong>{section.title}</strong></div></li>
         })}
-        <li className={currentStep === TOTAL_STEPS - 1 ? 'isActive' : ''}><span>06</span><div><small>RILETTURA</small><strong>La tua fotografia</strong></div></li>
+        <li className={currentStep === TOTAL_STEPS - 1 ? 'isActive' : ''}><span>{String(workbookSections.length + 1).padStart(2, '0')}</span><div><small>RILETTURA</small><strong>La tua fotografia</strong></div></li>
       </ol>
       <p><Save size={14} /> Le risposte restano salvate solo su questo dispositivo finché non le invii.</p>
     </aside>
@@ -73,9 +76,9 @@ function IntroStep({ state, update, onContinue, errors }) {
     <section className="workbookIntro workbookStepPanel">
       <p className="workbookKicker"><span>PRIMA DI INIZIARE</span> 15–20 minuti tutti per te</p>
       <h1>Non cercare la risposta giusta.<br /><em>Cerca quella vera.</em></h1>
-      <p className="workbookLead">Questo percorso non ti assegna un’etichetta e non decide al posto tuo. Ti accompagna in 20 domande per rendere visibile la situazione professionale che stai vivendo oggi.</p>
+      <p className="workbookLead">Questo percorso non ti assegna un’etichetta e non decide al posto tuo. Ti accompagna in 20 domande guidate e 14 valutazioni rapide per rendere visibile la situazione professionale che stai vivendo oggi e ciò che desideri costruire.</p>
       <div className="workbookPromiseGrid">
-        <article><Clock3 /><strong>Procedi con calma</strong><span>5 sezioni brevi, una alla volta.</span></article>
+        <article><Clock3 /><strong>Procedi con calma</strong><span>{workbookSections.length} sezioni, una alla volta.</span></article>
         <article><FileHeart /><strong>Ricevi la tua copia</strong><span>Al termine avrai il riepilogo personale via e-mail.</span></article>
         <article><ShieldCheck /><strong>Nessuna newsletter</strong><span>I dati servono solo per questo workbook.</span></article>
       </div>
@@ -105,12 +108,30 @@ function QuestionStep({ section, answers, updateAnswer, errors }) {
       <div className="workbookQuestionList">
         {section.questions.map((question, index) => {
           const id = `${section.id}-${index + 1}`
+          const questionText = typeof question === 'string' ? question : question.text
           const answer = answers[id] || ''
           const required = requiredQuestionIds.has(id)
+          if (section.kind === 'rating') {
+            return (
+              <fieldset className="workbookQuestion workbookRatingQuestion" key={id}>
+                <legend>
+                  <span className="workbookQuestionIndex">{section.number}.{index + 1}</span>
+                  <span className="workbookQuestionText">{questionText} {required && <i>necessaria</i>}</span>
+                </legend>
+                <div className="workbookRatingScale" role="radiogroup" aria-label={`${questionText} Voto da 0 a 10`} aria-invalid={Boolean(errors[id])}>
+                  {Array.from({ length: 11 }, (_, value) => (
+                    <button type="button" role="radio" aria-checked={answer === String(value)} className={answer === String(value) ? 'isSelected' : ''} onClick={() => updateAnswer(id, String(value))} key={value}>{value}</button>
+                  ))}
+                </div>
+                <div className="workbookRatingLabels"><span>0 · {question.low}</span><strong>{answer === '' ? 'Scegli un voto' : `${answer} / 10`}</strong><span>10 · {question.high}</span></div>
+                {errors[id] && <span className="workbookQuestionMeta"><b>{errors[id]}</b></span>}
+              </fieldset>
+            )
+          }
           return (
             <label className="workbookQuestion" key={id}>
               <span className="workbookQuestionIndex">{section.number}.{index + 1}</span>
-              <span className="workbookQuestionText">{question} {required && <i>necessaria</i>}</span>
+              <span className="workbookQuestionText">{questionText} {required && <i>necessaria</i>}</span>
               <textarea value={answer} onChange={(event) => updateAnswer(id, event.target.value)} maxLength="2500" rows="4" placeholder="Scrivi qui, con parole tue…" aria-invalid={Boolean(errors[id])} />
               <span className="workbookQuestionMeta">{errors[id] ? <b>{errors[id]}</b> : 'Non serve scrivere molto: serve essere concreto.'}<small>{answer.length} / 2500</small></span>
             </label>
@@ -125,7 +146,7 @@ function ReviewStep({ state, onEdit, onSubmit, sending, error }) {
   const completed = workbookQuestions.filter(({ id }) => (state.answers[id] || '').trim()).length
   return (
     <section className="workbookReview workbookStepPanel">
-      <p className="workbookKicker"><span>LA TUA FOTOGRAFIA</span> {completed} risposte su 20</p>
+      <p className="workbookKicker"><span>LA TUA FOTOGRAFIA</span> {completed} risposte su {workbookQuestions.length}</p>
       <h1>{firstName(state.name)}, fermati un momento.<br /><em>Guarda ciò che hai reso visibile.</em></h1>
       <p className="workbookLead">Puoi rileggere o correggere ogni sezione. Quando invii, riceverai via e-mail un PDF personale con le tue risposte e anche Gabriele ne riceverà una copia per poterne parlare con te, se lo vorrai.</p>
       <div className="workbookReviewSections">
@@ -133,7 +154,7 @@ function ReviewStep({ state, onEdit, onSubmit, sending, error }) {
           const sectionAnswers = section.questions.map((_, index) => state.answers[`${section.id}-${index + 1}`]).filter((answer) => answer?.trim()).length
           return (
             <button type="button" key={section.id} onClick={() => onEdit(sectionIndex + 1)}>
-              <span style={{ background: section.color }}>{section.number}</span><div><small>{section.label}</small><strong>{section.title}</strong><em>{sectionAnswers} di 4 risposte</em></div><ChevronRight />
+              <span style={{ background: section.color }}>{section.number}</span><div><small>{section.label}</small><strong>{section.title}</strong><em>{sectionAnswers} di {section.questions.length} risposte</em></div><ChevronRight />
             </button>
           )
         })}
@@ -184,7 +205,10 @@ export function OnlineWorkbookPage() {
       const section = workbookSections[currentStep - 1]
       section.questions.forEach((_, index) => {
         const id = `${section.id}-${index + 1}`
-        if (requiredQuestionIds.has(id) && (state.answers[id] || '').trim().length < 2) nextErrors[id] = 'Questa risposta serve per completare la fotografia.'
+        const answer = (state.answers[id] || '').trim()
+        if (requiredQuestionIds.has(id) && (ratingQuestionIds.has(id) ? !/^(?:10|[0-9])$/.test(answer) : answer.length < 2)) {
+          nextErrors[id] = ratingQuestionIds.has(id) ? 'Scegli un voto da 0 a 10.' : 'Questa risposta serve per completare la fotografia.'
+        }
       })
     }
     setErrors(nextErrors)
@@ -196,12 +220,15 @@ export function OnlineWorkbookPage() {
   }
 
   const submit = async () => {
-    const missing = [...requiredQuestionIds].filter((id) => (state.answers[id] || '').trim().length < 2)
+    const missing = [...requiredQuestionIds].filter((id) => {
+      const answer = (state.answers[id] || '').trim()
+      return ratingQuestionIds.has(id) ? !/^(?:10|[0-9])$/.test(answer) : answer.length < 2
+    })
     if (missing.length) {
       const firstMissing = workbookQuestions.find((item) => item.id === missing[0])
       const sectionIndex = workbookSections.findIndex((section) => section.id === firstMissing.sectionId)
       goTo(sectionIndex + 1)
-      setErrors(Object.fromEntries(missing.map((id) => [id, 'Questa risposta serve per completare la fotografia.'])))
+      setErrors(Object.fromEntries(missing.map((id) => [id, ratingQuestionIds.has(id) ? 'Scegli un voto da 0 a 10.' : 'Questa risposta serve per completare la fotografia.'])))
       return
     }
 
