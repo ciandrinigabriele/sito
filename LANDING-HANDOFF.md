@@ -40,7 +40,7 @@ Per il video definitivo sostituire il file, aggiornare sottotitoli e poster, tog
 1. Accedere al progetto Supabase autorizzato da Gabriele.
 2. Applicare lo schema della tabella `workbook_responses` contenuto in `supabase/schema.sql`.
 3. Collegare Resend, verificare un dominio mittente e creare la chiave API.
-4. Configurare su Vercel `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `WORKBOOK_FROM_EMAIL` e `WORKBOOK_OWNER_EMAIL`.
+4. Configurare su Vercel `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `WORKBOOK_FROM_EMAIL` e `WORKBOOK_OWNER_EMAIL`. Il backend accetta anche la precedente `SUPABASE_SERVICE_ROLE_KEY` come fallback.
 5. Questi valori sono solo lato server: non usare mai il prefisso `VITE_` e non inserirli nel repository.
 6. Effettuare un invio controllato con dati di prova, verificare la riga nel database e l’arrivo di entrambe le e-mail con PDF allegato.
 7. Pubblicare soltanto dopo l’approvazione esplicita di Gabriele.

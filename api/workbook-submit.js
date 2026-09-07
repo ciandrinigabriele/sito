@@ -122,7 +122,7 @@ export default async function handler(req, res) {
   if (requestOrigin && !ALLOWED_ORIGIN.test(requestOrigin)) return res.status(403).json({ ok: false, error: 'ORIGIN_NOT_ALLOWED' })
 
   const supabaseUrl = process.env.SUPABASE_URL
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  const serviceKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
   const resendKey = process.env.RESEND_API_KEY
   const from = process.env.WORKBOOK_FROM_EMAIL
   const ownerEmail = process.env.WORKBOOK_OWNER_EMAIL || OWNER_EMAIL
