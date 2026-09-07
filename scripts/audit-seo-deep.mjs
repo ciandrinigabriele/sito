@@ -4,6 +4,7 @@ import path from 'node:path'
 const root = process.cwd()
 const dist = path.join(root, 'dist')
 const origin = 'https://gabrieleciandrini.com'
+const isProduction = process.env.VERCEL_ENV === 'production'
 
 const walk = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
   const absolute = path.join(directory, entry.name)
@@ -87,8 +88,10 @@ for (const page of pages) {
   if (page.canonical !== `${origin}${page.route}`) {
     issues.push({ severity: 'error', route: page.route, issue: `canonical errato: ${page.canonical}` })
   }
-  if (!page.robots.includes('index, follow')) {
-    issues.push({ severity: 'error', route: page.route, issue: `robots non indicizzabile: ${page.robots}` })
+  const robotTokens = page.robots.split(',').map((token) => token.trim())
+  const shouldBeNoindex = !isProduction || ['/workbook-stato-attuale/', '/grazie-per-il-workbook/'].includes(page.route)
+  if (shouldBeNoindex ? !robotTokens.includes('noindex') : (!robotTokens.includes('index') || !robotTokens.includes('follow') || robotTokens.includes('noindex'))) {
+    issues.push({ severity: 'error', route: page.route, issue: `robots non coerente con l'ambiente: ${page.robots}` })
   }
   if (!page.ogImage.startsWith(`${origin}/media/`)) {
     issues.push({ severity: 'warning', route: page.route, issue: 'immagine Open Graph assente o esterna' })
@@ -126,7 +129,7 @@ for (const [description, owners] of descriptionOwners) {
   if (description && owners.length > 1) issues.push({ severity: 'error', route: owners.join(', '), issue: 'meta description duplicata' })
 }
 for (const [route, count] of inbound) {
-  if (route !== '/' && count === 0) issues.push({ severity: 'warning', route, issue: 'pagina orfana nel corpo HTML statico' })
+  if (route !== '/' && route !== '/grazie-per-il-workbook/' && count === 0) issues.push({ severity: 'warning', route, issue: 'pagina orfana nel corpo HTML statico' })
 }
 
 const summary = {

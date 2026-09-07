@@ -7,3 +7,5 @@ dist/
 .audit-*.json
 .*-out.log
 .*-err.log
+tmp/
+output/

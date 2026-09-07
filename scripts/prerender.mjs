@@ -90,6 +90,7 @@ const homeBody = `
       <h2>Uno strumento per osservare la situazione completa</h2>
       <p>La Ruota della Vita aiuta a leggere lavoro, salute, relazioni, tempo e crescita prima di scegliere da dove ripartire.</p>
       <a href="${origin}/ruota-della-vita/">Scopri la Ruota della Vita</a>
+      <a href="${origin}/cambia-direzione/">Apri il workbook gratuito sulla direzione professionale</a>
     </section>
   </main>
   ${footer}`
@@ -139,14 +140,14 @@ const privacyBody = `
     <article>
       <p>Trasparenza e protezione dei dati</p>
       <h1>Privacy Policy</h1>
-      <p>Ultimo aggiornamento: 1 settembre 2026.</p>
-      <p>Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com o invii una richiesta tramite il modulo di contatto.</p>
+      <p>Ultimo aggiornamento: 3 settembre 2026.</p>
+      <p>Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com, invii una richiesta o chiedi di ricevere una risorsa gratuita.</p>
       <h2>Titolare del trattamento</h2>
       <p>Gabriele Ciandrini, P. IVA 02815060423, Corso Amendola 28, 60123 Ancona, Italia. E-mail: ciandrini.gabriele@gmail.com.</p>
       <h2>Dati trattati e finalità</h2>
-      <p>Il modulo raccoglie nome, e-mail e messaggio esclusivamente per rispondere alla richiesta. I sistemi tecnici possono trattare dati di navigazione necessari al funzionamento e alla sicurezza del sito.</p>
+      <p>Il modulo di contatto raccoglie nome, e-mail e messaggio. Il modulo per le risorse gratuite raccoglie nome, e-mail, risorsa richiesta e dati di provenienza della visita per consegnare il materiale e rispondere alla richiesta. La richiesta non comporta l'iscrizione automatica a una newsletter.</p>
       <h2>Conservazione e fornitori</h2>
-      <p>I messaggi vengono conservati per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Vercel fornisce l’hosting e Supabase la banca dati del modulo.</p>
+      <p>I dati vengono conservati per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Vercel fornisce l’hosting e Supabase la banca dati dei moduli.</p>
       <h2>Diritti</h2>
       <p>Puoi chiedere accesso, rettifica, cancellazione, limitazione, portabilità o opposizione scrivendo a ciandrini.gabriele@gmail.com. Puoi inoltre proporre reclamo al Garante per la protezione dei dati personali.</p>
     </article>
@@ -159,14 +160,63 @@ const cookieBody = `
     <article>
       <p>Trasparenza e protezione dei dati</p>
       <h1>Cookie Policy</h1>
-      <p>Ultimo aggiornamento: 1 settembre 2026.</p>
+      <p>Ultimo aggiornamento: 7 settembre 2026.</p>
       <p>Il sito non utilizza cookie pubblicitari, Meta Pixel, Google Analytics o altri strumenti di profilazione.</p>
-      <h2>Strumento tecnico utilizzato</h2>
-      <p>Il valore di sessionStorage ria-intro-seen ricorda che l’animazione iniziale è già stata mostrata nella scheda corrente. Dura fino alla chiusura della sessione del browser, non identifica l’utente e non viene condiviso con soggetti pubblicitari.</p>
+      <h2>Strumenti tecnici utilizzati</h2>
+      <p>Il valore di sessionStorage ria-intro-seen ricorda che l’animazione iniziale è già stata mostrata nella scheda corrente. Il valore di localStorage ria-workbook-state-v1 salva nel dispositivo la bozza del workbook avviata volontariamente, fino all’invio, alla scelta “Ricomincia” o alla cancellazione dei dati del sito. La bozza non viene trasmessa finché l’utente non seleziona il pulsante finale di invio.</p>
       <h2>Perché non compare il banner</h2>
-      <p>Poiché il sito utilizza soltanto uno strumento strettamente tecnico, non è richiesto il consenso preventivo. Se verranno introdotti strumenti non necessari, saranno bloccati fino alla scelta dell’utente e verrà aggiunto un pannello per accettare, rifiutare o modificare le preferenze.</p>
+      <p>Poiché il sito utilizza soltanto strumenti tecnici o richiesti direttamente dall’utente, non è richiesto un banner di consenso preventivo. Se verranno introdotti strumenti non necessari, saranno bloccati fino alla scelta dell’utente e verrà aggiunto un pannello per accettare, rifiutare o modificare le preferenze.</p>
       <p>Per maggiori informazioni consulta la <a href="${origin}/privacy-policy/">Privacy Policy</a>.</p>
     </article>
+  </main>
+  ${footer}`
+
+const landingBody = `
+  <header><a href="${origin}/">Gabriele Ciandrini</a><a href="https://wa.me/393497759350">Hai una domanda?</a></header>
+  <main>
+    <p>Per chi sente che il lavoro non è più quello giusto</p>
+    <h1>Non devi mollare tutto. Devi capire dove andare.</h1>
+    <p>Scopri come trasformare dubbi, paura e insoddisfazione in una direzione professionale concreta, sostenibile e adatta alla tua vita reale.</p>
+    <a href="#video">Guarda il video gratuito</a>
+    <section id="video">
+      <h2>Non ti serve più coraggio. Ti serve più chiarezza.</h2>
+      <p>Il cambiamento professionale non deve essere un salto nel vuoto: può diventare un passaggio costruito con metodo.</p>
+      <video controls playsinline preload="metadata" poster="/media/method-gabriele-cinematic.webp"><source src="/media/video-metodo-ria-prova.mp4" type="video/mp4"><track kind="captions" src="/media/video-metodo-ria-prova.it.vtt" srclang="it" label="Italiano" default></video>
+    </section>
+    <section>
+      <h2>Dove sei adesso? La mappa del tuo punto di partenza</h2>
+      <p>Compila il workbook online per fotografare lo stato professionale attuale, riconoscere blocchi e convinzioni limitanti e definire la prima verifica concreta.</p>
+      <a href="${origin}/workbook-stato-attuale/">Inizia il workbook online</a>
+    </section>
+    <section>
+      <h2>Respira. Immagina. Agisci.</h2>
+      <ol><li>Respira: fai chiarezza.</li><li>Immagina: costruisci possibilità coerenti.</li><li>Agisci: verifica il prossimo passo.</li></ol>
+    </section>
+    <section><h2>Ho cambiato lavoro più volte. Mai con un salto nel vuoto.</h2><p>Gabriele Ciandrini accompagna il cambiamento professionale ad Ancona e online in tutta Italia.</p><a href="${origin}/about-2/">Conosci la mia storia</a></section>
+  </main>
+  ${footer}`
+
+const thankYouBody = `
+  <header><a href="${origin}/">Gabriele Ciandrini</a></header>
+  <main>
+    <p>La prima azione è compiuta</p>
+    <h1>La tua fotografia è pronta.</h1>
+    <p>La copia personale delle risposte viene inviata via e-mail dopo la compilazione del workbook online.</p>
+    <a href="${origin}/workbook-stato-attuale/">Apri il workbook online</a>
+    <section><h2>Vuoi confrontare le tue risposte?</h2><p>Richiedi un primo incontro conoscitivo per partire dalla tua situazione reale.</p><a href="https://wa.me/393497759350">Richiedi il primo incontro</a></section>
+  </main>
+  ${footer}`
+
+const workbookBody = `
+  <header><a href="${origin}/">Gabriele Ciandrini</a><a href="${origin}/cambia-direzione/">Esci dal workbook</a></header>
+  <main>
+    <p>Workbook online sul cambiamento professionale</p>
+    <h1>Dove sei adesso?</h1>
+    <p>Venti domande guidate per fotografare la situazione professionale attuale, senza etichette e senza risposte generate da un algoritmo.</p>
+    <section><h2>La fotografia del presente</h2><p>Descrivi la situazione, ciò che funziona e ciò che oggi ti pesa.</p></section>
+    <section><h2>Energia, contesto e identità</h2><p>Osserva i segnali, il ritmo, lo spazio decisionale, i valori e le capacità che riesci a esprimere.</p></section>
+    <section><h2>Vincoli e direzione</h2><p>Distingui i limiti oggettivi dalle paure e rendi visibile il costo del restare fermo.</p></section>
+    <p>Le risposte vengono salvate temporaneamente nel dispositivo fino all’invio. Il riepilogo personale viene inviato via e-mail al partecipante e a Gabriele Ciandrini.</p>
   </main>
   ${footer}`
 
@@ -240,7 +290,7 @@ const replaceOrInsertMeta = (html, selector, tag) => {
   return html.replace('</head>', `    ${tag}\n  </head>`)
 }
 
-const render = ({ route, title, description, body, type = 'website', date = null, image = defaultImage, extraSchema = null }) => {
+const render = ({ route, title, description, body, type = 'website', date = null, image = defaultImage, extraSchema = null, robots = null }) => {
   const normalizedRoute = normalizeRoute(route)
   const canonical = `${origin}${normalizedRoute}`
   const schemas = [
@@ -267,7 +317,9 @@ const render = ({ route, title, description, body, type = 'website', date = null
   html = replaceOrInsertMeta(
     html,
     /<meta name="robots" content="[^"]*"\s*\/?>/i,
-    isProduction
+    robots
+      ? `<meta name="robots" content="${robots}" />`
+      : isProduction
       ? '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />'
       : '<meta name="robots" content="noindex, nofollow" />',
   )
@@ -355,6 +407,32 @@ render({
   type: 'website',
 })
 
+render({
+  route: '/cambia-direzione/',
+  title: 'Dove sei adesso? Fai chiarezza | Gabriele Ciandrini',
+  description: 'Guarda il video e compila il workbook online per fotografare la tua situazione, riconoscere blocchi e convinzioni limitanti e scegliere il primo passo.',
+  body: landingBody,
+  type: 'website',
+})
+
+render({
+  route: '/workbook-stato-attuale/',
+  title: 'Workbook online: dove sei adesso? | Gabriele Ciandrini',
+  description: 'Compila il workbook guidato per fotografare la tua situazione professionale attuale e ricevere il riepilogo personale delle tue risposte.',
+  body: workbookBody,
+  type: 'website',
+  robots: 'noindex, follow',
+})
+
+render({
+  route: '/grazie-per-il-workbook/',
+  title: 'La tua fotografia è pronta | Gabriele Ciandrini',
+  description: 'Ricevi il riepilogo personale del workbook e scegli il prossimo passo verso una direzione professionale più chiara e sostenibile.',
+  body: thankYouBody,
+  type: 'website',
+  robots: 'noindex, follow',
+})
+
 for (const item of content) {
   if (['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/'].includes(item.path)) continue
   render({
@@ -368,7 +446,7 @@ for (const item of content) {
   })
 }
 
-const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', ...content.map((item) => item.path)]
+const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', '/cambia-direzione/', ...content.map((item) => item.path)]
 const uniqueRoutes = [...new Set(routes.map(normalizeRoute))]
 const itemByPath = new Map(content.map((item) => [normalizeRoute(item.path), item]))
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniqueRoutes.map((route) => {

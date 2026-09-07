@@ -6,7 +6,7 @@ const dist = path.join(root, 'dist')
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-inventory.json'), 'utf8'))
 const content = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-content.json'), 'utf8'))
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'))
-const expectedRoutes = new Set(['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', ...inventory.routes.map((item) => item.route)])
+const expectedRoutes = new Set(['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', '/cambia-direzione/', ...inventory.routes.map((item) => item.route)])
 const failures = []
 const isProduction = process.env.VERCEL_ENV === 'production'
 
@@ -45,6 +45,18 @@ for (const rawRoute of expectedRoutes) {
   if (!sitemap.includes(`<loc>https://gabrieleciandrini.com${route}</loc>`)) {
     failures.push(`${route}: assente dalla sitemap`)
   }
+}
+
+const privateRoutes = ['/workbook-stato-attuale/', '/grazie-per-il-workbook/']
+for (const privateRoute of privateRoutes) {
+  if (!fs.existsSync(fileFor(privateRoute))) {
+    failures.push(`${privateRoute}: file HTML mancante`)
+  } else {
+    const privateHtml = fs.readFileSync(fileFor(privateRoute), 'utf8')
+    if (!/<meta name="robots" content="noindex, follow"/i.test(privateHtml)) failures.push(`${privateRoute}: noindex mancante`)
+    if (!privateHtml.includes(`<link rel="canonical" href="https://gabrieleciandrini.com${privateRoute}"`)) failures.push(`${privateRoute}: canonical mancante`)
+  }
+  if (sitemap.includes(`<loc>https://gabrieleciandrini.com${privateRoute}</loc>`)) failures.push(`${privateRoute}: non deve comparire nella sitemap`)
 }
 
 if (!fs.existsSync(path.join(dist, 'robots.txt'))) failures.push('robots.txt mancante')

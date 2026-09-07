@@ -5,6 +5,9 @@ import {
   MapPin, Menu, MessageCircle, Quote, X
 } from 'lucide-react'
 import { supabase } from './supabase'
+import { LeadLandingPage, LeadThankYouPage } from './LandingPage'
+import { OnlineWorkbookPage } from './OnlineWorkbook'
+import { WORKBOOK_PATH } from './workbookQuestions'
 import { imageForItem, optimizedHtmlFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
 
@@ -158,7 +161,7 @@ function SiteFooter() {
   return (
     <footer>
       <div><a className="brand footerBrand" href="/"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-      <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a><a href="/ruota-della-vita/">Ruota della Vita</a></div>
+      <div className="footerLinks"><a href="/#percorso">Il percorso</a><a href="/metodo-respira-immagina-agisci/">Metodo</a><a href="/about-2/">Chi sono</a><a href="/articoli/">Articoli</a><a href="/cambia-direzione/">Workbook gratuito</a><a href="/ruota-della-vita/">Ruota della Vita</a></div>
       <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a><a href={PRIVACY_URL}>Privacy Policy</a><a href={COOKIE_URL}>Cookie Policy</a></div>
       <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
     </footer>
@@ -182,12 +185,12 @@ function LegalPage({ type }) {
           <a className="contentBack" href="/"><ArrowLeft size={16} /> Torna alla home</a>
           <p className="eyebrow"><span /> Trasparenza e protezione dei dati</p>
           <h1>{title}</h1>
-          <p className="legalUpdated">Ultimo aggiornamento: 1 settembre 2026</p>
+          <p className="legalUpdated">Ultimo aggiornamento: 7 settembre 2026</p>
         </header>
 
         {isPrivacy ? (
           <article className="legalContent">
-            <p className="legalLead">Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com o invii una richiesta tramite il modulo di contatto.</p>
+            <p className="legalLead">Questa informativa spiega quali dati personali vengono trattati quando visiti gabrieleciandrini.com, invii una richiesta o chiedi di ricevere una risorsa gratuita.</p>
 
             <section>
               <span className="legalNumber">01</span>
@@ -198,28 +201,28 @@ function LegalPage({ type }) {
             <section>
               <span className="legalNumber">02</span>
               <h2>Dati trattati</h2>
-              <h3>Dati inviati tramite il modulo</h3>
-              <p>Quando utilizzi il modulo di contatto vengono raccolti nome e cognome, indirizzo e-mail e contenuto del messaggio.</p>
+              <h3>Dati inviati tramite i moduli</h3>
+              <p>Il modulo di contatto raccoglie nome e cognome, indirizzo e-mail e contenuto del messaggio. Il workbook online raccoglie nome, indirizzo e-mail, le risposte inserite nelle 20 domande e dati di provenienza della visita, come gli eventuali parametri della campagna social.</p>
               <h3>Dati tecnici di navigazione</h3>
               <p>I sistemi che rendono disponibile il sito possono trattare indirizzo IP, data e ora della richiesta, indirizzo richiesto, tipo di browser, dispositivo ed eventuali informazioni necessarie alla sicurezza e al corretto funzionamento del servizio.</p>
-              <div className="legalNotice"><strong>Proteggi anche tu i tuoi dati.</strong><p>Il modulo serve a richiedere informazioni sul percorso. Ti chiediamo di non inserire dati sanitari, diagnosi o altre informazioni particolarmente delicate.</p></div>
+              <div className="legalNotice"><strong>Proteggi anche tu i tuoi dati.</strong><p>I moduli e il workbook servono a fotografare la situazione professionale e richiedere informazioni sul percorso. Ti chiediamo di non inserire dati sanitari, diagnosi o altre informazioni particolarmente delicate.</p></div>
             </section>
 
             <section>
               <span className="legalNumber">03</span>
               <h2>Finalità e basi giuridiche</h2>
               <ul>
-                <li><strong>Rispondere alle richieste:</strong> i dati del modulo vengono usati per ricontattarti e gestire la tua richiesta. La base giuridica è l’esecuzione di misure precontrattuali richieste dall’interessato, ai sensi dell’art. 6, par. 1, lett. b del GDPR.</li>
+                <li><strong>Rispondere alle richieste e consegnare le risorse:</strong> i dati dei moduli e del workbook vengono usati per preparare e inviare il riepilogo personale delle risposte, consentire a Gabriele di leggerlo e gestire l’eventuale richiesta di confronto. La base giuridica è l’esecuzione di misure precontrattuali o di un servizio richiesto dall’interessato, ai sensi dell’art. 6, par. 1, lett. b del GDPR.</li>
                 <li><strong>Funzionamento e sicurezza:</strong> i dati tecnici vengono trattati per erogare il sito, prevenire abusi e risolvere problemi. La base giuridica è il legittimo interesse del titolare, ai sensi dell’art. 6, par. 1, lett. f del GDPR.</li>
                 <li><strong>Obblighi e tutela dei diritti:</strong> alcuni dati possono essere conservati quando necessario per adempiere a obblighi di legge o accertare, esercitare o difendere un diritto.</li>
               </ul>
-              <p>Il sito non utilizza i dati del modulo per newsletter o comunicazioni promozionali e non effettua decisioni automatizzate o profilazione.</p>
+              <p>La richiesta di una risorsa non comporta l’iscrizione automatica a newsletter o comunicazioni promozionali. Il sito non effettua decisioni automatizzate o profilazione.</p>
             </section>
 
             <section>
               <span className="legalNumber">04</span>
               <h2>Conferimento e conservazione</h2>
-              <p>Fornire i dati nel modulo è facoltativo, ma senza nome, e-mail e messaggio non è possibile rispondere alla richiesta. I messaggi vengono conservati per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Possono essere conservati più a lungo quando nasce un rapporto professionale, quando lo richiede la legge o quando è necessario tutelare un diritto.</p>
+              <p>Fornire i dati nei moduli è facoltativo, ma senza i campi richiesti non è possibile rispondere o consegnare la risorsa. La bozza del workbook resta nel browser del visitatore fino all’invio o alla cancellazione manuale. Le risposte inviate vengono conservate per il tempo necessario a gestire il contatto e, di regola, non oltre 12 mesi. Possono essere conservate più a lungo quando nasce un rapporto professionale, quando lo richiede la legge o quando è necessario tutelare un diritto.</p>
             </section>
 
             <section>
@@ -229,6 +232,7 @@ function LegalPage({ type }) {
               <ul>
                 <li><strong>Vercel Inc.</strong>, per l’hosting e la distribuzione del sito. Consulta la <a href="https://vercel.com/legal/privacy-notice">Privacy Notice di Vercel</a>.</li>
                 <li><strong>Supabase Inc.</strong>, per la banca dati che riceve le richieste inviate dal modulo. Consulta la <a href="https://supabase.com/privacy">Privacy Policy di Supabase</a>.</li>
+                <li><strong>Resend Inc.</strong>, per l’invio del riepilogo del workbook via e-mail. Consulta la <a href="https://resend.com/legal/privacy-policy">Privacy Policy di Resend</a>.</li>
               </ul>
               <p>I dati non vengono venduti. Possono essere comunicati ad autorità o consulenti soltanto nei casi previsti dalla legge o necessari alla tutela di un diritto.</p>
             </section>
@@ -268,8 +272,9 @@ function LegalPage({ type }) {
               <div className="cookieTable" role="table" aria-label="Strumenti tecnici utilizzati">
                 <div className="cookieRow cookieHead" role="row"><span role="columnheader">Strumento</span><span role="columnheader">Finalità</span><span role="columnheader">Durata</span></div>
                 <div className="cookieRow" role="row"><span role="cell"><strong>ria-intro-seen</strong><small>sessionStorage, prima parte</small></span><span role="cell">Ricorda che l’animazione iniziale è già stata mostrata nella scheda corrente.</span><span role="cell">Fino alla chiusura della sessione del browser.</span></div>
+                <div className="cookieRow" role="row"><span role="cell"><strong>ria-workbook-state-v1</strong><small>localStorage, prima parte</small></span><span role="cell">Salva nel dispositivo la bozza del workbook avviata volontariamente, così può essere ripresa senza perdere le risposte.</span><span role="cell">Fino all’invio, alla scelta “Ricomincia” o alla cancellazione dei dati del sito.</span></div>
               </div>
-              <p>Questo strumento è strettamente tecnico: non identifica l’utente, non crea profili e non viene condiviso con soggetti pubblicitari.</p>
+              <p>Questi strumenti sono tecnici e non vengono usati per pubblicità o profilazione. La bozza del workbook resta nel dispositivo e non viene trasmessa finché l’utente non seleziona il pulsante finale di invio.</p>
             </section>
 
             <section>
@@ -287,14 +292,14 @@ function LegalPage({ type }) {
             <section>
               <span className="legalNumber">05</span>
               <h2>Perché non compare il banner</h2>
-              <p>Il consenso preventivo è necessario per cookie di profilazione o altri tracciamenti non tecnici. Poiché al momento il sito utilizza soltanto uno strumento tecnico, l’informazione viene fornita direttamente in questa pagina.</p>
+              <p>Il consenso preventivo è necessario per cookie di profilazione o altri tracciamenti non tecnici. Poiché al momento il sito utilizza soltanto strumenti tecnici o richiesti direttamente dall’utente, l’informazione viene fornita in questa pagina senza un banner invasivo.</p>
               <p>Se in futuro verranno introdotti Analytics, Meta Pixel, video incorporati o altri servizi non strettamente necessari, tali strumenti saranno bloccati fino alla scelta dell’utente e verrà aggiunto un pannello per accettare, rifiutare o modificare le preferenze.</p>
             </section>
 
             <section>
               <span className="legalNumber">06</span>
               <h2>Come gestire i dati nel browser</h2>
-              <p>Puoi cancellare i dati del sito dalle impostazioni del browser. La rimozione di <strong>ria-intro-seen</strong> farà semplicemente ricomparire l’animazione iniziale alla visita successiva.</p>
+              <p>Puoi cancellare i dati del sito dalle impostazioni del browser. La rimozione di <strong>ria-intro-seen</strong> farà ricomparire l’animazione iniziale; la rimozione di <strong>ria-workbook-state-v1</strong> cancellerà la bozza non ancora inviata.</p>
               <p>Per informazioni sul trattamento dei dati personali consulta la <a href={PRIVACY_URL}>Privacy Policy</a>. Per domande puoi scrivere a <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.</p>
             </section>
           </article>
@@ -1044,7 +1049,7 @@ function App() {
 
       <footer>
         <div><a className="brand footerBrand" href="#top"><span className="brandDot" /> Gabriele <strong>Ciandrini</strong></a><p>Coach per il cambiamento professionale<br />ad Ancona e online.</p></div>
-        <div className="footerLinks"><a href="#percorso">Il percorso</a><a href="#metodo">Metodo</a><a href="/about-2/">Chi sono</a><a href="#risorse">Articoli</a></div>
+        <div className="footerLinks"><a href="#percorso">Il percorso</a><a href="#metodo">Metodo</a><a href="/about-2/">Chi sono</a><a href="#risorse">Articoli</a><a href="/cambia-direzione/">Workbook gratuito</a></div>
         <div className="footerLinks"><a href={WHATSAPP}>WhatsApp</a><a href="https://www.facebook.com/coachgabrieleciandrini">Facebook</a><a href="/contatti/">Contatti</a><a href={PRIVACY_URL}>Privacy Policy</a><a href={COOKIE_URL}>Cookie Policy</a></div>
         <p className="copyright">© {new Date().getFullYear()} Gabriele Ciandrini · P. IVA 02815060423</p>
       </footer>
@@ -1058,6 +1063,9 @@ const isArticlesPage = currentPath === '/articoli/'
 const isAboutPage = currentPath === '/about-2/'
 const isPrivacyPage = currentPath === PRIVACY_URL
 const isCookiePage = currentPath === COOKIE_URL
+const isLeadLandingPage = currentPath === '/cambia-direzione/'
+const isLeadThankYouPage = currentPath === '/grazie-per-il-workbook/'
+const isOnlineWorkbookPage = currentPath === WORKBOOK_PATH
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const renderPage = (page) => root.render(<React.StrictMode>{page}</React.StrictMode>)
 
@@ -1071,6 +1079,12 @@ if (currentPath === '/') {
   renderPage(<LegalPage type="privacy" />)
 } else if (isCookiePage) {
   renderPage(<LegalPage type="cookie" />)
+} else if (isLeadLandingPage) {
+  renderPage(<LeadLandingPage />)
+} else if (isLeadThankYouPage) {
+  renderPage(<LeadThankYouPage />)
+} else if (isOnlineWorkbookPage) {
+  renderPage(<OnlineWorkbookPage />)
 } else {
   import('./data/wordpress-content.json').then(({ default: wordpressContent }) => {
     const posts = wordpressContent
