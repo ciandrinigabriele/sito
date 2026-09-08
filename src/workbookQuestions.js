@@ -8,10 +8,15 @@ export const workbookSections = [
     title: 'Che effetto ti fa?',
     prompt: 'Ascolta i segnali che il corpo e le emozioni stanno già inviando.',
     color: '#ff8a70',
+    guide: {
+      title: 'Cosa intendiamo per energia?',
+      text: 'Non soltanto la stanchezza fisica. Osserva come il lavoro influisce sulla tua energia mentale, emotiva e fisica: lucidità, motivazione, tensione, irritabilità, entusiasmo e capacità di recuperare.',
+      tip: 'Pensa a come ti senti prima di iniziare, durante la giornata e quando torni a casa.',
+    },
     questions: [
       'Quali sensazioni ed emozioni provi la domenica sera?',
       'Il lunedì mattina, quando ti svegli, quali sono i tuoi primi pensieri e le tue emozioni?',
-      'Quando ti svegli al mattino, come descriveresti la tua energia?',
+      'Al mattino, pensando alla giornata lavorativa che ti aspetta, come descriveresti la tua energia mentale, emotiva e fisica?',
       'Quali attività o situazioni lavorative ti tolgono più energia?',
       'Dopo il lavoro, riesci davvero a staccare e recuperare energie?',
       'Quali emozioni provi quando pensi al tuo lavoro?',
@@ -46,10 +51,15 @@ export const workbookSections = [
   {
     id: 'identita',
     number: '04',
-    label: 'Identità e valore',
+    label: 'Identità e valori',
     title: 'Ti riconosci ancora?',
     prompt: 'Distingui il tuo valore dal contesto nel quale oggi stai cercando di esprimerlo.',
     color: '#78d9ff',
+    guide: {
+      title: 'Cosa intendiamo per valori?',
+      text: 'Sono le cose che per te contano davvero e che vorresti riconoscere nel tuo modo di lavorare: per esempio autonomia, sicurezza, rispetto, crescita, creatività, libertà, utilità, equilibrio e relazioni positive.',
+      tip: 'Non scegliere ciò che dovrebbe essere importante. Pensa a ciò che conta realmente per te.',
+    },
     questions: [
       'Quali valori personali riesci a esprimere nel tuo lavoro?',
       'Quali valori, invece, senti di dover sacrificare nel tuo lavoro?',

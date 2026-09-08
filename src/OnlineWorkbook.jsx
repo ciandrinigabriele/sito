@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, ChevronRight, Clock3, FileHeart,
-  LockKeyhole, Mail, RotateCcw, Save, Send, ShieldCheck, Sparkles,
+  Lightbulb, LockKeyhole, Mail, RotateCcw, Save, Send, ShieldCheck, Sparkles,
 } from 'lucide-react'
 import { LandingBrand, PRIVACY_URL, THANK_YOU_URL, useLandingMeta } from './LandingPage'
 import { ratingQuestionIds, requiredQuestionIds, workbookQuestions, workbookSections } from './workbookQuestions'
@@ -106,6 +106,17 @@ function QuestionStep({ section, answers, updateAnswer, errors }) {
         <span className="workbookSectionNumber">{section.number}</span>
         <div><p>{section.label}</p><h1>{section.title}</h1><span>{section.prompt}</span></div>
       </div>
+      {section.guide && (
+        <aside className="workbookSectionGuide" aria-label="Una chiave per rispondere">
+          <span className="workbookSectionGuideIcon"><Lightbulb /></span>
+          <div>
+            <small>UNA CHIAVE PER RISPONDERE</small>
+            <h2>{section.guide.title}</h2>
+            <p>{section.guide.text}</p>
+            <strong>{section.guide.tip}</strong>
+          </div>
+        </aside>
+      )}
       <div className="workbookQuestionList">
         {section.questions.map((question, index) => {
           const id = `${section.id}-${index + 1}`

@@ -65,6 +65,13 @@
 .workbookSectionHeading p { margin:2px 0 11px; color:#6c7672; font-size:9px; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; }
 .workbookSectionHeading h1 { margin:0; font-family:'Manrope'; font-size:clamp(52px,6vw,82px); line-height:.9; letter-spacing:-4px; }
 .workbookSectionHeading div > span { display:block; max-width:670px; margin-top:18px; color:#68716e; font-size:14px; line-height:1.55; }
+.workbookSectionGuide { position:relative; margin:-24px 0 30px; padding:23px 26px; border:1px solid color-mix(in srgb,var(--section-color) 44%,#d8d4c9); border-radius:21px; display:grid; grid-template-columns:46px 1fr; gap:17px; background:linear-gradient(135deg,color-mix(in srgb,var(--section-color) 13%,white),rgba(255,255,255,.65)); box-shadow:0 16px 38px rgba(29,39,36,.05); color:var(--wb-ink); }
+.workbookSectionGuideIcon { width:46px; height:46px; display:grid; place-items:center; border-radius:14px; background:var(--section-color); }
+.workbookSectionGuideIcon svg { width:21px; height:21px; stroke-width:2; }
+.workbookSectionGuide small { display:block; margin:1px 0 7px; color:#6b7570; font-size:8px; font-weight:900; letter-spacing:1.15px; }
+.workbookSectionGuide h2 { margin:0; font-family:'Manrope'; font-size:20px; line-height:1.2; letter-spacing:-.5px; }
+.workbookSectionGuide p { max-width:760px; margin:9px 0 0; color:#59635f; font-size:13px; line-height:1.6; }
+.workbookSectionGuide strong { display:block; margin-top:10px; padding-top:10px; border-top:1px solid color-mix(in srgb,var(--section-color) 40%,#d8d4c9); color:#303b37; font-size:11px; line-height:1.5; }
 .workbookQuestionList { display:grid; gap:18px; }
 .workbookQuestion { position:relative; padding:28px 29px 22px; border:1px solid #dbd7cc; border-radius:22px; display:grid; grid-template-columns:45px 1fr; column-gap:16px; background:rgba(255,255,255,.55); color:var(--wb-ink); transition:border-color .2s,box-shadow .2s,background .2s; }
 .workbookQuestion:focus-within { border-color:var(--section-color); background:white; box-shadow:0 20px 50px rgba(29,39,36,.07); }
@@ -152,6 +159,12 @@
   .workbookSectionNumber { width:58px; height:58px; border-radius:17px; font-size:17px; }
   .workbookSectionHeading h1 { font-size:42px; letter-spacing:-3px; }
   .workbookSectionHeading div > span { font-size:12px; }
+  .workbookSectionGuide { margin:-8px 0 22px; padding:18px 16px; grid-template-columns:39px 1fr; gap:12px; border-radius:17px; }
+  .workbookSectionGuideIcon { width:39px; height:39px; border-radius:11px; }
+  .workbookSectionGuideIcon svg { width:18px; height:18px; }
+  .workbookSectionGuide h2 { font-size:17px; }
+  .workbookSectionGuide p { font-size:12px; line-height:1.55; }
+  .workbookSectionGuide strong { font-size:10px; }
   .workbookQuestion { padding:19px 16px 16px; grid-template-columns:35px 1fr; gap:12px; border-radius:17px; }
   .workbookQuestionIndex { width:35px; height:35px; border-radius:10px; }
   .workbookQuestionText { font-size:15px; }
