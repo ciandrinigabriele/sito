@@ -212,9 +212,9 @@ const workbookBody = `
   <main>
     <p>Workbook online sul cambiamento professionale</p>
     <h1>Dove sei adesso?</h1>
-    <p>Venti domande guidate per fotografare la situazione professionale attuale, senza etichette e senza risposte generate da un algoritmo.</p>
-    <section><h2>La fotografia del presente</h2><p>Descrivi la situazione, ciò che funziona e ciò che oggi ti pesa.</p></section>
-    <section><h2>Energia, contesto e identità</h2><p>Osserva i segnali, il ritmo, lo spazio decisionale, i valori e le capacità che riesci a esprimere.</p></section>
+    <p>Trentaquattro domande, tra risposte aperte e valutazioni da 0 a 10, per fotografare la situazione professionale attuale senza etichette e senza risposte generate da un algoritmo.</p>
+    <section><h2>Energia ed emozioni</h2><p>Parti dai segnali che emergono la domenica sera, il lunedì mattina e durante la tua giornata lavorativa.</p></section>
+    <section><h2>Fotografia, contesto e identità</h2><p>Descrivi la situazione, il ritmo, lo spazio decisionale, i valori e le capacità che riesci a esprimere.</p></section>
     <section><h2>Vincoli e direzione</h2><p>Distingui i limiti oggettivi dalle paure e rendi visibile il costo del restare fermo.</p></section>
     <p>Le risposte vengono salvate temporaneamente nel dispositivo fino all’invio. Il riepilogo personale viene inviato via e-mail al partecipante e a Gabriele Ciandrini.</p>
   </main>

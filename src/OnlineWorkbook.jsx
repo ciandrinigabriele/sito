@@ -8,10 +8,11 @@ import { ratingQuestionIds, requiredQuestionIds, workbookQuestions, workbookSect
 import './workbook.css'
 
 const STORAGE_KEY = 'ria-workbook-state-v1'
+const QUESTION_SET_VERSION = 2
 const TOTAL_STEPS = workbookSections.length + 2
 
 const emptyState = () => ({
-  version: 1,
+  version: QUESTION_SET_VERSION,
   submissionId: crypto.randomUUID(),
   name: '',
   email: '',
@@ -24,7 +25,7 @@ const emptyState = () => ({
 const loadState = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
-    if (saved?.version === 1 && saved.submissionId && saved.answers) {
+    if (saved?.version === QUESTION_SET_VERSION && saved.submissionId && saved.answers) {
       const fresh = emptyState()
       return { ...fresh, ...saved, answers: { ...fresh.answers, ...saved.answers } }
     }
@@ -74,9 +75,9 @@ function ProgressRail({ currentStep }) {
 function IntroStep({ state, update, onContinue, errors }) {
   return (
     <section className="workbookIntro workbookStepPanel">
-      <p className="workbookKicker"><span>PRIMA DI INIZIARE</span> 15–20 minuti tutti per te</p>
+      <p className="workbookKicker"><span>PRIMA DI INIZIARE</span> 20–25 minuti tutti per te</p>
       <h1>Non cercare la risposta giusta.<br /><em>Cerca quella vera.</em></h1>
-      <p className="workbookLead">Questo percorso non ti assegna un’etichetta e non decide al posto tuo. Ti accompagna in 20 domande guidate e 14 valutazioni rapide per rendere visibile la situazione professionale che stai vivendo oggi e ciò che desideri costruire.</p>
+      <p className="workbookLead">Questo percorso non ti assegna un’etichetta e non decide al posto tuo. Ti accompagna in 20 domande aperte e 14 valutazioni rapide per rendere visibile la situazione professionale che stai vivendo oggi e ciò che desideri costruire.</p>
       <div className="workbookPromiseGrid">
         <article><Clock3 /><strong>Procedi con calma</strong><span>{workbookSections.length} sezioni, una alla volta.</span></article>
         <article><FileHeart /><strong>Ricevi la tua copia</strong><span>Al termine avrai il riepilogo personale via e-mail.</span></article>

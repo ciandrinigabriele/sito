@@ -203,7 +203,7 @@ function LegalPage({ type }) {
               <span className="legalNumber">02</span>
               <h2>Dati trattati</h2>
               <h3>Dati inviati tramite i moduli</h3>
-              <p>Il modulo di contatto raccoglie nome e cognome, indirizzo e-mail e contenuto del messaggio. Il workbook online raccoglie nome, indirizzo e-mail, le risposte inserite nelle 20 domande e dati di provenienza della visita, come gli eventuali parametri della campagna social.</p>
+              <p>Il modulo di contatto raccoglie nome e cognome, indirizzo e-mail e contenuto del messaggio. Il workbook online raccoglie nome, indirizzo e-mail, le risposte inserite nelle 34 domande e dati di provenienza della visita, come gli eventuali parametri della campagna social.</p>
               <h3>Dati tecnici di navigazione</h3>
               <p>I sistemi che rendono disponibile il sito possono trattare indirizzo IP, data e ora della richiesta, indirizzo richiesto, tipo di browser, dispositivo ed eventuali informazioni necessarie alla sicurezza e al corretto funzionamento del servizio.</p>
               <div className="legalNotice"><strong>Proteggi anche tu i tuoi dati.</strong><p>I moduli e il workbook servono a fotografare la situazione professionale e richiedere informazioni sul percorso. Ti chiediamo di non inserire dati sanitari, diagnosi o altre informazioni particolarmente delicate.</p></div>

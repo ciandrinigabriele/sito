@@ -158,7 +158,7 @@ export function LeadLandingPage() {
           </div>
           <aside className="leadWorkbookAction">
             <span className="leadMiniIcon"><FileText size={18} /></span>
-            <p>20 DOMANDE · 5 SEZIONI · 15–20 MINUTI</p>
+            <p>34 DOMANDE · 8 SEZIONI · 20–25 MINUTI</p>
             <h2>Apri il tuo spazio personale.</h2>
             <span>Compila il percorso direttamente online, interrompilo quando vuoi e ricevi via e-mail la fotografia completa delle tue risposte.</span>
             <a className="leadSubmit" href={WORKBOOK_PATH}>Inizia il workbook online <ArrowRight size={19} /></a>

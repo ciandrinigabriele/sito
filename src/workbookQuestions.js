@@ -2,31 +2,32 @@ export const WORKBOOK_PATH = '/workbook-stato-attuale/'
 
 export const workbookSections = [
   {
-    id: 'fotografia',
-    number: '01',
-    label: 'Fotografia del presente',
-    title: 'Dove sei, davvero?',
-    prompt: 'Partiamo dai fatti. Non cercare di essere positivo: prova a essere preciso.',
-    color: '#cbff45',
-    questions: [
-      'Se dovessi descrivere in una frase la tua situazione professionale attuale, cosa diresti?',
-      'Quale episodio recente rappresenta meglio il momento che stai vivendo?',
-      'Che cosa continua a funzionare bene e vuoi assolutamente proteggere?',
-      'Quale aspetto della tua situazione professionale ti pesa maggiormente?',
-    ],
-  },
-  {
     id: 'energia',
-    number: '02',
+    number: '01',
     label: 'Energia ed emozioni',
     title: 'Che effetto ti fa?',
     prompt: 'Ascolta i segnali che il corpo e le emozioni stanno già inviando.',
     color: '#ff8a70',
     questions: [
-      'Con quale energia inizi normalmente la giornata lavorativa?',
-      'Quali attività o situazioni ti tolgono più energia?',
-      'Riesci realmente a staccare e recuperare dopo il lavoro?',
-      'Qual è l’emozione che provi più frequentemente pensando al tuo lavoro?',
+      'Quali sensazioni ed emozioni provi la domenica sera?',
+      'Il lunedì mattina, quando ti svegli, quali sono i tuoi primi pensieri e le tue emozioni?',
+      'Quando ti svegli al mattino, come descriveresti la tua energia?',
+      'Quali attività o situazioni lavorative ti tolgono più energia?',
+      'Dopo il lavoro, riesci davvero a staccare e recuperare energie?',
+      'Quali emozioni provi quando pensi al tuo lavoro?',
+    ],
+  },
+  {
+    id: 'fotografia',
+    number: '02',
+    label: 'Fotografia del presente',
+    title: 'Dove sei, davvero?',
+    prompt: 'Partiamo dai fatti. Non cercare di essere positivo: prova a essere preciso.',
+    color: '#cbff45',
+    questions: [
+      'Descrivi con una frase la tua situazione professionale attuale.',
+      'Che cosa continua a funzionare bene nella tua vita e vuoi assolutamente proteggere?',
+      'Quale aspetto della tua situazione professionale ti pesa maggiormente?',
     ],
   },
   {
@@ -38,8 +39,7 @@ export const workbookSections = [
     color: '#b6a7ff',
     questions: [
       'Considerando energia, tempo e responsabilità, il tuo attuale ritmo di lavoro è sostenibile?',
-      'Quanto puoi decidere autonomamente come organizzare e svolgere il tuo lavoro?',
-      'Sai con chiarezza che cosa ci si aspetta da te oppure ricevi richieste confuse o contraddittorie?',
+      'Nel tuo lavoro quanto ti senti autonomo e quanto, invece, limitato da regole, orari o modalità che non puoi scegliere?',
       'Nel tuo ambiente di lavoro ti senti ascoltato, rispettato e sostenuto?',
     ],
   },
@@ -51,10 +51,9 @@ export const workbookSections = [
     prompt: 'Distingui il tuo valore dal contesto nel quale oggi stai cercando di esprimerlo.',
     color: '#78d9ff',
     questions: [
-      'Il lavoro che svolgi rappresenta ancora la persona che sei diventato?',
-      'Quali valori personali riesci a esprimere nel lavoro e quali senti di dover sacrificare?',
-      'Quali capacità importanti possiedi ma non riesci a utilizzare?',
-      'Ti senti realmente privo di valore oppure ti trovi in un contesto che non riesce a riconoscerlo?',
+      'Quali valori personali riesci a esprimere nel tuo lavoro?',
+      'Quali valori, invece, senti di dover sacrificare nel tuo lavoro?',
+      'Senti di avere capacità e qualità che non puoi esprimere nel lavoro che svolgi attualmente?',
     ],
   },
   {
@@ -65,10 +64,11 @@ export const workbookSections = [
     prompt: 'Chiudi la fotografia separando i vincoli reali dalle paure e dai costi dell’immobilità.',
     color: '#ffd86b',
     questions: [
-      'Quali sono i vincoli realmente oggettivi della tua situazione e quali potrebbero essere paure o supposizioni?',
-      'Qual è il primo pensiero che compare quando immagini di cambiare qualcosa?',
-      'Che cosa stai ottenendo e che cosa stai perdendo rimanendo nella situazione attuale?',
-      'Se nulla cambiasse nei prossimi dodici mesi, quale sarebbe il costo personale, professionale ed emotivo per te?',
+      'Quali sono i vincoli o le paure che ti tengono legato a questo lavoro?',
+      'Qual è il primo pensiero che compare quando immagini di cambiare lavoro?',
+      'Che cosa stai ottenendo da questo lavoro, in questo momento?',
+      'Che cosa senti di stare perdendo restando in questo lavoro?',
+      'Immagina i prossimi dieci anni: se rimanessi fermo senza cambiare nulla, quale sarebbe il costo personale, professionale ed emotivo per te?',
     ],
   },
   {
@@ -134,8 +134,8 @@ export const workbookQuestions = workbookSections.flatMap((section) =>
 )
 
 export const requiredQuestionIds = new Set([
-  'fotografia-1', 'fotografia-4', 'energia-1', 'energia-4', 'contesto-1',
-  'identita-1', 'direzione-1', 'direzione-2', 'direzione-3', 'direzione-4',
+  'energia-1', 'energia-6', 'fotografia-1', 'fotografia-3', 'contesto-1',
+  'identita-1', 'direzione-1', 'direzione-2', 'direzione-3', 'direzione-4', 'direzione-5',
   'oggi-1', 'oggi-2', 'oggi-3', 'oggi-4', 'oggi-5',
   'desideri-1', 'desideri-2', 'desideri-3', 'desideri-4', 'desideri-5',
   'azione-1', 'azione-2', 'azione-3', 'azione-4',
