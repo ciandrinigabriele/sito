@@ -695,7 +695,7 @@ footer { background: #080c0b; color: #9ca4a1; padding: 70px max(24px, calc((100%
     transform: translate3d(0, calc(var(--hero-scroll) * 28px), 0);
   }
   .portraitFrame { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; filter: saturate(.86) contrast(1.05) brightness(1.02); box-shadow: none; }
-  .portraitFrame img { object-position: 43% center; transform: scale(1.07); }
+  .portraitFrame img { object-position: 40% center; transform: none; }
   .portraitFrame:after {
     background:
       linear-gradient(180deg, rgba(8,13,12,.18) 0%, rgba(8,13,12,.2) 34%, rgba(8,13,12,.78) 69%, #101716 100%),

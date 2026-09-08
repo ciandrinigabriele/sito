@@ -19,12 +19,13 @@ const COOKIE_URL = '/cookie-policy/'
 const PRIVACY_EMAIL = 'ciandrini.gabriele@gmail.com'
 
 const images = {
-  hero: '/media/method-gabriele-cinematic.webp',
+  hero: '/media/gabriele-home-strada-blu-finale-crop2.webp',
+  homeHero: '/media/gabriele-home-strada-blu-finale-crop2.webp',
   studio1: '/media/studio1.jpg',
   studio2: '/media/studio2.jpg',
   studio3: '/media/studio3.jpg',
   studio4: '/media/studio4.jpg',
-  method: '/media/method-gabriele-cinematic.webp',
+  method: '/media/gabriele-landing-editorial-v1.webp',
 }
 
 const journeyPhases = [
@@ -864,7 +865,7 @@ function App() {
           <div className="heroPortrait">
             <div className="portraitAura" aria-hidden="true" />
             <div className="portraitFrame">
-              <img src={images.hero} alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchpriority="high" decoding="async" />
+              <img src={images.homeHero} alt="Gabriele Ciandrini, coach per il cambiamento professionale, davanti a una strada verso una nuova direzione" fetchpriority="high" decoding="async" />
             </div>
             <div className="floatingCard">
               <span className="pulse" />

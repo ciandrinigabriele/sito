@@ -67,7 +67,7 @@ function VideoSection() {
           <span className="leadVideoBadge"><Play size={13} fill="currentColor" /> Video di prova</span>
           <video
             src={VIDEO_URL}
-            poster="/media/method-gabriele-cinematic.webp"
+            poster="/media/gabriele-landing-editorial-v1.webp"
             controls
             playsInline
             preload="metadata"
@@ -126,7 +126,7 @@ export function LeadLandingPage() {
           </div>
           <div className="leadHeroVisual">
             <div className="leadPortraitCard">
-              <img src="/media/method-gabriele-cinematic.webp" alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchpriority="high" />
+              <img src="/media/gabriele-landing-editorial-v1.webp" alt="Gabriele Ciandrini, coach per il cambiamento professionale" fetchpriority="high" />
               <span className="leadPortraitLine" />
               <div className="leadPortraitCaption"><small>GABRIELE CIANDRINI</small><strong>Non insegno il cambiamento.<br />L’ho attraversato.</strong></div>
             </div>
