@@ -7,7 +7,7 @@ import { WORKBOOK_PATH } from './workbookQuestions'
 import './landing.css'
 
 export const THANK_YOU_URL = '/grazie-per-il-workbook/'
-const VIDEO_URL = '/media/video-metodo-ria-prova.mp4'
+const VIDEO_URL = 'https://app.heygen.com/embeds/2f92e49451c74cf7aedcbe27e9ef3bd2'
 export const WHATSAPP = 'https://wa.me/393497759350'
 export const PRIVACY_URL = '/privacy-policy/'
 
@@ -60,30 +60,27 @@ function VideoSection() {
       <div className="leadSectionIntro">
         <p className="leadEyebrow"><span>01</span> Prima guarda, poi scegli</p>
         <h2>Non ti serve più coraggio.<br /><em>Ti serve più chiarezza.</em></h2>
-        <p>In questo breve video ti mostro perché cambiare direzione non significa necessariamente mollare tutto, ma costruire un passaggio che protegga ciò che per te conta davvero.</p>
+        <p>In questo breve video ti accompagno nel primo passo: fotografare con sincerità la tua situazione professionale attuale e capire se è arrivato il momento di costruire una nuova direzione.</p>
       </div>
       <div className="leadVideoGrid">
         <div className="leadVideoFrame">
-          <span className="leadVideoBadge"><Play size={13} fill="currentColor" /> Video di prova</span>
-          <video
+          <span className="leadVideoBadge"><Play size={13} fill="currentColor" /> Mini sessione gratuita</span>
+          <iframe
             src={VIDEO_URL}
-            poster="/media/gabriele-landing-editorial-v1.webp"
-            controls
-            playsInline
-            preload="metadata"
-            onLoadedMetadata={(event) => { event.currentTarget.playbackRate = 0.88 }}
-          >
-            <track kind="captions" src="/media/video-metodo-ria-prova.it.vtt" srcLang="it" label="Italiano" default />
-            Il tuo browser non supporta la riproduzione video.
-          </video>
+            title="Mini sessione gratuita: fai chiarezza sulla tua situazione professionale"
+            allow="encrypted-media; fullscreen"
+            allowFullScreen
+            loading="eager"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
           <div className="leadVideoGlow" />
         </div>
         <aside className="leadVideoNotes">
           <p className="leadNotesLabel">NEL VIDEO</p>
           {[
-            ['01', 'Perché la confusione non è un fallimento, ma un segnale da leggere.'],
-            ['02', 'Come distinguere una fuga da una direzione professionale concreta.'],
-            ['03', 'Il primo passo da fare senza mettere a rischio tutto.'],
+            ['01', 'Perché ogni cambiamento serio parte dalla consapevolezza del punto in cui ti trovi.'],
+            ['02', 'Come usare il workbook per osservare emozioni, energia, valori e ciò che oggi ti trattiene.'],
+            ['03', 'Come richiedere un incontro conoscitivo gratuito, senza pressioni, se vuoi costruire il passo successivo.'],
           ].map(([number, text]) => (
             <article key={number}><span>{number}</span><p>{text}</p></article>
           ))}
