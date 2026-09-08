@@ -7,7 +7,7 @@ import { WORKBOOK_PATH } from './workbookQuestions'
 import './landing.css'
 
 export const THANK_YOU_URL = '/grazie-per-il-workbook/'
-const VIDEO_URL = '/media/video-landing-finale.mp4'
+const VIDEO_URL = '/media/video-landing-pause-naturali-v2.mp4'
 export const WHATSAPP = 'https://wa.me/393497759350'
 export const PRIVACY_URL = '/privacy-policy/'
 
