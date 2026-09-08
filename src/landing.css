@@ -41,11 +41,17 @@
 .leadPortraitCaption { position: absolute; z-index: 3; bottom: 30px; left: 30px; right: 30px; display: grid; gap: 9px; }
 .leadPortraitCaption small { color: var(--lead-lime); font-size: 9px; font-weight: 900; letter-spacing: 1.4px; }
 .leadPortraitCaption strong { font-family: 'Manrope'; font-size: clamp(22px,2vw,31px); line-height: 1.05; letter-spacing: -1.2px; }
-.leadStoryShortcut { margin: 18px auto 0; width: fit-content; display: flex; align-items: center; justify-content: center; gap: 8px; color: #97a19d!important; font-size: 11px; text-decoration: none; transition: color .2s,transform .2s; }
-.leadStoryShortcut strong { color: white; font-size: 12px; }
-.leadStoryShortcut svg { color: var(--lead-lime); transition: transform .2s; }
-.leadStoryShortcut:hover { color: white!important; transform: translateY(-2px); }
-.leadStoryShortcut:hover svg { transform: translateX(3px); }
+.leadDiscoveryLinks { margin: 20px auto 0; display: grid; justify-items: center; gap: 9px; text-align: center; }
+.leadDiscoveryIntro { color: #aeb7b3; font-size: 12px; }
+.leadStoryShortcut { width: fit-content; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 11px 19px; border: 1px solid rgba(193,255,52,.62); border-radius: 999px; background: rgba(193,255,52,.1); color: var(--lead-lime)!important; text-decoration: none; box-shadow: 0 8px 28px rgba(193,255,52,.08); transition: background .2s,box-shadow .2s,transform .2s; }
+.leadStoryShortcut strong { color: inherit; font-size: 15px; letter-spacing: -.15px; }
+.leadStoryShortcut svg { transition: transform .2s; }
+.leadStoryShortcut:hover { background: rgba(193,255,52,.17); box-shadow: 0 10px 32px rgba(193,255,52,.14); transform: translateY(-2px); }
+.leadStoryShortcut:hover svg,.leadBookShortcut:hover svg { transform: translateX(3px); }
+.leadBookShortcut { max-width: 390px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; column-gap: 5px; color: #aeb7b3!important; font-size: 11px; line-height: 1.45; text-decoration: none; transition: color .2s; }
+.leadBookShortcut strong { color: white; font-size: 11px; }
+.leadBookShortcut svg { color: var(--lead-lime); flex: 0 0 auto; transition: transform .2s; }
+.leadBookShortcut:hover { color: white!important; }
 .leadFloatingWord { position: absolute; top: 13%; left: -58px; display: grid; padding: 18px 21px; border: 1px solid rgba(255,255,255,.2); border-radius: 17px; background: rgba(14,21,20,.82); box-shadow: 0 18px 45px rgba(0,0,0,.3); backdrop-filter: blur(16px); font-family: 'Manrope'; font-size: 13px; line-height: 1.45; transform: rotate(-5deg); }
 .leadFloatingWord strong { color: var(--lead-lime); }
 .leadVideoSection { padding: clamp(85px,10vw,150px) clamp(24px,6vw,94px); background: #141d1b; color: white; }
@@ -206,7 +212,10 @@
   .leadHeroProof span:last-child { grid-column: 1/-1; }
   .leadHeroVisual { width: 94%; }
   .leadPortraitCaption { left: 23px; right: 23px; bottom: 23px; }
-  .leadStoryShortcut { max-width: 300px; flex-wrap: wrap; row-gap: 3px; text-align: center; }
+  .leadDiscoveryLinks { margin-top: 17px; gap: 8px; }
+  .leadStoryShortcut { min-width: 236px; padding: 12px 20px; }
+  .leadStoryShortcut strong { font-size: 16px; }
+  .leadBookShortcut { max-width: 310px; padding: 0 10px; }
   .leadFloatingWord { left: -12px; top: 10%; padding: 13px 15px; font-size: 10px; }
   .leadVideoSection,.leadWorkbookSection,.leadMethodSection,.leadFaqSection { padding-left: 18px; padding-right: 18px; }
   .leadSectionIntro h2,.leadWorkbookCopy h2,.leadFaqSection h2 { font-size: 41px; letter-spacing: -2.8px; }

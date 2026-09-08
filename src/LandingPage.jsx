@@ -128,11 +128,18 @@ export function LeadLandingPage() {
               <span className="leadPortraitLine" />
               <div className="leadPortraitCaption"><small>GABRIELE CIANDRINI</small><strong>Non insegno il cambiamento.<br />L’ho attraversato.</strong></div>
             </div>
-            <a className="leadStoryShortcut" href="/about-2/">
-              <span>Vuoi sapere chi sta parlando?</span>
-              <strong>Conosci la mia storia</strong>
-              <ChevronRight size={17} />
-            </a>
+            <div className="leadDiscoveryLinks">
+              <span className="leadDiscoveryIntro">Vuoi sapere chi sta parlando?</span>
+              <a className="leadStoryShortcut" href="/about-2/">
+                <strong>Conosci la mia storia</strong>
+                <ChevronRight size={18} />
+              </a>
+              <a className="leadBookShortcut" href="/libro-respira-immagina-agisci/">
+                La storia completa è nel mio libro
+                <strong>Respira. Immagina. Agisci.</strong>
+                <ChevronRight size={15} />
+              </a>
+            </div>
             <div className="leadFloatingWord"><span>Respira.</span><span>Immagina.</span><strong>Agisci.</strong></div>
           </div>
         </section>
