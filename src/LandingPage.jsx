@@ -7,7 +7,7 @@ import { WORKBOOK_PATH } from './workbookQuestions'
 import './landing.css'
 
 export const THANK_YOU_URL = '/grazie-per-il-workbook/'
-const VIDEO_URL = 'https://app.heygen.com/embeds/2f92e49451c74cf7aedcbe27e9ef3bd2'
+const VIDEO_URL = '/media/video-landing-finale.mp4'
 export const WHATSAPP = 'https://wa.me/393497759350'
 export const PRIVACY_URL = '/privacy-policy/'
 
@@ -65,14 +65,15 @@ function VideoSection() {
       <div className="leadVideoGrid">
         <div className="leadVideoFrame">
           <span className="leadVideoBadge"><Play size={13} fill="currentColor" /> Mini sessione gratuita</span>
-          <iframe
+          <video
             src={VIDEO_URL}
-            title="Mini sessione gratuita: fai chiarezza sulla tua situazione professionale"
-            allow="encrypted-media; fullscreen"
-            allowFullScreen
-            loading="eager"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
+            poster="/media/video-landing-finale-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+          >
+            Il tuo browser non supporta la riproduzione video.
+          </video>
           <div className="leadVideoGlow" />
         </div>
         <aside className="leadVideoNotes">

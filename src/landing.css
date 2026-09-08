@@ -50,7 +50,7 @@
 .leadSectionIntro > p:last-child { max-width: 680px; color: #aeb8b5; line-height: 1.65; }
 .leadVideoGrid { display: grid; grid-template-columns: minmax(320px,.85fr) minmax(300px,.6fr); gap: clamp(35px,7vw,110px); align-items: center; }
 .leadVideoFrame { position: relative; width: min(100%,570px); justify-self: center; padding: 13px; border: 1px solid #394542; border-radius: 34px; background: #0b1110; box-shadow: 0 40px 90px rgba(0,0,0,.35); }
-.leadVideoFrame iframe { position: relative; z-index: 2; display: block; width: 100%; max-height: 740px; aspect-ratio: 9/16; border: 0; border-radius: 23px; background: #080c0b; }
+.leadVideoFrame video { position: relative; z-index: 2; display: block; width: 100%; max-height: 740px; aspect-ratio: 478/850; border-radius: 23px; background: #080c0b; object-fit: contain; }
 .leadVideoBadge { position: absolute; z-index: 4; top: 28px; left: 28px; display: flex; align-items: center; gap: 7px; padding: 8px 10px; border-radius: 999px; background: var(--lead-lime); color: var(--lead-ink); font-size: 8px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
 .leadVideoGlow { position: absolute; z-index: 0; inset: 15% -12% -8%; border-radius: 50%; background: rgba(203,255,69,.11); filter: blur(70px); }
 .leadVideoNotes { position: relative; z-index: 2; }
@@ -205,7 +205,7 @@
   .leadVideoSection,.leadWorkbookSection,.leadMethodSection,.leadFaqSection { padding-left: 18px; padding-right: 18px; }
   .leadSectionIntro h2,.leadWorkbookCopy h2,.leadFaqSection h2 { font-size: 41px; letter-spacing: -2.8px; }
   .leadVideoFrame { width: 100%; padding: 8px; border-radius: 25px; }
-  .leadVideoFrame iframe { border-radius: 18px; }
+  .leadVideoFrame video { border-radius: 18px; }
   .leadVideoBadge { top: 19px; left: 19px; }
   .leadWorkbookPreview { min-height: 420px; }
   .leadWorkbookCard { width: 290px; padding: 28px 24px; }
