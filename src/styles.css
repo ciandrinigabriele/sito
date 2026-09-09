@@ -6,6 +6,48 @@
   font-display: swap;
 }
 
+/* Instagram link hub */
+.socialHub { position: relative; min-height: 100svh; overflow: hidden; padding: 34px 18px 54px; color: #f7faf8; background: #0b100f; }
+.socialHubGlow { position: fixed; width: 420px; height: 420px; border-radius: 50%; filter: blur(110px); opacity: .16; pointer-events: none; }
+.socialHubGlowOne { top: -220px; right: -190px; background: #cbff45; }
+.socialHubGlowTwo { bottom: -260px; left: -220px; background: #ff735c; }
+.socialHubHeader, .socialHubIntro, .socialHubLinks, .socialHubFooter { position: relative; z-index: 1; width: min(100%, 560px); margin-inline: auto; }
+.socialHubHeader { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 50px; }
+.socialHubBrand { display: inline-flex; align-items: center; gap: 7px; color: white; font-size: 15px; }
+.socialHubBrandDot { width: 9px; height: 9px; border-radius: 50%; background: #cbff45; box-shadow: 0 0 16px rgba(203,255,69,.75); }
+.socialHubHeader p { max-width: 170px; margin: 0; color: #9ca6a2; font-size: 10px; line-height: 1.35; text-align: right; text-transform: uppercase; letter-spacing: .09em; }
+.socialHubIntro { margin-bottom: 28px; }
+.socialHubPill { display: inline-flex; margin-bottom: 18px; padding: 8px 12px; border: 1px solid rgba(203,255,69,.35); border-radius: 999px; color: #cbff45; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.socialHubIntro h1 { max-width: 520px; margin: 0; font-size: clamp(42px, 12vw, 66px); line-height: .96; letter-spacing: -.055em; }
+.socialHubIntro > p { max-width: 490px; margin: 20px 0 0; color: #aeb8b5; font-size: 16px; line-height: 1.6; }
+.socialHubLinks { display: grid; gap: 14px; }
+.socialHubCard { position: relative; min-height: 260px; overflow: hidden; border: 1px solid rgba(255,255,255,.11); border-radius: 28px; color: white; box-shadow: 0 22px 60px rgba(0,0,0,.22); isolation: isolate; }
+.socialHubCard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+.socialHubCard:hover img { transform: scale(1.035); }
+.socialHubCardShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,10,9,.95) 0%, rgba(6,10,9,.72) 58%, rgba(6,10,9,.12) 100%); }
+.socialHubCardContent { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; min-height: 260px; padding: 24px; }
+.socialHubCardIcon { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: auto; border-radius: 50%; background: #cbff45; color: #0b100f; }
+.socialHubCardEyebrow { margin: 24px 0 8px; color: #cbff45; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.socialHubCard strong { display: block; max-width: 350px; font-size: clamp(29px, 8vw, 38px); line-height: 1; letter-spacing: -.04em; }
+.socialHubCardText { max-width: 360px; margin-top: 12px; color: #c7cfcc; font-size: 13px; line-height: 1.5; }
+.socialHubCardAction { display: inline-flex; align-items: center; gap: 8px; margin-top: 19px; font-size: 12px; font-weight: 800; }
+.socialHubCardStory .socialHubCardIcon { background: #ff735c; }
+.socialHubCardStory .socialHubCardEyebrow { color: #ff9b89; }
+.socialHubCardBook img { width: 46%; left: auto; object-fit: cover; object-position: top; }
+.socialHubCardBook .socialHubCardIcon { background: #b6a7ff; }
+.socialHubCardBook .socialHubCardEyebrow { color: #cfc6ff; }
+.socialHubFooter { display: flex; flex-direction: column; align-items: center; padding-top: 42px; text-align: center; }
+.socialHubFooter p { margin: 0 0 16px; color: #aeb8b5; }
+.socialHubFooter a { display: inline-flex; align-items: center; gap: 9px; padding: 14px 20px; border-radius: 999px; background: #cbff45; color: #0b100f; font-weight: 800; }
+.socialHubFooter small { margin-top: 30px; color: #65706c; }
+
+@media (min-width: 760px) {
+  .socialHub { padding-top: 50px; }
+  .socialHubHeader { margin-bottom: 70px; }
+  .socialHubCard { min-height: 300px; }
+  .socialHubCardContent { min-height: 300px; padding: 30px; }
+}
+
 @font-face {
   font-family: 'Manrope';
   src: url('/fonts/manrope-latin.woff2') format('woff2');

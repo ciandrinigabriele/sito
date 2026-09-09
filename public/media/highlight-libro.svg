@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#0b100f"/>
+  <circle cx="540" cy="540" r="405" fill="none" stroke="#ff735c" stroke-width="18"/>
+  <path d="M370 375h135c38 0 35 28 35 28s-3-28 35-28h135v280H575c-38 0-35 28-35 28s3-28-35-28H370z" fill="none" stroke="#ff735c" stroke-width="25" stroke-linejoin="round"/>
+  <path d="M540 405v275" stroke="#ff735c" stroke-width="20"/>
+  <text x="540" y="790" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="6">IL LIBRO</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#0b100f"/>
+  <circle cx="540" cy="540" r="405" fill="none" stroke="#b6a7ff" stroke-width="18"/>
+  <path d="M440 435c10-105 200-108 205 6 4 95-100 91-100 172" fill="none" stroke="#b6a7ff" stroke-width="30" stroke-linecap="round"/>
+  <circle cx="545" cy="672" r="18" fill="#b6a7ff"/>
+  <text x="540" y="795" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="4">DOMANDE</text>
+</svg>

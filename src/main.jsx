@@ -7,6 +7,7 @@ import {
 import { supabase } from './supabase'
 import { LeadLandingPage, LeadThankYouPage } from './LandingPage'
 import { OnlineWorkbookPage } from './OnlineWorkbook'
+import { SocialHubPage } from './SocialHubPage'
 import { WORKBOOK_PATH } from './workbookQuestions'
 import { imageForItem, optimizedHtmlFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
@@ -1067,6 +1068,7 @@ const isCookiePage = currentPath === COOKIE_URL
 const isLeadLandingPage = currentPath === '/cambia-direzione/'
 const isLeadThankYouPage = currentPath === '/grazie-per-il-workbook/'
 const isOnlineWorkbookPage = currentPath === WORKBOOK_PATH
+const isSocialHubPage = currentPath === '/inizia/'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const renderPage = (page) => root.render(<React.StrictMode>{page}</React.StrictMode>)
 
@@ -1086,6 +1088,8 @@ if (currentPath === '/') {
   renderPage(<LeadThankYouPage />)
 } else if (isOnlineWorkbookPage) {
   renderPage(<OnlineWorkbookPage />)
+} else if (isSocialHubPage) {
+  renderPage(<SocialHubPage />)
 } else {
   import('./data/wordpress-content.json').then(({ default: wordpressContent }) => {
     const posts = wordpressContent

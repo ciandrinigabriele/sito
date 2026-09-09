@@ -196,6 +196,37 @@ const landingBody = `
   </main>
   ${footer}`
 
+const socialHubBody = `
+  <header><a href="${origin}/">Gabriele Ciandrini</a><p>Coach per il cambiamento professionale</p></header>
+  <main>
+    <p>Da dove vuoi iniziare?</p>
+    <h1>Il primo passo non è cambiare lavoro.</h1>
+    <p>È capire con chiarezza dove sei e quale direzione vuoi costruire.</p>
+    <section>
+      <h2>Le risorse per iniziare</h2>
+      <article>
+        <p>Inizia da qui</p>
+        <h3><a href="${origin}/cambia-direzione/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=profilo">Workbook gratuito</a></h3>
+        <p>Fai chiarezza sulla tua situazione lavorativa e scopri da dove partire.</p>
+      </article>
+      <article>
+        <p>La mia esperienza</p>
+        <h3><a href="${origin}/about-2/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=profilo">Conosci la mia storia</a></h3>
+        <p>I cambiamenti di lavoro, le ripartenze e il percorso che mi ha portato fin qui.</p>
+      </article>
+      <article>
+        <p>Respira. Immagina. Agisci.</p>
+        <h3><a href="https://amzn.eu/d/0ec3bLMb">Scopri il mio libro</a></h3>
+        <p>La mia storia completa e un invito concreto a trasformare le difficoltà in direzione.</p>
+      </article>
+    </section>
+    <section>
+      <h2>Vuoi parlarmi direttamente?</h2>
+      <a href="https://wa.me/393497759350?text=Ciao%20Gabriele%2C%20vorrei%20capire%20meglio%20il%20percorso%20per%20il%20cambiamento%20professionale.">Scrivimi su WhatsApp</a>
+    </section>
+  </main>
+  ${footer}`
+
 const thankYouBody = `
   <header><a href="${origin}/">Gabriele Ciandrini</a></header>
   <main>
@@ -416,6 +447,15 @@ render({
 })
 
 render({
+  route: '/inizia/',
+  title: 'Inizia qui | Gabriele Ciandrini',
+  description: 'Workbook gratuito, storia e libro di Gabriele Ciandrini, coach per il cambiamento professionale.',
+  body: socialHubBody,
+  type: 'website',
+  image: `${origin}/media/gabriele-landing-editorial-v1.webp`,
+})
+
+render({
   route: '/workbook-stato-attuale/',
   title: 'Workbook online: dove sei adesso? | Gabriele Ciandrini',
   description: 'Compila il workbook guidato per fotografare la tua situazione professionale attuale e ricevere il riepilogo personale delle tue risposte.',
@@ -446,7 +486,7 @@ for (const item of content) {
   })
 }
 
-const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', '/cambia-direzione/', ...content.map((item) => item.path)]
+const routes = ['/', '/articoli/', '/libro-respira-immagina-agisci/', '/about-2/', '/privacy-policy/', '/cookie-policy/', '/cambia-direzione/', '/inizia/', ...content.map((item) => item.path)]
 const uniqueRoutes = [...new Set(routes.map(normalizeRoute))]
 const itemByPath = new Map(content.map((item) => [normalizeRoute(item.path), item]))
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniqueRoutes.map((route) => {
