@@ -12,18 +12,39 @@ const WHATSAPP_URL = 'https://wa.me/393497759350?text=Ciao%20Gabriele%2C%20vorre
 const phases = [
   {
     number: '01',
-    title: 'Respira',
-    text: 'Fermiamo il rumore, leggiamo con lucidità ciò che stai vivendo e distinguiamo paure, bisogni e priorità.',
+    title: 'Respira — recupera lucidità',
+    intro: 'Prima di decidere dove andare, serve capire con precisione dove sei.',
+    points: [
+      'Riconosciamo emozioni e pensieri che accompagnano il cambiamento.',
+      'Distinguiamo limiti reali e convinzioni che ti trattengono.',
+      'Facciamo emergere capacità, esperienze e risorse già disponibili.',
+      'Definiamo ciò che vuoi cambiare e ciò che vuoi proteggere.',
+    ],
+    result: 'Una fotografia chiara del punto di partenza e dei blocchi da affrontare.',
   },
   {
     number: '02',
-    title: 'Immagina',
-    text: 'Costruiamo una direzione professionale coerente con i tuoi valori, le tue capacità e la vita che desideri.',
+    title: 'Immagina — costruisci la direzione',
+    intro: 'Non cerchiamo un lavoro qualsiasi: costruiamo una possibilità coerente con te.',
+    points: [
+      'Mettiamo a fuoco valori, bisogni, desideri e priorità.',
+      'Individuiamo capacità che vuoi finalmente esprimere.',
+      'Esploriamo una strada da dipendente, indipendente o ibrida.',
+      'Verifichiamo la compatibilità con tempo, famiglia e risorse.',
+    ],
+    result: 'Una direzione professionale desiderabile, realistica e sostenibile.',
   },
   {
     number: '03',
-    title: 'Agisci',
-    text: 'Trasformiamo la direzione in scelte, verifiche e passi concreti, senza fare salti nel vuoto.',
+    title: 'Agisci — crea il tuo piano',
+    intro: 'La direzione diventa utile quando sai quale passo compiere per primo.',
+    points: [
+      'Scegliamo la possibilità professionale da verificare.',
+      'Definiamo obiettivi, priorità e prime azioni concrete.',
+      'Prepariamo risorse e strategie per gli ostacoli prevedibili.',
+      'Stabiliamo come monitorare progressi e prossime decisioni.',
+    ],
+    result: 'Una mappa operativa per iniziare senza fare salti nel vuoto.',
   },
 ]
 
@@ -79,22 +100,65 @@ export function ProposalPage() {
           </div>
         </section>
 
+        <section className="proposalDirection proposalSection">
+          <div className="proposalDirectionLead">
+            <p className="proposalKicker">Dal punto A al punto B</p>
+            <h2>Non devi diventare per forza indipendente. Devi trovare la forma di lavoro più giusta per te.</h2>
+          </div>
+          <div className="proposalDirectionMap">
+            <article>
+              <span>A</span>
+              <p>Una situazione professionale che non ti rappresenta più</p>
+            </article>
+            <ArrowRight aria-hidden="true" />
+            <article>
+              <span>B</span>
+              <p>Una direzione chiara e un piano concreto per costruirla</p>
+            </article>
+          </div>
+          <div className="proposalPaths" aria-label="Possibili direzioni professionali">
+            <span>Nuovo lavoro dipendente</span>
+            <span>Attività indipendente</span>
+            <span>Percorso ibrido</span>
+          </div>
+        </section>
+
+        <section className="proposalAudience proposalSection">
+          <div>
+            <p className="proposalKicker">Può essere il percorso giusto per te se…</p>
+            <h2>Non cerchi soltanto un altro lavoro. Cerchi una direzione che ti rappresenti.</h2>
+          </div>
+          <ul>
+            <li><Check /> Il lavoro attuale non rispecchia più chi sei o come vuoi vivere.</li>
+            <li><Check /> Hai un’idea, ma non sai ancora come trasformarla in un progetto concreto.</li>
+            <li><Check /> Vuoi cambiare senza mettere a rischio tutto ciò che hai costruito.</li>
+            <li><Check /> Desideri più autonomia, tempo o significato, non soltanto uno stipendio diverso.</li>
+          </ul>
+        </section>
+
         <section className="proposalJourney proposalSection">
           <div className="proposalSectionHeading proposalSectionHeadingLight">
             <p className="proposalKicker">Il percorso individuale</p>
             <h2>Tre sessioni per passare dalla confusione a una direzione possibile.</h2>
-            <p>Ogni incontro dura da 60 a 90 minuti e viene costruito sulla tua situazione reale, non su un programma standard.</p>
+            <p>Ogni incontro viene costruito sulla tua situazione reale, non su un programma standard.</p>
           </div>
           <div className="proposalPhases">
             {phases.map((phase) => (
               <article key={phase.title}>
                 <span>{phase.number}</span>
                 <h3>{phase.title}</h3>
-                <p>{phase.text}</p>
+                <p className="proposalPhaseIntro">{phase.intro}</p>
+                <ul>
+                  {phase.points.map((point) => <li key={point}><Check /> {point}</li>)}
+                </ul>
+                <p className="proposalPhaseResult"><strong>Cosa porti con te</strong>{phase.result}</p>
               </article>
             ))}
           </div>
-          <div className="proposalDuration"><Clock3 size={20} /> 3 sessioni individuali online · da 60 a 90 minuti ciascuna</div>
+          <div className="proposalDurationCard">
+            <Clock3 size={24} />
+            <div><strong>Da 60 a 120 minuti per sessione</strong><span>La durata è flessibile in base al lavoro della singola fase. Non interrompiamo meccanicamente allo scadere dell’ora: entro un massimo di 120 minuti arriviamo a una conclusione utile e concreta.</span></div>
+          </div>
         </section>
 
         <section className="proposalSupport proposalSection">
@@ -118,7 +182,7 @@ export function ProposalPage() {
             <ul>
               <li><Check /> Workbook online sullo stato attuale</li>
               <li><Check /> Prima sessione conoscitiva gratuita</li>
-              <li><Check /> 3 sessioni individuali da 60–90 minuti</li>
+              <li><Check /> 3 sessioni individuali da 60–120 minuti</li>
               <li><Check /> Supporto WhatsApp durante il percorso</li>
             </ul>
           </div>
