@@ -89,7 +89,7 @@ for (const page of pages) {
     issues.push({ severity: 'error', route: page.route, issue: `canonical errato: ${page.canonical}` })
   }
   const robotTokens = page.robots.split(',').map((token) => token.trim())
-  const shouldBeNoindex = !isProduction || ['/workbook-stato-attuale/', '/grazie-per-il-workbook/'].includes(page.route)
+  const shouldBeNoindex = !isProduction || ['/workbook-stato-attuale/', '/grazie-per-il-workbook/', '/proposta-percorso/'].includes(page.route)
   if (shouldBeNoindex ? !robotTokens.includes('noindex') : (!robotTokens.includes('index') || !robotTokens.includes('follow') || robotTokens.includes('noindex'))) {
     issues.push({ severity: 'error', route: page.route, issue: `robots non coerente con l'ambiente: ${page.robots}` })
   }
@@ -129,7 +129,7 @@ for (const [description, owners] of descriptionOwners) {
   if (description && owners.length > 1) issues.push({ severity: 'error', route: owners.join(', '), issue: 'meta description duplicata' })
 }
 for (const [route, count] of inbound) {
-  if (route !== '/' && route !== '/grazie-per-il-workbook/' && count === 0) issues.push({ severity: 'warning', route, issue: 'pagina orfana nel corpo HTML statico' })
+  if (!['/', '/grazie-per-il-workbook/', '/proposta-percorso/'].includes(route) && count === 0) issues.push({ severity: 'warning', route, issue: 'pagina orfana nel corpo HTML statico' })
 }
 
 const summary = {

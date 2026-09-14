@@ -227,6 +227,20 @@ const socialHubBody = `
   </main>
   ${footer}`
 
+const proposalBody = `
+  <header><a href="${origin}/">Gabriele Ciandrini</a><a href="${origin}/downloads/proposta-percorso-cambiamento-professionale-gabriele-ciandrini.pdf">Scarica il PDF</a></header>
+  <main>
+    <p>Proposta personale e riservata</p>
+    <h1>La direzione non si aspetta. Si costruisce.</h1>
+    <p>Un percorso individuale per trasformare ciò che hai compreso in una direzione professionale concreta, sostenibile e davvero tua.</p>
+    <a href="https://wa.me/393497759350?text=Ciao%20Gabriele%2C%20vorrei%20iniziare%20il%20percorso%20di%20cambiamento%20professionale.">Voglio iniziare</a>
+    <section><h2>Hai già fatto qualcosa di importante: ti sei fermato ad ascoltarti.</h2><p>Il workbook sullo stato attuale e la prima sessione online sono inclusi gratuitamente.</p></section>
+    <section><h2>Tre sessioni per passare dalla confusione a una direzione possibile.</h2><ol><li>Respira: fai chiarezza.</li><li>Immagina: costruisci la direzione.</li><li>Agisci: trasformala in passi concreti.</li></ol><p>Ogni sessione individuale dura da 60 a 90 minuti.</p></section>
+    <section><h2>Hai il mio supporto anche durante il percorso.</h2><p>Puoi scrivere su WhatsApp quando emerge un dubbio, un blocco o una decisione da chiarire. Gabriele risponderà appena possibile, compatibilmente con gli impegni professionali.</p></section>
+    <section><h2>La proposta riservata</h2><p>Valore delle tre sessioni: <s>600 euro</s>. Proposta: <strong>450 euro</strong>. Risparmio: 150 euro, pari al 25%.</p><a href="https://wa.me/393497759350?text=Ciao%20Gabriele%2C%20vorrei%20iniziare%20il%20percorso%20di%20cambiamento%20professionale.">Parliamone su WhatsApp</a></section>
+  </main>
+  ${footer}`
+
 const thankYouBody = `
   <header><a href="${origin}/">Gabriele Ciandrini</a></header>
   <main>
@@ -453,6 +467,16 @@ render({
   body: socialHubBody,
   type: 'website',
   image: `${origin}/media/gabriele-landing-editorial-v1.webp`,
+})
+
+render({
+  route: '/proposta-percorso/',
+  title: 'La tua proposta personale | Gabriele Ciandrini',
+  description: 'Proposta riservata per il percorso individuale di cambiamento professionale con Gabriele Ciandrini.',
+  body: proposalBody,
+  type: 'website',
+  robots: 'noindex, follow',
+  image: `${origin}/media/gabriele-home-strada-blu-finale-crop2.webp`,
 })
 
 render({
