@@ -32,17 +32,25 @@
 .proposalStep { color: #769715; font-size: 11px; font-weight: 900; letter-spacing: .14em; }
 .proposalIntroGrid h3, .proposalPhases h3 { margin: 42px 0 12px; font-family: 'Manrope', sans-serif; font-size: 27px; letter-spacing: -.035em; }
 .proposalIntroGrid p, .proposalPhases p, .proposalSectionHeading > p:last-child, .proposalSupport p { color: var(--proposal-muted); font-size: 16px; line-height: 1.65; }
-.proposalDirection { border-top: 1px solid #d7ded2; }
+.proposalPrinciple { border-top: 1px solid #d7ded2; }
 .proposalDirectionLead { display: grid; grid-template-columns: .62fr 1.38fr; gap: 30px; }
 .proposalDirectionLead h2, .proposalAudience h2 { margin: 0; font-family: 'Manrope', sans-serif; font-size: clamp(34px, 4.5vw, 62px); line-height: 1.04; letter-spacing: -.045em; }
-.proposalDirectionMap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-top: 56px; }
-.proposalDirectionMap > svg { color: #799a17; }
+.proposalPrincipleLead { max-width: 720px; margin: 34px 0 0 auto; color: var(--proposal-muted); font-size: 18px; line-height: 1.65; }
+.proposalScenarios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 52px; }
+.proposalScenarios article { display: flex; min-height: 330px; flex-direction: column; border: 1px solid #dce3d6; border-radius: 25px; padding: 29px; background: rgba(255, 255, 255, .65); }
+.proposalScenarios article > svg { width: 42px; height: 42px; margin-bottom: 39px; padding: 10px; border-radius: 13px; background: var(--proposal-lime); }
+.proposalScenarios article > span { color: #799a17; font-size: 10px; font-weight: 900; letter-spacing: .12em; }
+.proposalScenarios h3 { margin: 13px 0 10px; font: 800 23px/1.15 'Manrope', sans-serif; letter-spacing: -.035em; }
+.proposalScenarios p { margin: 0; color: var(--proposal-muted); font-size: 14px; line-height: 1.6; }
+.proposalDirectionMap { display: grid; grid-template-columns: 1fr .62fr 1fr; gap: 18px; align-items: stretch; margin-top: 22px; }
 .proposalDirectionMap article { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; min-height: 122px; border-radius: 25px; padding: 25px; background: white; }
 .proposalDirectionMap article span { display: grid; width: 54px; height: 54px; place-items: center; border-radius: 50%; background: var(--proposal-ink); color: var(--proposal-lime); font: 900 22px 'Manrope', sans-serif; }
 .proposalDirectionMap article:last-child span { background: var(--proposal-lime); color: var(--proposal-ink); }
 .proposalDirectionMap p { margin: 0; font-size: 18px; font-weight: 750; line-height: 1.4; }
-.proposalPaths { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; margin-top: 20px; }
-.proposalPaths span { border: 1px solid #ccd6c5; border-radius: 999px; padding: 9px 15px; color: #4f5d57; font-size: 12px; font-weight: 800; }
+.proposalBridge { display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #b8d363; border-radius: 25px; padding: 20px; background: #e8f6bd; text-align: center; }
+.proposalBridge svg { margin-bottom: 8px; color: #6e8e0c; }
+.proposalBridge strong { font-size: 14px; }
+.proposalBridge span { margin-top: 4px; color: #687568; font-size: 11px; }
 .proposalAudience { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: end; padding-top: 0; }
 .proposalAudience ul, .proposalPhases ul { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
 .proposalAudience li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; color: #46534e; line-height: 1.55; }
@@ -116,14 +124,15 @@
   .proposalHeroLead { font-size: 17px; }
   .proposalHeroActions { display: grid; }
   .proposalSectionHeading, .proposalSectionHeadingLight, .proposalSupport, .proposalOffer, .proposalDirectionLead, .proposalAudience { grid-template-columns: 1fr; }
-  .proposalIntroGrid, .proposalPhases { grid-template-columns: 1fr; }
+  .proposalIntroGrid, .proposalPhases, .proposalScenarios { grid-template-columns: 1fr; }
   .proposalSectionHeading h2 { margin-top: -4px; }
   .proposalIntroGrid { margin-top: 38px; }
   .proposalIntroGrid article { min-height: 235px; }
+  .proposalPrincipleLead { margin-top: 26px; }
+  .proposalScenarios article { min-height: auto; }
+  .proposalScenarios article > svg { margin-bottom: 28px; }
   .proposalDirectionMap { grid-template-columns: 1fr; }
-  .proposalDirectionMap > svg { margin: -8px auto; transform: rotate(90deg); }
   .proposalDirectionMap article { min-height: 105px; }
-  .proposalPaths { justify-content: flex-start; }
   .proposalAudience { gap: 35px; }
   .proposalPhases article { min-height: auto; }
   .proposalPhases h3 { margin-top: 34px; }

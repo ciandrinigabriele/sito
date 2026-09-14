@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  ArrowDownToLine, ArrowRight, Check, Clock3, Compass, MessageCircle,
-  ShieldCheck, Sparkles,
+  ArrowDownToLine, ArrowRight, BriefcaseBusiness, Check, Clock3, Compass,
+  Gauge, MessageCircle, Route, ShieldCheck, Sparkles, WalletCards,
 } from 'lucide-react'
 import { LandingBrand, useLandingMeta } from './LandingPage'
 import './proposal.css'
@@ -12,39 +12,39 @@ const WHATSAPP_URL = 'https://wa.me/393497759350?text=Ciao%20Gabriele%2C%20vorre
 const phases = [
   {
     number: '01',
-    title: 'Respira — recupera lucidità',
-    intro: 'Prima di decidere dove andare, serve capire con precisione dove sei.',
+    title: 'Respira — proteggi la base',
+    intro: 'Prima di cambiare, fotografiamo la situazione e definiamo ciò che deve restare stabile mentre costruisci il nuovo.',
     points: [
-      'Riconosciamo emozioni e pensieri che accompagnano il cambiamento.',
+      'Leggiamo la situazione professionale, personale ed economica attuale.',
       'Distinguiamo limiti reali e convinzioni che ti trattengono.',
-      'Facciamo emergere capacità, esperienze e risorse già disponibili.',
-      'Definiamo ciò che vuoi cambiare e ciò che vuoi proteggere.',
+      'Mappiamo responsabilità, tempo, entrate e risorse già disponibili.',
+      'Definiamo la base di sicurezza da proteggere durante il passaggio.',
     ],
-    result: 'Una fotografia chiara del punto di partenza e dei blocchi da affrontare.',
+    result: 'Un punto di partenza chiaro e le condizioni di sicurezza da rispettare.',
   },
   {
     number: '02',
     title: 'Immagina — costruisci la direzione',
-    intro: 'Non cerchiamo un lavoro qualsiasi: costruiamo una possibilità coerente con te.',
+    intro: 'Non cerchiamo un lavoro qualsiasi: costruiamo il lavoro desiderato e verifichiamo se può reggere nella vita reale.',
     points: [
       'Mettiamo a fuoco valori, bisogni, desideri e priorità.',
       'Individuiamo capacità che vuoi finalmente esprimere.',
-      'Esploriamo una strada da dipendente, indipendente o ibrida.',
+      'Esploriamo il ruolo, il settore o l’attività che possono rappresentarti.',
       'Verifichiamo la compatibilità con tempo, famiglia e risorse.',
     ],
     result: 'Una direzione professionale desiderabile, realistica e sostenibile.',
   },
   {
     number: '03',
-    title: 'Agisci — crea il tuo piano',
-    intro: 'La direzione diventa utile quando sai quale passo compiere per primo.',
+    title: 'Agisci — costruisci il passaggio',
+    intro: 'La direzione diventa concreta quando creiamo il ponte tra il lavoro di oggi e quello che desideri.',
     points: [
-      'Scegliamo la possibilità professionale da verificare.',
-      'Definiamo obiettivi, priorità e prime azioni concrete.',
-      'Prepariamo risorse e strategie per gli ostacoli prevedibili.',
-      'Stabiliamo come monitorare progressi e prossime decisioni.',
+      'Se lavori, manteniamo la base mentre prepari e verifichi il nuovo.',
+      'Se ti serve reddito, individuiamo anche un lavoro-ponte immediato.',
+      'Definiamo prove, risorse, tempi e soglie prima del passaggio.',
+      'Se hai una reale autonomia economica, acceleriamo il piano con criterio.',
     ],
-    result: 'Una mappa operativa per iniziare senza fare salti nel vuoto.',
+    result: 'Una mappa operativa personalizzata per cambiare senza salti nel vuoto.',
   },
 ]
 
@@ -69,9 +69,9 @@ export function ProposalPage() {
           <div className="proposalHeroImage" aria-hidden="true" />
           <div className="proposalHeroShade" />
           <div className="proposalHeroContent">
-            <p className="proposalEyebrow"><Sparkles size={15} /> Proposta personale e riservata</p>
-            <h1>La direzione non si aspetta.<br /><em>Si costruisce.</em></h1>
-            <p className="proposalHeroLead">Un percorso individuale per trasformare ciò che hai compreso in una direzione professionale concreta, sostenibile e davvero tua.</p>
+            <p className="proposalEyebrow"><Sparkles size={15} /> Il mio metodo per cambiare lavoro</p>
+            <h1>Non devi mollare tutto.<br /><em>Devi costruire il passaggio.</em></h1>
+            <p className="proposalHeroLead">Con Respira. Immagina. Agisci. proteggiamo la tua base attuale, definiamo il lavoro che desideri e prepariamo il ponte per raggiungerlo senza salti nel vuoto.</p>
             <div className="proposalHeroActions">
               <a className="proposalPrimary" href={WHATSAPP_URL}>Voglio iniziare <ArrowRight size={19} /></a>
               <a className="proposalSecondary" href="#percorso">Scopri il percorso</a>
@@ -100,47 +100,57 @@ export function ProposalPage() {
           </div>
         </section>
 
-        <section className="proposalDirection proposalSection">
+        <section className="proposalPrinciple proposalSection">
           <div className="proposalDirectionLead">
-            <p className="proposalKicker">Dal punto A al punto B</p>
-            <h2>Non devi diventare per forza indipendente. Devi trovare la forma di lavoro più giusta per te.</h2>
+            <p className="proposalKicker">Il principio che guida tutto</p>
+            <h2>Il cambiamento non comincia lasciando il lavoro. Comincia costruendo una base per quello nuovo.</h2>
+          </div>
+          <p className="proposalPrincipleLead">La sicurezza non significa restare fermi. Significa muoversi con una strategia compatibile con le proprie responsabilità e possibilità economiche.</p>
+          <div className="proposalScenarios">
+            <article>
+              <BriefcaseBusiness />
+              <span>SE HAI GIÀ UN LAVORO</span>
+              <h3>Lo mantieni mentre costruisci il nuovo.</h3>
+              <p>Usiamo lo stipendio e la stabilità attuale come base. Nel frattempo esplori, ti prepari e verifichi concretamente la nuova direzione.</p>
+            </article>
+            <article>
+              <WalletCards />
+              <span>SE TI SERVE REDDITO SUBITO</span>
+              <h3>Troviamo anche un lavoro-ponte.</h3>
+              <p>Una soluzione temporanea può proteggere le entrate mentre organizzi il cambiamento vero, senza confondere il ponte con la destinazione.</p>
+            </article>
+            <article>
+              <Gauge />
+              <span>SE HAI AUTONOMIA ECONOMICA</span>
+              <h3>Possiamo accelerare con criterio.</h3>
+              <p>Se disponi delle risorse necessarie, riduciamo i tempi. Ma la velocità nasce da una valutazione concreta, non da una decisione impulsiva.</p>
+            </article>
           </div>
           <div className="proposalDirectionMap">
-            <article>
-              <span>A</span>
-              <p>Una situazione professionale che non ti rappresenta più</p>
-            </article>
-            <ArrowRight aria-hidden="true" />
-            <article>
-              <span>B</span>
-              <p>Una direzione chiara e un piano concreto per costruirla</p>
-            </article>
-          </div>
-          <div className="proposalPaths" aria-label="Possibili direzioni professionali">
-            <span>Nuovo lavoro dipendente</span>
-            <span>Attività indipendente</span>
-            <span>Percorso ibrido</span>
+            <article><span>A</span><p>La situazione professionale e le responsabilità di oggi</p></article>
+            <div className="proposalBridge"><Route /><strong>Un passaggio protetto</strong><span>costruito sul tuo caso reale</span></div>
+            <article><span>B</span><p>Il lavoro desiderato, raggiunto con un piano sostenibile</p></article>
           </div>
         </section>
 
         <section className="proposalAudience proposalSection">
           <div>
             <p className="proposalKicker">Può essere il percorso giusto per te se…</p>
-            <h2>Non cerchi soltanto un altro lavoro. Cerchi una direzione che ti rappresenti.</h2>
+            <h2>Non cerchi un’altra soluzione casuale. Vuoi costruire un lavoro che ti rappresenti.</h2>
           </div>
           <ul>
             <li><Check /> Il lavoro attuale non rispecchia più chi sei o come vuoi vivere.</li>
-            <li><Check /> Hai un’idea, ma non sai ancora come trasformarla in un progetto concreto.</li>
-            <li><Check /> Vuoi cambiare senza mettere a rischio tutto ciò che hai costruito.</li>
-            <li><Check /> Desideri più autonomia, tempo o significato, non soltanto uno stipendio diverso.</li>
+            <li><Check /> Hai un’idea, ma non sai ancora come trasformarla in una possibilità verificabile.</li>
+            <li><Check /> Vuoi cambiare senza mettere inutilmente a rischio reddito e responsabilità.</li>
+            <li><Check /> Hai risorse economiche e vuoi capire come accelerare senza agire d’impulso.</li>
           </ul>
         </section>
 
         <section className="proposalJourney proposalSection">
           <div className="proposalSectionHeading proposalSectionHeadingLight">
             <p className="proposalKicker">Il percorso individuale</p>
-            <h2>Tre sessioni per passare dalla confusione a una direzione possibile.</h2>
-            <p>Ogni incontro viene costruito sulla tua situazione reale, non su un programma standard.</p>
+            <h2>Tre sessioni per costruire la strada, non per spingerti a saltare.</h2>
+            <p>Respira. Immagina. Agisci. si adatta alla tua situazione, alle responsabilità e alle risorse che hai davvero.</p>
           </div>
           <div className="proposalPhases">
             {phases.map((phase) => (
@@ -178,7 +188,7 @@ export function ProposalPage() {
         <section className="proposalOffer proposalSection">
           <div className="proposalOfferCopy">
             <p className="proposalKicker">La proposta</p>
-            <h2>Un investimento nella tua prossima direzione.</h2>
+            <h2>Un investimento per costruire il passaggio con metodo.</h2>
             <ul>
               <li><Check /> Workbook online sullo stato attuale</li>
               <li><Check /> Prima sessione conoscitiva gratuita</li>
