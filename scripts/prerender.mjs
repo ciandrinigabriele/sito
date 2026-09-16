@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { socialVideoPosts, videoForPath, videoSchemaFor } from '../src/data/social-videos.js'
 import {
   DEFAULT_SOCIAL_IMAGE,
   imageForItem,
@@ -10,7 +11,7 @@ import {
 
 const root = process.cwd()
 const dist = path.join(root, 'dist')
-const content = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-content.json'), 'utf8'))
+const content = [...socialVideoPosts, ...JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-content.json'), 'utf8'))]
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'src', 'data', 'wordpress-inventory.json'), 'utf8'))
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 const origin = 'https://gabrieleciandrini.com'
@@ -505,6 +506,7 @@ for (const item of content) {
     title: seoTitleFor(item),
     description: seoDescriptionFor(item),
     body: contentBody(item),
+    extraSchema: videoSchemaFor(item.path),
     type: item.type === 'post' ? 'article' : 'website',
     date: item.date,
     image: imageForItem(item).startsWith('http') ? imageForItem(item) : `${origin}${imageForItem(item)}`,
@@ -516,7 +518,7 @@ const uniqueRoutes = [...new Set(routes.map(normalizeRoute))]
 const itemByPath = new Map(content.map((item) => [normalizeRoute(item.path), item]))
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniqueRoutes.map((route) => {
   const item = itemByPath.get(route)
-  const lastmod = item?.date ? `<lastmod>${item.date.slice(0, 10)}</lastmod>` : ''
+  const lastmod = videoForPath(route) ? '<lastmod>2026-09-16</lastmod>' : item?.date ? `<lastmod>${item.date.slice(0, 10)}</lastmod>` : ''
   return `  <url><loc>${origin}${route}</loc>${lastmod}</url>`
 }).join('\n')}\n</urlset>\n`
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap)

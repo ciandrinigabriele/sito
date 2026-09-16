@@ -12,6 +12,7 @@ import { ProposalPage } from './ProposalPage'
 import { WORKBOOK_PATH } from './workbookQuestions'
 import { imageForItem, optimizedHtmlFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
+import { socialVideoPosts, videoForPath } from './data/social-videos'
 
 const WHATSAPP = 'https://wa.me/393497759350'
 const BOOK_URL = '/libro-respira-immagina-agisci/'
@@ -370,6 +371,7 @@ function ArticlesPage({ posts }) {
               <span className="articleIndex">{String(index + 1).padStart(2, '0')}</span>
               <p>{new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(post.date))}</p>
               <h2>{post.title}</h2>
+              {videoForPath(post.path) && <span className="archiveVideoLabel">Video sottotitolato e approfondimento</span>}
               <span className="archiveRead">Leggi <ArrowRight /></span>
             </a>
           ))}
@@ -1095,7 +1097,8 @@ if (currentPath === '/') {
 } else if (isProposalPage) {
   renderPage(<ProposalPage />)
 } else {
-  import('./data/wordpress-content.json').then(({ default: wordpressContent }) => {
+  import('./data/wordpress-content.json').then(({ default: importedContent }) => {
+    const wordpressContent = [...socialVideoPosts, ...importedContent]
     const posts = wordpressContent
       .filter((item) => item.type === 'post')
       .sort((a, b) => new Date(b.date) - new Date(a.date))

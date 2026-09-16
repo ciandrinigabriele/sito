@@ -1,3 +1,4 @@
+import { videoForPath, videoHtmlFor } from './social-videos.js'
 export const SITE_NAME = 'Gabriele Ciandrini'
 export const SITE_ORIGIN = 'https://gabrieleciandrini.com'
 export const DEFAULT_SOCIAL_IMAGE = '/media/career-bridge-og.png'
@@ -47,6 +48,8 @@ export const seoDescriptionFor = (item) => truncateAtWord(
 )
 
 export const imageForItem = (item) => {
+  const video = videoForPath(item.path)
+  if (video) return `/media/video-social/${video.id}.jpg`
   if (item.featuredImage) return item.featuredImage
   const match = item.html?.match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)
   return match?.[1] || DEFAULT_SOCIAL_IMAGE
@@ -60,7 +63,7 @@ const contextualAlt = (item) => {
 }
 
 export const optimizedHtmlFor = (item) => {
-  let html = item.html || ''
+  let html = videoHtmlFor(item.path) + (item.html || '')
   html = html
     .replaceAll('/wp-content/uploads/2021/01/ruota-della-vita-per-facebook.pdf', '/downloads/ruota-della-vita-gabriele-ciandrini.pdf')
     .replace('>ruota-della-vita-per-facebook<', '>Ruota della Vita di Gabriele Ciandrini<')
