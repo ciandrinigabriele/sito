@@ -9,3 +9,6 @@ dist/
 .*-err.log
 tmp/
 output/
+
+.vercel
+.env*
