@@ -5,6 +5,7 @@ import {
   DEFAULT_SOCIAL_IMAGE,
   imageForItem,
   optimizedHtmlFor,
+  pageHeadingFor,
   seoDescriptionFor,
   seoTitleFor,
 } from '../src/data/seo-meta.js'
@@ -289,7 +290,7 @@ const contentBody = (item) => `
     <article>
       <header>
         <p>${item.type === 'post' ? 'Idee per il cambiamento professionale' : 'Percorsi e strumenti'}</p>
-        <h1>${escapeHtml(item.title)}</h1>
+        <h1>${escapeHtml(pageHeadingFor(item))}</h1>
         ${item.date ? `<time datetime="${escapeHtml(item.date)}">${escapeHtml(item.date)}</time>` : ''}
       </header>
       ${optimizedHtmlFor(item)}

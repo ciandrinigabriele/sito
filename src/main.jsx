@@ -10,7 +10,7 @@ import { OnlineWorkbookPage } from './OnlineWorkbook'
 import { SocialHubPage } from './SocialHubPage'
 import { ProposalPage } from './ProposalPage'
 import { WORKBOOK_PATH } from './workbookQuestions'
-import { imageForItem, optimizedHtmlFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
+import { imageForItem, optimizedHtmlFor, pageHeadingFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
 import { socialVideoPosts, videoForPath } from './data/social-videos'
 
@@ -325,7 +325,7 @@ function ContentPage({ item, posts }) {
         <header className="contentHero">
           <a className="contentBack" href={item.type === 'post' ? '/articoli/' : '/'}><ArrowLeft size={16} /> {item.type === 'post' ? 'Tutti gli articoli' : 'Torna alla home'}</a>
           <p className="eyebrow"><span /> {item.type === 'post' ? 'Idee per il cambiamento' : 'Percorsi e strumenti'}</p>
-          <h1>{item.title}</h1>
+          <h1>{pageHeadingFor(item)}</h1>
           {item.date && <p className="contentDate"><CalendarDays size={16} /> {new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(item.date))}</p>}
         </header>
         <div className="contentLayout">
@@ -982,6 +982,7 @@ function App() {
               <span><MapPin /> Ancona</span>
               <span><MessageCircle /> Online</span>
             </div>
+            <ArrowLink href="/cambiare-lavoro-ancona/" className="lightLink">Scopri il percorso per cambiare lavoro ad Ancona</ArrowLink>
           </div>
           <div className="studioGallery">
             <img src={images.studio1} alt="Studio di coaching ad Ancona" />
