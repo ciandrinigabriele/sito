@@ -492,6 +492,15 @@ render({
 })
 
 render({
+  route: '/workbook-paure-limiti-vincoli/',
+  title: 'Prima di cambiare: paure, limiti e vincoli | Gabriele Ciandrini',
+  description: 'Workbook riservato per distinguere paure, limiti mentali e vincoli reali e osservare la propria situazione professionale.',
+  body: `<header><a href="${origin}/">Gabriele Ciandrini</a></header><main><p>Workbook riservato per il colloquio</p><h1>Prima di cambiare, guarda cosa ti sta fermando.</h1><p>Nove domande guidate per distinguere paure, limiti mentali e vincoli reali, seguite dalla Ruota della vita professionale.</p><p>Le domande sono facoltative, puoi tornare indietro e modificare le risposte. Al termine riceverai il riepilogo via e-mail.</p><a href="${origin}/proposta-percorso/">Scopri il percorso Respira. Immagina. Agisci.</a><a href="${origin}/metodo-respira-immagina-agisci/">Conosci il metodo</a></main>`,
+  type: 'website',
+  robots: 'noindex, follow',
+})
+
+render({
   route: '/grazie-per-il-workbook/',
   title: 'La tua fotografia è pronta | Gabriele Ciandrini',
   description: 'Ricevi il riepilogo personale del workbook e scegli il prossimo passo verso una direzione professionale più chiara e sostenibile.',

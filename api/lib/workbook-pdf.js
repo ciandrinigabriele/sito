@@ -53,6 +53,7 @@ const wrapText = (text, maxChars) => {
 
 const fillRect = (x, y, width, height, rgb) => `${color(rgb)} rg ${x} ${y} ${width} ${height} re f\n`
 const strokeLine = (x1, y1, x2, y2, rgb, width = 1) => `${color(rgb)} RG ${width} w ${x1} ${y1} m ${x2} ${y2} l S\n`
+const strokePolygon = (points, rgb, width = 1, fill = null) => `${fill ? `${color(fill)} rg ` : ''}${color(rgb)} RG ${width} w ${points.map(([x, y], index) => `${x} ${y} ${index ? 'l' : 'm'}`).join(' ')} h ${fill ? 'B' : 'S'}\n`
 const text = (value, x, y, size, font = 'F1', rgb = palette.ink) =>
   `BT /${font} ${size} Tf ${color(rgb)} rg 1 0 0 1 ${x} ${y} Tm (${pdfString(value)}) Tj ET\n`
 
@@ -104,15 +105,15 @@ const createPdf = (pageStreams) => {
   return Buffer.concat(chunks)
 }
 
-export function buildWorkbookPdf({ name, email, submittedAt, sections }) {
+export function buildWorkbookPdf({ name, email, submittedAt, sections, wheel = null, title = ['Dove sei', 'adesso?'], subtitle = 'La fotografia del tuo punto di partenza', nextUrl = 'gabrieleciandrini.com/incontro-gratuito/' }) {
   const pages = []
   const cover = []
   cover.push(fillRect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, palette.ink))
   cover.push(fillRect(MARGIN, PAGE_HEIGHT - 120, 82, 5, palette.lime))
   cover.push(text('WORKBOOK PERSONALE', MARGIN, PAGE_HEIGHT - 155, 9, 'F2', palette.lime))
-  cover.push(text('Dove sei', MARGIN, PAGE_HEIGHT - 270, 48, 'F2', palette.white))
-  cover.push(text('adesso?', MARGIN, PAGE_HEIGHT - 325, 48, 'F2', palette.white))
-  cover.push(text('La fotografia del tuo punto di partenza', MARGIN, PAGE_HEIGHT - 365, 16, 'F1', [0.75, 0.8, 0.78]))
+  cover.push(text(title[0], MARGIN, PAGE_HEIGHT - 270, 48, 'F2', palette.white))
+  cover.push(text(title[1], MARGIN, PAGE_HEIGHT - 325, 48, 'F2', palette.white))
+  cover.push(text(subtitle, MARGIN, PAGE_HEIGHT - 365, 16, 'F1', [0.75, 0.8, 0.78]))
   cover.push(fillRect(MARGIN, 155, PAGE_WIDTH - MARGIN * 2, 120, [0.102, 0.135, 0.125]))
   cover.push(text('PREPARATO PER', MARGIN + 24, 242, 8, 'F2', palette.lime))
   cover.push(text(name, MARGIN + 24, 207, 23, 'F2', palette.white))
@@ -162,6 +163,28 @@ export function buildWorkbookPdf({ name, email, submittedAt, sections }) {
     pageNumber += 1
   }
 
+  if (wheel?.length) {
+    const commands = []
+    header(commands, 'Ruota professionale')
+    commands.push(text('La tua ruota professionale', MARGIN, PAGE_HEIGHT - 125, 27, 'F2', palette.ink))
+    commands.push(text('I voti rappresentano come percepisci oggi ciascuna area.', MARGIN, PAGE_HEIGHT - 150, 10, 'F1', palette.muted))
+    const cx = 210; const cy = 420; const radius = 135
+    const point = (index, value = 10) => { const angle = (-Math.PI / 2) + index * Math.PI / 4; const distance = radius * Number(value || 0) / 10; return [cx + Math.cos(angle) * distance, cy + Math.sin(angle) * distance] }
+    ;[2, 4, 6, 8, 10].forEach((level) => commands.push(strokePolygon(wheel.map((_, index) => point(index, level)), palette.line, .7)))
+    wheel.forEach((_, index) => commands.push(strokeLine(cx, cy, ...point(index), palette.line, .7)))
+    commands.push(strokePolygon(wheel.map((item, index) => point(index, item.value)), [0.196, 0.141, 0.557], 2, [0.714, 0.655, 1]))
+    wheel.forEach((item, index) => {
+      const column = index < 4 ? 365 : MARGIN
+      const row = index < 4 ? index : index - 4
+      const y = 650 - row * 38
+      commands.push(fillRect(column, y - 8, 16, 16, item.color || palette.lime))
+      commands.push(text(`${item.label}: ${item.value === '' ? '-' : `${item.value}/10`}`, column + 23, y - 4, 8.5, 'F1', palette.ink))
+    })
+    footer(commands, pageNumber)
+    pages.push(commands.join(''))
+    pageNumber += 1
+  }
+
   const close = []
   close.push(fillRect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, palette.ink))
   close.push(fillRect(MARGIN, PAGE_HEIGHT - 118, 82, 5, palette.lime))
@@ -173,7 +196,7 @@ export function buildWorkbookPdf({ name, email, submittedAt, sections }) {
   close.push(fillRect(MARGIN, 168, PAGE_WIDTH - MARGIN * 2, 118, [0.102, 0.135, 0.125]))
   close.push(text('IL PROSSIMO PASSO', MARGIN + 24, 252, 8, 'F2', palette.lime))
   close.push(text('Confronta le tue risposte con Gabriele.', MARGIN + 24, 220, 17, 'F2', palette.white))
-  close.push(text('gabrieleciandrini.com/incontro-gratuito/', MARGIN + 24, 193, 10, 'F1', [0.7, 0.76, 0.73]))
+  close.push(text(nextUrl, MARGIN + 24, 193, 10, 'F1', [0.7, 0.76, 0.73]))
   close.push(text('gabrieleciandrini.com', MARGIN, 75, 9, 'F1', [0.55, 0.62, 0.59]))
   close.push(text('R  /  I  /  A', PAGE_WIDTH - MARGIN - 75, 75, 9, 'F2', palette.lime))
   pages.push(close.join(''))

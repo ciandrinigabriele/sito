@@ -7,9 +7,11 @@ import {
 import { supabase } from './supabase'
 import { LeadLandingPage, LeadThankYouPage } from './LandingPage'
 import { OnlineWorkbookPage } from './OnlineWorkbook'
+import { SessionWorkbookPage } from './SessionWorkbook'
 import { SocialHubPage } from './SocialHubPage'
 import { ProposalPage } from './ProposalPage'
 import { WORKBOOK_PATH } from './workbookQuestions'
+import { SESSION_WORKBOOK_PATH } from './sessionWorkbookData'
 import { imageForItem, optimizedHtmlFor, pageHeadingFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
 import { socialVideoPosts, videoForPath } from './data/social-videos'
@@ -1072,6 +1074,7 @@ const isCookiePage = currentPath === COOKIE_URL
 const isLeadLandingPage = currentPath === '/cambia-direzione/'
 const isLeadThankYouPage = currentPath === '/grazie-per-il-workbook/'
 const isOnlineWorkbookPage = currentPath === WORKBOOK_PATH
+const isSessionWorkbookPage = currentPath === SESSION_WORKBOOK_PATH
 const isSocialHubPage = currentPath === '/inizia/'
 const isProposalPage = currentPath === '/proposta-percorso/'
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -1093,6 +1096,8 @@ if (currentPath === '/') {
   renderPage(<LeadThankYouPage />)
 } else if (isOnlineWorkbookPage) {
   renderPage(<OnlineWorkbookPage />)
+} else if (isSessionWorkbookPage) {
+  renderPage(<SessionWorkbookPage />)
 } else if (isSocialHubPage) {
   renderPage(<SocialHubPage />)
 } else if (isProposalPage) {
