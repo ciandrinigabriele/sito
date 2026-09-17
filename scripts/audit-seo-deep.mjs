@@ -89,7 +89,7 @@ for (const page of pages) {
     issues.push({ severity: 'error', route: page.route, issue: `canonical errato: ${page.canonical}` })
   }
   const robotTokens = page.robots.split(',').map((token) => token.trim())
-  const shouldBeNoindex = !isProduction || ['/workbook-stato-attuale/', '/grazie-per-il-workbook/', '/proposta-percorso/'].includes(page.route)
+  const shouldBeNoindex = !isProduction || ['/workbook-stato-attuale/', '/workbook-paure-limiti-vincoli/', '/grazie-per-il-workbook/', '/proposta-percorso/'].includes(page.route)
   if (shouldBeNoindex ? !robotTokens.includes('noindex') : (!robotTokens.includes('index') || !robotTokens.includes('follow') || robotTokens.includes('noindex'))) {
     issues.push({ severity: 'error', route: page.route, issue: `robots non coerente con l'ambiente: ${page.robots}` })
   }
