@@ -47,7 +47,7 @@ for (const rawRoute of expectedRoutes) {
   }
 }
 
-const privateRoutes = ['/workbook-stato-attuale/', '/workbook-paure-limiti-vincoli/', '/grazie-per-il-workbook/', '/proposta-percorso/']
+const privateRoutes = ['/workbook-stato-attuale/', '/workbook-paure-limiti-vincoli/', '/bussola-valori-obiettivo/', '/grazie-per-il-workbook/', '/proposta-percorso/']
 for (const privateRoute of privateRoutes) {
   if (!fs.existsSync(fileFor(privateRoute))) {
     failures.push(`${privateRoute}: file HTML mancante`)

@@ -501,6 +501,15 @@ render({
 })
 
 render({
+  route: '/bussola-valori-obiettivo/',
+  title: 'Bussola dei valori e obiettivo | Gabriele Ciandrini',
+  description: 'Percorso riservato della fase Immagina per costruire la gerarchia dei valori e un obiettivo professionale ben formato.',
+  body: `<header><a href="${origin}/">Gabriele Ciandrini</a></header><main><p>Metodo Respira. Immagina. Agisci. · Fase Immagina</p><h1>La vita professionale che desideri rispetta davvero ciò che conta per te?</h1><p>Percorso riservato da utilizzare durante una seduta individuale per trasformare cinque elementi importanti in una gerarchia personale, confrontarla con il futuro professionale desiderato e costruire un obiettivo concreto e sostenibile.</p><p>Le risposte riflessive sono facoltative, modificabili e salvate automaticamente sul dispositivo. Al termine riceverai un PDF via e-mail.</p></main>`,
+  type: 'website',
+  robots: 'noindex, follow',
+})
+
+render({
   route: '/grazie-per-il-workbook/',
   title: 'La tua fotografia è pronta | Gabriele Ciandrini',
   description: 'Ricevi il riepilogo personale del workbook e scegli il prossimo passo verso una direzione professionale più chiara e sostenibile.',

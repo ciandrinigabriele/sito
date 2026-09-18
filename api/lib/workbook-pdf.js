@@ -169,7 +169,7 @@ export function buildWorkbookPdf({ name, email, submittedAt, sections, wheel = n
     commands.push(text('La tua ruota professionale', MARGIN, PAGE_HEIGHT - 125, 27, 'F2', palette.ink))
     commands.push(text('I voti rappresentano come percepisci oggi ciascuna area.', MARGIN, PAGE_HEIGHT - 150, 10, 'F1', palette.muted))
     const cx = 210; const cy = 420; const radius = 135
-    const point = (index, value = 10) => { const angle = (-Math.PI / 2) + index * Math.PI / 4; const distance = radius * Number(value || 0) / 10; return [cx + Math.cos(angle) * distance, cy + Math.sin(angle) * distance] }
+    const point = (index, value = 10) => { const angle = (-Math.PI / 2) + index * Math.PI * 2 / wheel.length; const distance = radius * Number(value || 0) / 10; return [cx + Math.cos(angle) * distance, cy + Math.sin(angle) * distance] }
     ;[2, 4, 6, 8, 10].forEach((level) => commands.push(strokePolygon(wheel.map((_, index) => point(index, level)), palette.line, .7)))
     wheel.forEach((_, index) => commands.push(strokeLine(cx, cy, ...point(index), palette.line, .7)))
     commands.push(strokePolygon(wheel.map((item, index) => point(index, item.value)), [0.196, 0.141, 0.557], 2, [0.714, 0.655, 1]))

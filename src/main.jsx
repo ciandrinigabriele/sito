@@ -8,10 +8,12 @@ import { supabase } from './supabase'
 import { LeadLandingPage, LeadThankYouPage } from './LandingPage'
 import { OnlineWorkbookPage } from './OnlineWorkbook'
 import { SessionWorkbookPage } from './SessionWorkbook'
+import { ValuesGoalWorkbookPage } from './ValuesGoalWorkbook'
 import { SocialHubPage } from './SocialHubPage'
 import { ProposalPage } from './ProposalPage'
 import { WORKBOOK_PATH } from './workbookQuestions'
 import { SESSION_WORKBOOK_PATH } from './sessionWorkbookData'
+import { VALUES_GOAL_PATH } from './valuesGoalData'
 import { imageForItem, optimizedHtmlFor, pageHeadingFor, seoDescriptionFor, seoTitleFor } from './data/seo-meta'
 import './styles.css'
 import { socialVideoPosts, videoForPath } from './data/social-videos'
@@ -1075,6 +1077,7 @@ const isLeadLandingPage = currentPath === '/cambia-direzione/'
 const isLeadThankYouPage = currentPath === '/grazie-per-il-workbook/'
 const isOnlineWorkbookPage = currentPath === WORKBOOK_PATH
 const isSessionWorkbookPage = currentPath === SESSION_WORKBOOK_PATH
+const isValuesGoalWorkbookPage = currentPath === VALUES_GOAL_PATH
 const isSocialHubPage = currentPath === '/inizia/'
 const isProposalPage = currentPath === '/proposta-percorso/'
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -1098,6 +1101,8 @@ if (currentPath === '/') {
   renderPage(<OnlineWorkbookPage />)
 } else if (isSessionWorkbookPage) {
   renderPage(<SessionWorkbookPage />)
+} else if (isValuesGoalWorkbookPage) {
+  renderPage(<ValuesGoalWorkbookPage />)
 } else if (isSocialHubPage) {
   renderPage(<SocialHubPage />)
 } else if (isProposalPage) {
