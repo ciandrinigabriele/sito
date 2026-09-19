@@ -12,7 +12,7 @@ const hexRgb = (hex) => [1, 3, 5].map((offset) => parseInt(hex.slice(offset, off
 const normalizeMap = (raw, fields, max = 3000) => Object.fromEntries(fields.map(([field]) => [field, clean(raw?.[field], max)]))
 const clampScore = (value, fallback = '') => { const number = Number(value); return Number.isFinite(number) && number >= 0 && number <= 10 ? number : fallback }
 const answer = (question, value) => ({ question, answer: clean(value) || 'Non compilata' })
-const chain = (value) => [value.source, value.meaning, value.allows, value.deeper, value.final].filter(Boolean).join(' → ')
+const chain = (value) => [value.source, value.final].filter(Boolean).join(' → ')
 
 const resend = async ({ apiKey, from, to, subject, html, attachment, key }) => {
   const response = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', 'Idempotency-Key': key }, body: JSON.stringify({ from, to: [to], subject, html, attachments: [{ filename: 'bussola-valori-obiettivo.pdf', content: attachment }] }) })
@@ -33,17 +33,19 @@ export default async function handler(req, res) {
     if (clean(body.company, 100)) return res.status(200).json({ ok: true })
     const submissionId = clean(body.submissionId, 50); const name = clean(body.name, 100); const email = clean(body.email, 200).toLowerCase()
     if (!UUID_PATTERN.test(submissionId) || name.length < 2 || !EMAIL_PATTERN.test(email) || !body.privacyAccepted) return res.status(400).json({ ok: false })
-    const values = Array.from({ length: 5 }, (_, index) => { const raw = body.values?.[index] || {}; return { source: clean(raw.source, 300), meaning: clean(raw.meaning), allows: clean(raw.allows), deeper: clean(raw.deeper), final: clean(raw.final, 300), importance: clampScore(raw.importance), presence: clampScore(raw.presence), workPresence: clampScore(raw.workPresence), color: valueColors[index] } })
-    const order = Array.isArray(body.order) && body.order.length === 5 && new Set(body.order).size === 5 ? body.order.map(Number) : [0, 1, 2, 3, 4]
+    const values = Array.from({ length: 7 }, (_, index) => { const raw = body.values?.[index] || {}; return { source: clean(raw.source, 300), meaning: '', allows: '', deeper: '', final: clean(raw.final, 300), importance: clampScore(raw.importance), presence: '', workPresence: '', color: valueColors[index] } })
+    const filledIndices = values.map((value, index) => value.source ? index : -1).filter((index) => index >= 0)
+    const requestedOrder = Array.isArray(body.order) ? body.order.map(Number).filter((index) => filledIndices.includes(index)) : []
+    const order = [...new Set([...requestedOrder, ...filledIndices])]
     const desire = normalizeMap(body.desire, desireQuestions); const ecology = normalizeMap(body.ecology, ecologyQuestions); const goal = normalizeMap(body.goal, goalQuestions)
     const conditions = { must: clean(body.conditions?.must), negotiable: clean(body.conditions?.negotiable), refuse: clean(body.conditions?.refuse), verify: clean(body.conditions?.verify) }
     const compatibility = Object.fromEntries(values.map((_, index) => [index, { status: clean(body.compatibility?.[index]?.status, 100), note: clean(body.compatibility?.[index]?.note) }]))
     const solidity = Object.fromEntries(solidityQuestions.map(([field]) => [field, clampScore(body.solidity?.[field])]))
     const improve = Object.fromEntries(solidityQuestions.map(([field]) => [field, clean(body.improve?.[field])]))
-    const orderedValues = order.map((index) => values[index]).filter(Boolean)
+    const orderedValues = order.map((index) => values[index]).filter((value) => value?.source)
     const sections = [
-      { number: '01', label: 'Radici', title: 'Dalle cinque parole ai valori-fine', color: hexRgb('#cbff45'), answers: orderedValues.flatMap((value, index) => [answer(`${index + 1}. Elemento iniziale e catena di profondità`, chain(value)), answer('Definizione personale', value.meaning), answer('Valore-fine confermato', value.final)]) },
-      { number: '02', label: 'Gerarchia', title: 'Ciò che vuoi proteggere', color: hexRgb('#ffb24a'), answers: orderedValues.map((value, index) => answer(`${index + 1}. ${value.final || value.source || 'Valore aperto'}`, `Importanza ${value.importance}/10 · Presenza nella vita ${value.presence}/10 · Presenza nel lavoro ${value.workPresence}/10`)) },
+      { number: '01', label: 'Radici', title: 'Dai punti di partenza ai valori-fine', color: hexRgb('#cbff45'), answers: orderedValues.map((value, index) => answer(`${index + 1}. Valore iniziale → valore-fine`, chain(value))) },
+      { number: '02', label: 'Gerarchia', title: 'Ciò che vuoi proteggere', color: hexRgb('#ffb24a'), answers: orderedValues.map((value, index) => answer(`${index + 1}. ${value.final || value.source || 'Valore aperto'}`, `Importanza ${value.importance}/10`)) },
       { number: '03', label: 'Desiderio', title: 'La vita professionale desiderata', color: hexRgb('#ff735c'), answers: desireQuestions.map(([field, question]) => answer(question, desire[field])) },
       { number: '04', label: 'Bussola', title: 'Confronto tra progetto e valori', color: hexRgb('#55d9d1'), answers: orderedValues.map((value) => { const originalIndex = values.indexOf(value); const result = compatibility[originalIndex]; return answer(value.final || value.source || 'Valore', `${result.status || 'Da verificare'}${result.note ? ` · ${result.note}` : ''}`) }) },
       { number: '05', label: 'Condizioni', title: 'La bussola professionale', color: hexRgb('#b6a7ff'), answers: [answer('Deve esserci', conditions.must), answer('Può essere negoziato', conditions.negotiable), answer('Non sono disposto ad accettarlo', conditions.refuse), answer('Devo ancora verificarlo', conditions.verify)] },
@@ -58,7 +60,7 @@ export default async function handler(req, res) {
     const pdf = buildWorkbookPdf({ name, email, submittedAt, sections, wheel, title: ['La tua bussola', 'professionale'], subtitle: 'Valori, condizioni e obiettivo ben formato', nextUrl: 'gabrieleciandrini.com/proposta-percorso/' }).toString('base64')
     const stored = { values, order, desire, compatibility, conditions, ecology, goal, solidity, improve, workbookType: 'bussola-valori-obiettivo' }
     await supabase({ url, key, path: 'workbook_responses?on_conflict=id', body: { id: submissionId, name, email, answers: stored, privacy_accepted_at: new Date().toISOString(), landing_path: '/bussola-valori-obiettivo/', user_agent: clean(req.headers['user-agent'], 500) }, prefer: 'resolution=ignore-duplicates,return=minimal' })
-    const valuesHtml = orderedValues.map((value, index) => `<p style="margin:6px 0;font:400 14px Arial"><strong>${index + 1}. ${escapeHtml(value.final || value.source || 'Valore aperto')}</strong> — importanza ${value.importance}/10, presenza ${value.presence}/10, lavoro ${value.workPresence}/10</p>`).join('')
+    const valuesHtml = orderedValues.map((value, index) => `<p style="margin:6px 0;font:400 14px Arial"><strong>${index + 1}. ${escapeHtml(value.final || value.source || 'Valore aperto')}</strong> — importanza ${value.importance}/10</p>`).join('')
     await Promise.all([
       resend({ apiKey: resendKey, from, to: email, subject: 'La tua bussola dei valori e il tuo obiettivo', html: shell({ eyebrow: 'LA TUA BUSSOLA PROFESSIONALE', title: `${escapeHtml(name.split(' ')[0])}, il tuo riepilogo è pronto.`, intro: 'In allegato trovi le radici dei tuoi valori, la gerarchia, il confronto con il lavoro desiderato, le condizioni e il primo passo. Non è una diagnosi: è una mappa da rileggere con Gabriele.' }), attachment: pdf, key: `values-goal-${submissionId}-participant` }),
       resend({ apiKey: resendKey, from, to: process.env.WORKBOOK_OWNER_EMAIL || OWNER_EMAIL, subject: `Bussola valori e obiettivo - ${name}`, html: shell({ eyebrow: 'FASE IMMAGINA', title: `${escapeHtml(name)} ha inviato la bussola.`, intro: `E-mail: <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`, content: `<h2 style="font:700 22px Arial">Gerarchia</h2>${valuesHtml}<h2 style="font:700 22px Arial">Obiettivo</h2><p style="font:400 14px/1.6 Arial">${escapeHtml(goal.positiveGoal || desire.desire || 'Non compilato')}</p><h2 style="font:700 22px Arial">Primo passo</h2><p style="font:400 14px/1.6 Arial">${escapeHtml(goal.firstStep || 'Non compilato')} · ${escapeHtml(goal.firstStepDate || 'data aperta')}</p>` }), attachment: pdf, key: `values-goal-${submissionId}-owner` }),

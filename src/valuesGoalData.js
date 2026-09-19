@@ -1,6 +1,6 @@
 export const VALUES_GOAL_PATH = '/bussola-valori-obiettivo/'
 
-export const valueColors = ['#cbff45', '#ffb24a', '#ff735c', '#b6a7ff', '#55d9d1']
+export const valueColors = ['#cbff45', '#ffb24a', '#ff735c', '#b6a7ff', '#55d9d1', '#ff91c8', '#7db6ff']
 
 export const desireQuestions = [
   ['desire', 'Se non dovessi ancora preoccuparti di come realizzarlo, quale lavoro o vita professionale desidereresti?'],
